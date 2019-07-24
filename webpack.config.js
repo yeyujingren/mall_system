@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const webpack = require('webpack')
 
 module.exports = {
   entry: {
@@ -49,12 +50,12 @@ module.exports = {
               sourceMap: true
             }
           },
-          {
-            loader: 'px2rem-loader',
-            options: {
-              remUnit: 100
-            }
-          },
+          // {
+          //   loader: 'px2rem-loader',
+          //   options: {
+          //     remUnit: 100
+          //   }
+          // },
           {
             loader: 'less-loader',
             options: {
@@ -100,7 +101,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css',
       chunkFilename: '[id].[contenthash:8].chunk.css'
-    })
+    }),
+
+    new webpack.HotModuleReplacementPlugin()
   ],
 
   optimization: {

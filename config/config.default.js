@@ -63,9 +63,9 @@ module.exports = appInfo => {
   };
 
   config.security = {
-    csrf: {
-      useSession: true
-    }
+    // csrf: {
+    //   useSession: true
+    // }
   };
 
   config.scgwapi = {

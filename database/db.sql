@@ -6,10 +6,10 @@ user_id int(10) not null auto_increment primary key comment '用户id',
 user_name varchar(100) not null default '' comment '用户姓名',
 email varchar(50) not null default '' comment '用户邮箱',
 psd varchar(25) not null comment'用户密码',
-vip_level int(10) not null comment'会员等级',
-integral int(10) comment'用户积分',
+vip_level int(10) not null default 1 comment'会员等级',
+integral int(10) default 0 comment'用户积分',
 account_status enum('normal', 'frozen', 'shuted_down') default 'normal' comment'账户状态',
-user_photo varchar(100) comment'用户头像'
+user_photo varchar(100) default 'https://github.com/fluidicon.png' comment'用户头像'
 )engine=InnoDB,default char set=utf8 comment='用户表单';
 
 -- 建立商品明细表 --  
@@ -21,7 +21,7 @@ merchant varchar(50) not null default '' comment '商家名称',
 com_price int(10) not null comment'商品价格',
 amount int(10) not null  comment'商品总数',
 com_dec varchar(150) not null default '' comment'商品介绍',
-com_photo varchar(100) comment'商品照片'
+com_photo varchar(100) default 'https://github.com/fluidicon.png' comment'商品照片'
 )engine=InnoDB,default char set=utf8 comment='商品表';
 
 -- 建立订单表 --  

@@ -9,13 +9,15 @@
     "dev:server": "npx egg-bin dev",
     "build": "npx webpack --mode production",
     "start": "npx eggctl start --port 8080 --daemon --title=egg-server-LUCKYIOTWAP",
-    "stop": "npx eggctl stop --title=egg-server-LUCKYIOTWAP"
+    "stop": "npx eggctl stop --title=egg-server-LUCKYIOTWAP",
+    "start:client": "webpack-dev-server --inline --progress --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@antv/data-set": "^0.10.2",
+    "antd": "^3.20.5",
     "antd-mobile": "^2.2.9",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
@@ -34,6 +36,7 @@
     "mitt": "^1.1.3",
     "object-assign": "^4.1.1",
     "prop-types": "^15.7.2",
+    "rc-queue-anim": "^1.6.12",
     "rc-tooltip": "^3.7.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
@@ -43,7 +46,9 @@
     "react-router-dom": "^4.3.1",
     "react-sticky": "^6.0.3",
     "redux": "^4.0.1",
+    "redux-immutable": "^4.0.0",
     "redux-thunk": "^2.3.0",
+    "webpack-dev-server": "^3.7.2",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
