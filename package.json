@@ -23,6 +23,7 @@
     "bluebird": "^3.5.3",
     "dayjs": "^1.8.12",
     "egg": "^2.19.0",
+    "egg-mysql": "^3.0.0",
     "egg-view-nunjucks": "^2.2.0",
     "es6-set": "^0.1.5",
     "history": "^4.7.2",
