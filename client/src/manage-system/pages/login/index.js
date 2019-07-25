@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Spin, message } from 'antd';
+import { Form, Icon, Input, Button, Spin } from 'antd';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import QueuiAnim from 'rc-queue-anim';
-import {login} from './store/actionCreators'
+import {
+  login,
+  loading
+} from './store/actionCreators'
 import '../../style/login.less';
 
 const FormItem = Form.Item;
@@ -13,14 +17,21 @@ class Login extends Component {
   handleSubmit(e) {
     // 取消默认的form提交事件
     e.preventDefault();
-    // 设置loading为true
-    this.props.loading.setState()
+    // 派发dispatch更改loading状态
+    this.props.handleLoading();
     const userInfro = this.props.form.getFieldsValue();
-    this.props.handleLogin(userInfro);
+    // 设置1秒延时，展示loading效果
+    setTimeout(() => {this.props.handleLogin(userInfro)}, 1000);
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form
+    const { getFieldDecorator } = this.props.form;
+    const { loading,login } = this.props;
+
+    // 登录成功后重定向
+    if(login){
+      return <Redirect to="/index" />
+    }
     return(
       <div className="login">
         <div className="title">
@@ -31,7 +42,7 @@ class Login extends Component {
           </QueuiAnim>
         </div>
         <QueuiAnim delay={3000} type="bottom" key="row" className="form-main">
-          <Spin spinning={ false }>
+          <Spin spinning={loading}>
             <Form onSubmit={e => { this.handleSubmit(e) }} className="login-form">
               <FormItem hasFeedback>
                 {getFieldDecorator('username', {
@@ -80,12 +91,16 @@ class Login extends Component {
 const from = Form.create()(Login);
 
 const mapState = state => ({
-  loading: state.getIn(['login','login'])
+  loading: state.getIn(['login','loading']),
+  login: state.getIn(['login','login'])
 })
 
 const mapDispatch = dispatch => ({
+  handleLoading() {
+    dispatch(loading())
+  },
   handleLogin(userInfro){
-    console.log('handleLogin:',userInfro)
+    // console.log('handleLogin:',userInfro)
     dispatch(login(userInfro));
   }
 })
