@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-24 15:13:29 
  * @Last Modified by: 
- * @Last Modified time: 2019-07-25 14:52:05
+ * @Last Modified time: 2019-07-30 10:28:32
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -50,8 +50,3 @@ export const login = userInfro => {
     })
   }
 }
-
-// 是否登录成功
-export const isLogin = () => ({
-  type: 'judge-is-login'
-})

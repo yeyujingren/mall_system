@@ -9,11 +9,13 @@ class RegesterController extends Controller {
     const userInfor = ctx.request.body;
 
     // 设置cookie
-    let count =  ctx.cookies.set('EGG_COOKIE',userInfor.user_name,{
-      maxAge: 24* 3600* 1000,
+    let cookie = ctx.cookies.set('EGG_COOK',userInfor.user_name, {
       httpOnly: false,
-      encrypt:true
-    });
+      encrypt: true
+    })
+
+    // 设置session
+    let session =  ctx.session.user = userInfor.user_name;
 
     const result = await ctx.service.registerServer.login(userInfor);
     if(result.length == 1) {
@@ -24,7 +26,8 @@ class RegesterController extends Controller {
       ctx.body = {
         'success': true,
         'message': '登陆成功！',
-        count
+        session,
+        cookie
       }
     } else {
       ctx.set({

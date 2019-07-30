@@ -26,8 +26,8 @@ class HomeController extends Controller {
   // 加载前台商城界面，默认路径'/'
   async admin() {
     const { ctx } = this;
-    // const cookie = ctx.cookies.get('EGG_COOKIE');
-    // console.log('========================',cookie)
+    const sessionInfor = ctx.session.user;
+    console.log('========================',sessionInfor)
     await ctx.render('platform.html');
   }
 }

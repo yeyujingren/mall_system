@@ -1,0 +1,37 @@
+@import '~antd/dist/antd.css';
+@themeColor:#233344;
+@iconColor: #ccc;
+.header{
+  background-color: @themeColor;
+  .logo{
+    float: left;
+    padding: 20px;
+    color: @iconColor;
+    font-size: 50px;
+  }
+  .sys-name{
+    float: left;
+    color:@iconColor;
+    padding-top: 30px;
+  }
+  .right{
+    line-height: 90px;
+    .role{
+      float: left;
+      color: @iconColor;
+      cursor: pointer;
+      .role-name{
+        margin-right: 10px;
+      }
+    }
+    .logup{
+      color: @iconColor;
+      cursor: pointer;
+    }
+  }
+}
+.left-nav{
+  .nav-icon{
+    font-size: 18px;
+  }
+}
