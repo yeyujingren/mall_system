@@ -16,12 +16,13 @@ class RegesterController extends Controller {
 
     // 设置session
     let session =  ctx.session.user = userInfor.user_name;
-
+    
     const result = await ctx.service.registerServer.login(userInfor);
+    // 设置返回头
+    ctx.set({
+      'contentType':'json'
+    });
     if(result.length == 1) {
-      ctx.set({
-        'contentType':'json'
-      });
       // 设置登录成功后返回的res字段
       ctx.body = {
         'success': true,
@@ -30,9 +31,6 @@ class RegesterController extends Controller {
         cookie
       }
     } else {
-      ctx.set({
-        'contentType':'json'
-      });
       // 设置登录失败后返回的res字段
       ctx.body = {
         'success': false,

@@ -5,6 +5,8 @@ const Controller = require('egg').Controller;
 class HomeController extends Controller {
   // 加载后台关系系统界面，默认路径'/admin'
   async shop() {
+    const {ctx} = this;
+    ctx.body='shop'
 
     // // 测试数据
     // const testData = {

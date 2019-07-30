@@ -9,7 +9,8 @@ psd varchar(25) not null comment'用户密码',
 vip_level int(10) not null default 1 comment'会员等级',
 integral int(10) default 0 comment'用户积分',
 account_status enum('normal', 'frozen', 'shuted_down') default 'normal' comment'账户状态',
-user_photo varchar(100) default 'https://github.com/fluidicon.png' comment'用户头像'
+user_photo varchar(100) default 'https://github.com/fluidicon.png' comment'用户头像',
+flag int(1) default 0 comment'是否被删除'
 )engine=InnoDB,default char set=utf8 comment='用户表单';
 
 -- 建立商品明细表 --  
@@ -32,5 +33,7 @@ com_id int(10) not null comment '商品id',
 com_num int(10) not null comment'商品数量',
 com_prise int(10) not null comment'商品价格',
 ispay boolean comment'订单状态',
-primary key(user_id,com_id)
+primary key(user_id,com_id),
+foreign key(user_id) references user(user_id),
+foreign key(com_id) references commodity(com_id)
 )engine=InnoDB,default char set=utf8 comment='订单表';
