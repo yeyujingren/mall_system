@@ -6,8 +6,7 @@ class HomeController extends Controller {
   // 加载后台关系系统界面，默认路径'/admin'
   async shop() {
     const {ctx} = this;
-    ctx.body='shop'
-
+    ctx.body='shop';
     // // 测试数据
     // const testData = {
     //   'user_name': 'test5',
@@ -28,8 +27,7 @@ class HomeController extends Controller {
   // 加载前台商城界面，默认路径'/'
   async admin() {
     const { ctx } = this;
-    const sessionInfor = ctx.session.user;
-    console.log('========================',sessionInfor)
+    // ctx.body='asasas'
     await ctx.render('platform.html');
   }
 }

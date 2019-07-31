@@ -12,7 +12,6 @@ import '../../style/login.less';
 const FormItem = Form.Item;
 
 class Login extends Component {
-
   // 点击登录时触发的事件
   handleSubmit(e) {
     // 取消默认的form提交事件
@@ -26,10 +25,11 @@ class Login extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { loading,login } = this.props;
+    const { loading, login } = this.props;
 
-    // 登录成功后重定向
-    if(login){
+    // 通过判断cookie判断用户是否登录
+    let cookies = document.cookie.indexOf('EGG_COOK=');
+    if(cookies !== -1){
       return <Redirect to="/index" />
     }
     return(

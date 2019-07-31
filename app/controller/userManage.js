@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-30 15:29:02 
  * @Last Modified by: 
- * @Last Modified time: 2019-07-30 20:05:00
+ * @Last Modified time: 2019-07-31 10:22:32
  */
 
 'use strict';
@@ -13,6 +13,7 @@ class UserManageController extends Controller {
   // 获取会员列表
   async getUserList() {
     const {ctx} = this;
+    console.log('获取会员信息：',ctx.request);
     // 获取server中处理所得到的结果
     const result = await ctx.service.userManagerServer.getList();
     ctx.set({
@@ -33,7 +34,6 @@ class UserManageController extends Controller {
     // 获取前台传递的用户id以及即将修改的用户状态
     let user_id = ctx.request.body.user_id;
     let user_infor = ctx.request.body.user_infor;
-    console.log('00000000000000000',user_infor,user_id)
     // 更改用户账户状态
     const result = await ctx.service.userManagerServer.handleStatus(user_id,user_infor);
     // 判断是否修改成功

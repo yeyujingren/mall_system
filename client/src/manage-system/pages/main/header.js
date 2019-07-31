@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { Button, Row, Col, Icon } from 'antd';
+import { connect } from 'react-redux';
+import { Row, Col, Icon } from 'antd';
+import {
+  logout
+} from './store/actionCreator'
 import '../../style/main.less';
 
-class Header extends Component {
+class WorkHeader extends Component {
+  handleLogOut() {
+    this.props.logout()
+  }
   render() {
     return(
       <div className="header">
@@ -18,7 +25,7 @@ class Header extends Component {
               <Icon type="user" />
               <span className="role-name">管理员</span>
             </div>
-            <div className="logup">
+            <div onClick={() => {this.handleLogOut()}} className="logup">
             <Icon type="poweroff" />
             </div>
           </Col>
@@ -28,4 +35,13 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapState = state => ({
+
+})
+const mapDispatch = dispatch => ({
+  logout() {
+    dispatch(logout())
+  }
+})
+
+export default connect(mapState,mapDispatch)(WorkHeader);

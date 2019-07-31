@@ -13,3 +13,9 @@ exports.mysql = {
   enable: true,
   package: 'egg-mysql'
 };
+
+// 开启egg-passport插件
+// exports.passport = {
+//   enable: true,
+//   package: 'egg-passport'
+// }

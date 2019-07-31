@@ -25,7 +25,7 @@ module.exports = appInfo => {
 
   config.keys = appInfo.name + 'secret-key';
 
-  // config.middleware = ['agentHandler'];
+  // config.middleware = ['userauth'];
 
   config.view = {
     defaultViewEngine: 'nunjucks',

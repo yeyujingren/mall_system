@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter  , Route, Switch } from 'react-router-dom';
 import store from './store/index';
 import Login from './pages/login/index';
 import ManageIndex from './pages/main/main';
