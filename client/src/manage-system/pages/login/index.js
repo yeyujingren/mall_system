@@ -91,8 +91,8 @@ class Login extends Component {
 const from = Form.create()(Login);
 
 const mapState = state => ({
-  loading: state.getIn(['login','loading']),
-  login: state.getIn(['login','login'])
+  loading: state.login.loading,
+  login: state.login.login
 })
 
 const mapDispatch = dispatch => ({
