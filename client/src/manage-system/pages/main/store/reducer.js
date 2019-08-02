@@ -2,13 +2,14 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 11:44:16 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-01 17:43:40
+ * @Last Modified time: 2019-08-02 15:19:19
  */
 // 定义默认state
 const defaultState = {
   userData:[],
   willChangeuserInfor:{},
-  userId:-1
+  userId:-1,
+  visible: false
 }
 export default(state = defaultState,action) => {
   switch (action.type){
@@ -21,7 +22,13 @@ export default(state = defaultState,action) => {
       return {
         ...state,
         willChangeuserInfor: action.infor,
-        userId: action.user_id
+        userId: action.user_id,
+        visible: action.visible
+      }
+    case 'CHANGE_VISIBLE_FLAG':
+      return {
+        ...state,
+        visible: action.visible
       }
     default:
       return state;

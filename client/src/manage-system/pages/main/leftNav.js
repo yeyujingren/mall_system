@@ -17,7 +17,7 @@ class LeftNav extends Component {
           <Menu
               theme="dark"
               mode="inline"
-              defaultSelectedKeys={['4']}
+              defaultSelectedKeys={['1']}
           >
             <Menu.Item key="1">
               <Icon className="nav-icon" type="contacts" theme="twoTone" />

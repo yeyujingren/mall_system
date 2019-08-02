@@ -2,18 +2,19 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 11:41:45 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-01 19:30:11
+ * @Last Modified time: 2019-08-02 15:28:43
  */
 import axios from 'axios';
 import { message } from 'antd';
 
 // 退出登录
 export const logout = () => {
-  return (dispacth) => {
+  return (dispatch) => {
     axios.get('/logout')
       .then(res => {
         if(res.data.success){
           message.success(res.data.message);
+          // dispatch(push('/admin'))
         } else {
           message.error(res.data.message)
         }
@@ -68,15 +69,20 @@ export const deleteUser = (user_id) => {
 }
 
 // 获取要修改的用户的数据
-export const willChangeUser = (userInfor, id) => ({
+export const willChangeUser = (userInfor, id, flag) => ({
   type: 'WILL_CHANGE_USER',
   infor: userInfor,
-  user_id: id
+  user_id: id,
+  visible: flag
 })
-
+// 控制模态框是否显示
+export const changeVisible = (flag) => ({
+  type: 'CHANGE_VISIBLE_FLAG',
+  visible: flag
+})
 // 更新用户数据
-export const upDateUser = (user_infor,id) => {
-  console.log(user_infor,id)
+export const upDateUser = (user_infor,id,flag) => {
+  // console.log(user_infor,id)
   return (dispatch) => {
     axios.post('/upDateUser',{
         user_id:id,
@@ -90,6 +96,7 @@ export const upDateUser = (user_infor,id) => {
     .then(res => {
       if(res.data.success){
         dispatch(getList());
+        dispatch(changeVisible(flag));
         message.success(res.data.message);
       } else {
         message.error(res.data.message);

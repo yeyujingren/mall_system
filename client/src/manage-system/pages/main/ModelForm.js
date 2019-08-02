@@ -4,19 +4,23 @@ import{
   Form,
   Input,
   Select,
+  Button
 } from 'antd';
 import {
-  willChangeUser
+  upDateUser
 } from './store/actionCreator';
 const { Option } = Select;
 class ModelForm extends Component{
-  changUserInfor(data,id) {
+  changUserInfor = (e,id) => {
+    e.preventDefault();
+    const data = this.props.form.getFieldsValue()
     this.props.changeInfor(data,id)
+    this.props.form.resetFields()
   }
   render() {
     const {user_name,email,integral,account_status} = this.props.userinfor;
     const {user_id}= this.props;
-    const { getFieldDecorator,getFieldsValue } = this.props.form;
+    const { getFieldDecorator} = this.props.form;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -29,7 +33,8 @@ class ModelForm extends Component{
     };
     return(
       <Form {...formItemLayout}
-          onChange={()=>this.changUserInfor(getFieldsValue(),user_id)}
+          onSubmit={e=>this.changUserInfor(e,user_id)}
+          // onChange={()=>this.changUserInfor()}
           // onChange={() => console.log(getFieldsValue())}
       >
         <Form.Item label="会员昵称">
@@ -63,7 +68,7 @@ class ModelForm extends Component{
           {getFieldDecorator('integral', {
             rules: [
               {
-                pattern: new RegExp(/^[1-9]\d*$/, 'g'),
+                pattern: new RegExp(/^[0-9]\d*$/, 'g'),
                 message: '请填数字！'
               },
               {
@@ -87,6 +92,11 @@ class ModelForm extends Component{
             </Select>
           )}
         </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            确认
+          </Button>
+        </Form.Item>
       </Form>
     )
   }
@@ -99,7 +109,8 @@ const mapState = state => ({
 })
 const mapDispatch = dispatch => ({
   changeInfor(data,id) {
-    dispatch(willChangeUser(data,id))
+    const flag = false;
+    dispatch(upDateUser(data,id,flag))
   }
 })
 export default connect(mapState,mapDispatch)(ModelHandle)

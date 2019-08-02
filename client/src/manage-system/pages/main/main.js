@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Layout } from 'antd';
 import WorkHeader from './header';
 import LeftNav from './leftNav';
 import UserManage from './userManage';
+import CommManage from './commManage'
 
 const { Sider, Content } = Layout;
 class ManageIndex extends Component {
@@ -21,8 +21,16 @@ class ManageIndex extends Component {
           <Sider>
             <LeftNav />
           </Sider>
-          <Content>
-            <UserManage />
+          <Content
+              style={{
+                margin: '24px 16px',
+                padding: 24,
+                background: '#fff',
+                minHeight: 280
+              }}
+          >
+            {/* <UserManage /> */}
+            <CommManage />
           </Content>
         </Layout>
       </Layout>

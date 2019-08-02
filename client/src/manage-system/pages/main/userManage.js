@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 15:57:37 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-01 20:09:30
+ * @Last Modified time: 2019-08-02 15:15:10
  */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
@@ -16,12 +16,11 @@ import {
   getList,
   deleteUser,
   willChangeUser,
-  upDateUser
+  upDateUser,
+  changeVisible
 } from './store/actionCreator';
 import ModelHandle from './ModelForm'
 class UserManage extends Component {
-  // 定义组件内部状态
-  state = { visible: false };
   // 获取用户列表
   componentDidMount() {
     this.props.getUserList();
@@ -32,28 +31,15 @@ class UserManage extends Component {
   }
   // 模态框状态控制
   showModal = (record) => {
-    this.setState({
-      visible: true
-    })
     this.props.handleWillChangeUser(record)
   }
 
-  // 模态框点击确认按钮后触发
-  handleOk = (userInfor,id) => {
-    this.props.upDateUser(userInfor,id)
-    this.setState({
-      visible: false
-    });
-  };
-
   // 模态框点击取消按钮后触发
   handleCancel = () => {
-    this.setState({
-      visible: false
-    });
+    this.props.handleVisible()
   };
   render() {
-    const { dataLits, willChangeUserInfor } = this.props;
+    const { dataLits, willChangeUserInfor,visible } = this.props;
     const {user_id} = this.props;
     const dataSource = dataLits;
     // 设置table表头
@@ -128,9 +114,10 @@ class UserManage extends Component {
         />
         <Modal
             title="修改会员信息"
-            visible={this.state.visible}
+            visible={visible}
             onOk={()=>this.handleOk(willChangeUserInfor,user_id)}
             onCancel={()=>this.handleCancel()}
+            footer={null}
         >
           <ModelHandle />
         </Modal>
@@ -144,22 +131,28 @@ class UserManage extends Component {
 const mapState = state => ({
   dataLits: state.main.userData,
   willChangeUserInfor: state.main.willChangeuserInfor,
-  user_id: state.main.userId
+  user_id: state.main.userId,
+  visible: state.main.visible
 })
 
-const mapDispatch = dispacth => ({
+const mapDispatch = dispatch => ({
   getUserList() {
-    dispacth(getList())
+    dispatch(getList())
   },
   deleteUser(user_id) {
-    dispacth(deleteUser(user_id))
+    dispatch(deleteUser(user_id))
   },
   handleWillChangeUser(userInfor) {
-    const id = userInfor.user_id
-    dispacth(willChangeUser(userInfor,id))
+    const id = userInfor.user_id;
+    const flag = true;
+    dispatch(willChangeUser(userInfor,id,flag))
   },
   upDateUser(userInfor,id){
-    dispacth(upDateUser(userInfor,id))
+    dispatch(upDateUser(userInfor,id))
+  },
+  handleVisible() {
+    const flag = false;
+    dispatch(changeVisible(flag))
   }
 })
 
