@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-30 15:29:02 
  * @Last Modified by: 
- * @Last Modified time: 2019-07-31 10:22:32
+ * @Last Modified time: 2019-08-04 15:04:56
  */
 
 'use strict';
@@ -13,7 +13,6 @@ class UserManageController extends Controller {
   // 获取会员列表
   async getUserList() {
     const {ctx} = this;
-    console.log('获取会员信息：',ctx.request);
     // 获取server中处理所得到的结果
     const result = await ctx.service.userManagerServer.getList();
     ctx.set({

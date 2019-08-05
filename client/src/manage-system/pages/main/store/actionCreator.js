@@ -2,11 +2,12 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 11:41:45 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-02 15:28:43
+ * @Last Modified time: 2019-08-05 15:49:47
  */
 import axios from 'axios';
 import { message } from 'antd';
 
+/**=============== 会员管理Begin ============= */
 // 退出登录
 export const logout = () => {
   return (dispatch) => {
@@ -68,19 +69,20 @@ export const deleteUser = (user_id) => {
   }
 }
 
-// 获取要修改的用户的数据
-export const willChangeUser = (userInfor, id, flag) => ({
-  type: 'WILL_CHANGE_USER',
-  infor: userInfor,
+// 获取要修改的数据
+export const willChangeInfor = (infor, id, flag) => ({
+  type: 'WILL_CHANGE_INFOR',
+  infor: infor,
   user_id: id,
-  visible: flag
+  visible: flag,
+  url:null
 })
 // 控制模态框是否显示
 export const changeVisible = (flag) => ({
   type: 'CHANGE_VISIBLE_FLAG',
   visible: flag
 })
-// 更新用户数据
+// 更新数据
 export const upDateUser = (user_infor,id,flag) => {
   // console.log(user_infor,id)
   return (dispatch) => {
@@ -107,3 +109,94 @@ export const upDateUser = (user_infor,id,flag) => {
     })
   }
 }
+/**=============== 会员管理End ============= */
+
+/**=============== 商品管理begin ============= */
+// 获取商品列表数据
+export const getCommList = () => {
+  return (dispatch) => {
+    axios.get('/getCommList')
+      .then( res => {
+        if(res.data.code ==200){
+          dispatch({
+            type: 'GET_COMM_LIST',
+            data: res.data.result
+          })
+        } else {
+          message.error(res.data.message);
+        }
+      })
+      .catch(()=>{
+        message.error('网络不可用！');
+      })
+  }
+}
+// 删除商品数据
+export const deleteComm = (com_id) => {
+  return dispatch => {
+    axios.post('/deleteComm',{'com_id':com_id},{
+      headers:{
+        'contentType':'json',
+        'x-csrf-token':window._csrf
+      }
+    })
+      .then(res => {
+        if(res.data.code == 200) {
+          message.success(res.data.message);
+          dispatch(getCommList());
+        } else {
+          message.error(res.data.message);
+        }
+      })
+      .catch(()=>{
+        message.error('网络连接失败')
+      })
+  }
+}
+// 将上传成功的图片的路径保存在state中
+export const pushUrl = url => ({
+  type: 'PUSH_URL',
+  url: url
+})
+// 更新数据
+export const upDateComm = (data,id,url,flag) => {
+  let comm_infor = {
+    'com_name': data.com_name,
+    'merchant': data.merchant,
+    'integral': data.integral,
+    'com_price': data.com_price,
+    'com_dec': data.com_dec,
+    'amount': data.amount
+  }
+  // 判断url是否为空，若为空则表示没有修改图片，否则为修改图片
+  if(url){
+    let key = 'com_photo';
+    let value = url;
+    comm_infor[key] = value;
+  }
+  console.log(comm_infor)
+  return (dispatch) => {
+    axios.post('/upDateComm',{
+        com_id:id,
+        comm_infor:comm_infor
+      },{
+        headers:{
+          'contentType':'json',
+          'x-csrf-token':window._csrf
+        }
+    })
+    .then(res => {
+      if(res.data.code == 200) {
+        message.success(res.data.message);
+        dispatch(changeVisible(flag));
+        dispatch(getCommList());
+      } else {
+        message.error(res.data.message);
+      }
+    })
+    .catch(()=>{
+      message.error('网络连接失败')
+    })
+  }
+}
+/**=============== 商品管理End ============= */

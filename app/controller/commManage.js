@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:42:17 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-02 19:56:36
+ * @Last Modified time: 2019-08-05 15:44:14
  */
 'use strict';
 
@@ -80,9 +80,9 @@ class CommManageController extends Controller {
   // 修改商品信息
   async changeComm() {
     const {ctx} = this;
-    const data = ctx.request.body.data;
+    const data = ctx.request.body.comm_infor;
     const com_id = ctx.request.body.com_id;
-    console.log('============',data,com_id)
+    console.log('=====================',data,com_id)
     const result = await ctx.service.commManageServer.changeComm(data,com_id)
     // 判断是否修改成功
     const isSuc = result.affectedRows === 1;
@@ -101,6 +101,21 @@ class CommManageController extends Controller {
         'code': 500,
         'message': '修改失败！'
       }
+    }
+  }
+
+  // 上传图片
+  async upload () {
+    const {ctx} = this;
+    const result =  await ctx.service.commManageServer.upload()
+    // 设置返回头
+    ctx.set({
+      'contentType':'json'
+    });
+    // 设置返回值
+    ctx.body = {
+      'code': 200,
+      'url': '/images/'+result
     }
   }
 }

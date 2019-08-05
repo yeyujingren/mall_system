@@ -63,10 +63,10 @@ module.exports = appInfo => {
   };
 
   config.security = {
-    // csrf: {
-    //   useSession: true
-    // }
-  };
+    csrf: {
+      ignore: '/upload'
+    }
+  }
 
   config.scgwapi = {
     url: 'http://some-remote-api-server.com'

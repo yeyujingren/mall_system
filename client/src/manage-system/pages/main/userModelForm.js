@@ -101,11 +101,11 @@ class ModelForm extends Component{
     )
   }
 }
-const ModelHandle = Form.create({ name: 'form' })(ModelForm);
+const UserModelHandle = Form.create({ name: 'form' })(ModelForm);
 
 const mapState = state => ({
   user_id: state.main.userId,
-  userinfor: state.main.willChangeuserInfor
+  userinfor: state.main.willChangeInfor
 })
 const mapDispatch = dispatch => ({
   changeInfor(data,id) {
@@ -113,4 +113,4 @@ const mapDispatch = dispatch => ({
     dispatch(upDateUser(data,id,flag))
   }
 })
-export default connect(mapState,mapDispatch)(ModelHandle)
+export default connect(mapState,mapDispatch)(UserModelHandle)

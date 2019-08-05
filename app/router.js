@@ -14,6 +14,7 @@ module.exports = app => {
   router.get('/getCommList',controller.commManage.getCommList);
   router.post('/addComm',controller.commManage.addComm);
   router.post('/deleteComm',controller.commManage.deleteComm);
-  router.post('/changeComm',controller.commManage.changeComm);
+  router.post('/upDateComm',controller.commManage.changeComm);
+  router.post('/upload',controller.commManage.upload)
   router.get('/(/?)**', controller.home.shop);
 }

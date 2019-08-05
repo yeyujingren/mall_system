@@ -19,6 +19,7 @@
     "@antv/data-set": "^0.10.2",
     "antd": "^3.20.5",
     "antd-mobile": "^2.2.9",
+    "await-stream-ready": "^1.0.1",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "bizcharts": "^3.4.5",
@@ -51,6 +52,7 @@
     "redux": "^4.0.1",
     "redux-immutable": "^4.0.0",
     "redux-thunk": "^2.3.0",
+    "stream-wormhole": "^1.1.0",
     "webpack-dev-server": "^3.7.2",
     "whatwg-fetch": "^3.0.0"
   },

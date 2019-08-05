@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 15:57:37 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-02 15:15:10
+ * @Last Modified time: 2019-08-05 09:54:54
  */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
@@ -15,11 +15,11 @@ import {
 import {
   getList,
   deleteUser,
-  willChangeUser,
+  willChangeInfor,
   upDateUser,
   changeVisible
 } from './store/actionCreator';
-import ModelHandle from './ModelForm'
+import UserModelHandle from './userModelForm';
 class UserManage extends Component {
   // 获取用户列表
   componentDidMount() {
@@ -119,7 +119,7 @@ class UserManage extends Component {
             onCancel={()=>this.handleCancel()}
             footer={null}
         >
-          <ModelHandle />
+          <UserModelHandle />
         </Modal>
       </Fragment>
     )
@@ -130,7 +130,7 @@ class UserManage extends Component {
 
 const mapState = state => ({
   dataLits: state.main.userData,
-  willChangeUserInfor: state.main.willChangeuserInfor,
+  willChangeUserInfor: state.main.willChangeInfor,
   user_id: state.main.userId,
   visible: state.main.visible
 })
@@ -145,7 +145,7 @@ const mapDispatch = dispatch => ({
   handleWillChangeUser(userInfor) {
     const id = userInfor.user_id;
     const flag = true;
-    dispatch(willChangeUser(userInfor,id,flag))
+    dispatch(willChangeInfor(userInfor,id,flag))
   },
   upDateUser(userInfor,id){
     dispatch(upDateUser(userInfor,id))

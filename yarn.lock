@@ -1799,6 +1799,11 @@ await-first@^1.0.0:
   dependencies:
     ee-first "^1.1.1"
 
+await-stream-ready@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/await-stream-ready/download/await-stream-ready-1.0.1.tgz#fa308c63fe14ac7a90966ad70822aa9369f8a6bb"
+  integrity sha1-+jCMY/4UrHqQlmrXCCKqk2n4prs=
+
 aws-sign2@~0.7.0:
   version "0.7.0"
   resolved "https://registry.npm.taobao.org/aws-sign2/download/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"

@@ -11,7 +11,8 @@ class RegesterController extends Controller {
     // 设置cookie
     let cookie = ctx.cookies.set('EGG_COOK',userInfor.user_name,{
       httpOnly: false, // 默认就是 true
-      encrypt: true // 加密传输
+      encrypt: true, // 加密传输
+      maxAge: 1000*60*60*24
     })
     // 设置session
     let session =  ctx.session.user = userInfor.user_name;
