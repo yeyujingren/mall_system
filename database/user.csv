@@ -1,7 +1,0 @@
-user_id,user_name,email,psd,vip_level,integral,account_status,user_photo
-1,admin,admin@gmail.com,super_admin,2,100,normal,https://github.com/fluidicon.png
-2,test1,123@gmail.com,123,1,0,frozen,https://github.com/fluidicon.png
-3,test2,123456@163.com,yeyujingren,1,10,normal,https://github.com/fluidicon.png
-4,test3,yifeng.tao@gmail.com,yifeng.tao,1,0,normal,https://github.com/fluidicon.png
-5,222,3333,4444,1,1,normal,https://github.com/fluidicon.png
-179,test5,test@outlook.com,test,1,0,normal,https://github.com/fluidicon.png

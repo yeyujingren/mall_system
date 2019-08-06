@@ -21,19 +21,27 @@ com_name varchar(100) not null default '' comment '商品名称',
 merchant varchar(50) not null default '' comment '商家名称',
 com_price int(10) not null comment'商品价格',
 amount int(10) not null  comment'商品总数',
+integral int(10) default 0 comment'用户积分',
 com_dec varchar(150) not null default '' comment'商品介绍',
-com_photo varchar(100) default 'https://github.com/fluidicon.png' comment'商品照片'
+com_photo varchar(100) default 'https://github.com/fluidicon.png' comment'商品照片',
+flag int(1) default 0 comment'是否被删除'
 )engine=InnoDB,default char set=utf8 comment='商品表';
 
 -- 建立订单表 --  
 DROP TABLE IF EXISTS `orderForm`;
 create table orderForm(
+order_id int(10) not null auto_increment primary key comment '订单id',
 user_id int(10) not null comment '用户id',
-com_id int(10) not null comment '商品id',
-com_num int(10) not null comment'商品数量',
-com_prise int(10) not null comment'商品价格',
+create_time varchar(50) not null comment '订单创建时间',
 ispay boolean comment'订单状态',
-primary key(user_id,com_id),
-foreign key(user_id) references user(user_id),
-foreign key(com_id) references commodity(com_id)
+foreign key(user_id) references user(user_id) on delete cascade on update cascade
 )engine=InnoDB,default char set=utf8 comment='订单表';
+-- 建立商品与订单之间的关联表 --
+DROP TABLE IF EXISTS `assocForm`;
+create table assocForm(
+assoc_id int(10) not null auto_increment primary key comment '关联表id',
+order_id int(10) not null comment '订单id',
+com_id int(10) not null comment '商品id',
+foreign key(order_id) references orderForm(order_id) on delete cascade on update cascade,
+foreign key(com_id) references commodity(com_id) on delete cascade on update cascade
+)engine=InnoDB,default char set=utf8 comment='订单与商品关联表';
