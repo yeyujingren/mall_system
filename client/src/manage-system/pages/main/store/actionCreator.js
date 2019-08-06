@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 11:41:45 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-05 15:49:47
+ * @Last Modified time: 2019-08-06 10:12:30
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -70,12 +70,13 @@ export const deleteUser = (user_id) => {
 }
 
 // 获取要修改的数据
-export const willChangeInfor = (infor, id, flag) => ({
+export const willChangeInfor = (infor, id, flag,handlePost) => ({
   type: 'WILL_CHANGE_INFOR',
   infor: infor,
   user_id: id,
   visible: flag,
-  url:null
+  url:null,
+  handlePost
 })
 // 控制模态框是否显示
 export const changeVisible = (flag) => ({
@@ -158,8 +159,15 @@ export const pushUrl = url => ({
   type: 'PUSH_URL',
   url: url
 })
-// 更新数据
-export const upDateComm = (data,id,url,flag) => {
+ /**
+  * 更新数据
+  * @param {object} data 要更新或者增加的数据
+  * @param {number} id 更新的id
+  * @param {string} url 需要更新的url
+  * @param {boolean} flag 控制模态框是否显示
+  * @param {number}handlePost: 标识请求类型，1代表商品修改请求，2代表商品增加请求
+  */
+export const upDateComm = (data,id,url,flag, handlePost) => {
   let comm_infor = {
     'com_name': data.com_name,
     'merchant': data.merchant,
@@ -168,6 +176,28 @@ export const upDateComm = (data,id,url,flag) => {
     'com_dec': data.com_dec,
     'amount': data.amount
   }
+  // 判断不同的标识来分发不同的请求
+  const posturl = () => {
+    if(handlePost == 1) {
+      return '/upDateComm'
+    } else {
+      return '/addComm'
+    }
+  }
+  // 判断不同的标识来确定是在请求body中添加com_id字段
+  const willPushData = () => {
+    if(handlePost == 1) {
+      return {
+        com_id:id,
+        comm_infor:comm_infor
+      }
+    } else {
+      return {
+        comm_infor
+      }
+    }
+  }
+  console.log(posturl(),willPushData())
   // 判断url是否为空，若为空则表示没有修改图片，否则为修改图片
   if(url){
     let key = 'com_photo';
@@ -176,10 +206,7 @@ export const upDateComm = (data,id,url,flag) => {
   }
   console.log(comm_infor)
   return (dispatch) => {
-    axios.post('/upDateComm',{
-        com_id:id,
-        comm_infor:comm_infor
-      },{
+    axios.post(posturl(),willPushData(),{
         headers:{
           'contentType':'json',
           'x-csrf-token':window._csrf

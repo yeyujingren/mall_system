@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:14:03 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-05 16:20:11
+ * @Last Modified time: 2019-08-06 10:09:31
  */
 
 import React,{ Component, Fragment } from 'react';
@@ -34,12 +34,18 @@ class CommManage extends Component {
   }
   // 点击显示按钮显示模态框
   showModal(record) {
-    this.props.handleModelVisible(record);
+    const handlePost = 1;
+    this.props.handleModelVisible(record,handlePost);
   }
   // 模态框点击取消按钮后触发
   handleCancel = () => {
-    this.props.handleVisible()
+    this.props.handleVisible();
   };
+  // 点击新增商品后触发
+  addComm() {
+    const handlePost = 2;
+    this.props.addNewComm(handlePost);
+  }
   render() {
     const {dataSource,visible} = this.props;
     // 设置table表头
@@ -117,7 +123,7 @@ class CommManage extends Component {
             columns={columns}
             rowKey={record => record.com_id}
         />
-        <Button type="dashed" onClick={this.add} style={{ width: '70%' }}>
+        <Button type="dashed" onClick={() => this.addComm()} style={{ width: '70%' }}>
           <Icon type="plus" /> 新增商品
         </Button>
         <Modal
@@ -149,14 +155,18 @@ const mapDispatch = dispatch => ({
     dispatch(deleteComm(com_id));
   },
   // 点击修改按钮，弹出模态框
-  handleModelVisible(record) {
+  handleModelVisible(record,handlePost) {
     const flag = true;
     const id = record.com_id;
-    dispatch(willChangeInfor(record,id,flag))
+    dispatch(willChangeInfor(record,id,flag,handlePost))
   },
   handleVisible() {
     const flag = false;
     dispatch(changeVisible(flag))
+  },
+  addNewComm(handlePost) {
+    const flag = true;
+    dispatch(willChangeInfor(null,null,flag,handlePost))
   }
 })
 

@@ -14,12 +14,12 @@ import {
 } from './store/actionCreator';
 const { TextArea } = Input;
 class ModelForm extends Component{
-  changCommInfor = (e,id) => {
+  changCommInfor = (e,id,handlePost) => {
     e.preventDefault();
     const data = this.props.form.getFieldsValue()
     console.log(data)
     const url = this.props.url;
-    this.props.changeInfor(data,id,url)
+    this.props.changeInfor(data,id,url,handlePost)
     this.props.form.resetFields()
   }
   pushPhotoUrl(info){
@@ -31,11 +31,10 @@ class ModelForm extends Component{
     } else if (status === 'error') {
       message.error(`${info.file.name}上传失败！`);
     }
-    
   }
   render() {
-    const {com_name,merchant,com_price,integral,amount,com_dec} = this.props.commInfor;
-    const {com_id}= this.props;
+    // const {com_name,merchant,com_price,integral,amount,com_dec} = this.props.commInfor;
+    const {com_id,handlePost}= this.props;
     const { getFieldDecorator} = this.props.form;
     const formItemLayout = {
       labelCol: {
@@ -49,18 +48,18 @@ class ModelForm extends Component{
     };
     return(
       <Form {...formItemLayout}
-          onSubmit={e=>this.changCommInfor(e,com_id)}
+          onSubmit={e=>this.changCommInfor(e,com_id,handlePost)}
       >
         <Form.Item label="商品名称">
           {getFieldDecorator('com_name', {
             rules: [
               {
                 required: true,
-                message: '请输入要修改的商品名称',
+                message: '请输入商品名称',
                 whitespace: true
               }
             ],
-            initialValue:com_name
+            initialValue:this.props.commInfor?this.props.commInfor.com_name:null
           })(<Input />)}
         </Form.Item>
         <Form.Item label="卖家">
@@ -68,10 +67,10 @@ class ModelForm extends Component{
             rules: [
               {
                 required: true,
-                message: '请填写修改的卖家'
+                message: '请填写卖家'
               }
             ],
-            initialValue:merchant
+            initialValue:this.props.commInfor?this.props.commInfor.merchant:null
           })(<Input />)}
         </Form.Item>
         <Form.Item label="商品价格">
@@ -83,10 +82,10 @@ class ModelForm extends Component{
               },
               {
                 required: true,
-                message: '请填写修正的商品价格'
+                message: '请填写商品价格'
               }
             ],
-            initialValue:com_price
+            initialValue:this.props.commInfor?this.props.commInfor.com_price:null
           })(<Input />)}
         </Form.Item>
         <Form.Item label="商品积分">
@@ -98,27 +97,30 @@ class ModelForm extends Component{
               },
               {
                 required: true,
-                message: '请填写修正的商品积分'
+                message: '请填写商品积分'
               }
             ],
-            initialValue:integral
+            initialValue:this.props.commInfor?this.props.commInfor.integral:null
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="已购买数量">
-          {getFieldDecorator('amount', {
-            rules: [
-              {
-                pattern: new RegExp(/^[0-9]\d*$/, 'g'),
-                message: '请填数字！'
-              },
-              {
-                required: true,
-                message: '请填写修正的已买数量'
-              }
-            ],
-            initialValue:amount
-          })(<Input />)}
-        </Form.Item>
+        {this.props.commInfor?
+          <Form.Item label="已购买数量">
+            {getFieldDecorator('amount', {
+              rules: [
+                {
+                  pattern: new RegExp(/^[0-9]\d*$/, 'g'),
+                  message: '请填数字！'
+                },
+                {
+                  required: false,
+                  message: '请填写修正的已买数量'
+                }
+              ],
+              initialValue:this.props.commInfor?this.props.commInfor.amount:null
+            })(<Input />)}
+          </Form.Item>
+          : null
+        }
         <Form.Item label="商品简介">
           {getFieldDecorator('com_dec', {
             rules: [
@@ -127,7 +129,7 @@ class ModelForm extends Component{
                 message: '请填商品简介'
               }
             ],
-            initialValue:com_dec
+            initialValue:this.props.commInfor?this.props.commInfor.com_dec:null
           })(
           <TextArea
               autosize={{ minRows: 2, maxRows: 6 }}
@@ -136,7 +138,14 @@ class ModelForm extends Component{
         </Form.Item>
         <Form.Item label="上传图片">
           <div className="dropbox">
-            {getFieldDecorator('dragger')(
+            {getFieldDecorator('dragger',{
+              rules: [
+                {
+                  required: true,
+                  message: '请上传商品图片'
+                }]
+            }
+              )(
               <Upload.Dragger
                   name="file"
                   multiple={false}
@@ -167,12 +176,13 @@ const CommModelHandle = Form.create({ name: 'form' })(ModelForm);
 const mapState = state => ({
   com_id: state.main.userId,
   commInfor: state.main.willChangeInfor,
-  url: state.main.url
+  url: state.main.url,
+  handlePost: state.main.handlePost
 })
 const mapDispatch = dispatch => ({
-  changeInfor(data,id,url) {
+  changeInfor(data,id,url,handlePost) {
     const flag = false;
-    dispatch(upDateComm(data,id,url,flag))
+    dispatch(upDateComm(data,id,url,flag,handlePost))
   },
   pushUrl(url) {
     console.log(url)
