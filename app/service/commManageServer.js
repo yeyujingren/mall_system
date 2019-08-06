@@ -1,8 +1,8 @@
 /*
- * @Author: Yifeng Tao 
- * @Date: 2019-08-02 16:52:13 
- * @Last Modified by: 
- * @Last Modified time: 2019-08-06 10:15:51
+ * @Author: Yifeng Tao
+ * @Date: 2019-08-02 16:52:13
+ * @Last Modified by
+ * @Last Modified time: 2019-08-06 18:20:00
  */
 'use strict';
 
@@ -21,7 +21,6 @@ class CommManageServerService extends Service {
 
   // 增加商品
   async addComm(data) {
-    console.log('===++++++++++++===',data)
     const result = await this.app.mysql.insert('commodity',data.comm_infor);
     return result;
   }
@@ -37,7 +36,6 @@ class CommManageServerService extends Service {
   }
   // 修改商品
   async changeComm(data,com_id){
-    console.log('===++++++++++++===',data)
     const result = await this.app.mysql.update('commodity',data,{
       where: {
         com_id

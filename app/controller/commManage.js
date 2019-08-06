@@ -1,12 +1,10 @@
 /*
- * @Author: Yifeng Tao 
- * @Date: 2019-08-02 16:42:17 
+ * @Author: Yifeng Tao
+ * @Date: 2019-08-02 16:42:17
  * @Last Modified by: 
- * @Last Modified time: 2019-08-05 15:44:14
+ * @Last Modified time: 2019-08-06 18:56:41
  */
 'use strict';
-
-// console.log('获取商品信息：')
 
 const Controller = require('egg').Controller;
 
@@ -14,12 +12,10 @@ class CommManageController extends Controller {
   // 获取商品列表
   async getCommList() {
     const {ctx} = this;
-    // 获取server中处理的数据
     const result = await ctx.service.commManageServer.getList();
     ctx.set({
       'contentType':'json'
     });
-    // 设置user列表字段
     ctx.body = {
       'code': 200,
       'message': '数据获取成功！',
@@ -35,11 +31,9 @@ class CommManageController extends Controller {
     const result = await ctx.service.commManageServer.addComm(data);
     // 判断是否修改成功
     const isSuc = result.affectedRows === 1;
-    // 设置返回头
     ctx.set({
       'contentType':'json'
     });
-    // 设置返回值
     if(isSuc){
       ctx.body = {
         'code': 200,
@@ -56,15 +50,13 @@ class CommManageController extends Controller {
   // 删除商品
   async deleteComm (){
     const {ctx} = this;
-    const com_id = ctx.request.body.com_id
+    const com_id = ctx.params.id;
     const result = await this.ctx.service.commManageServer.deleteComm(com_id);
     // 判断是否删除成功
     const isSuc = result.affectedRows === 1;
-    // 设置返回头
     ctx.set({
       'contentType':'json'
     });
-    // 设置返回值
     if(isSuc){
       ctx.body = {
         'code': 200,
@@ -82,15 +74,12 @@ class CommManageController extends Controller {
     const {ctx} = this;
     const data = ctx.request.body.comm_infor;
     const com_id = ctx.request.body.com_id;
-    console.log('=====================',data,com_id)
     const result = await ctx.service.commManageServer.changeComm(data,com_id)
     // 判断是否修改成功
     const isSuc = result.affectedRows === 1;
-    // 设置返回头
     ctx.set({
       'contentType':'json'
     });
-    // 设置返回值
     if(isSuc){
       ctx.body = {
         'code': 200,
@@ -108,11 +97,9 @@ class CommManageController extends Controller {
   async upload () {
     const {ctx} = this;
     const result =  await ctx.service.commManageServer.upload()
-    // 设置返回头
     ctx.set({
       'contentType':'json'
     });
-    // 设置返回值
     ctx.body = {
       'code': 200,
       'url': '/images/'+result

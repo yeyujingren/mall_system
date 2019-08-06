@@ -14,14 +14,15 @@ import {
 } from './store/actionCreator';
 const { TextArea } = Input;
 class ModelForm extends Component{
+  // 点击确认按钮后获取form表单值
   changCommInfor = (e,id,handlePost) => {
     e.preventDefault();
     const data = this.props.form.getFieldsValue()
-    console.log(data)
     const url = this.props.url;
     this.props.changeInfor(data,id,url,handlePost)
     this.props.form.resetFields()
   }
+  // 上传图片
   pushPhotoUrl(info){
     const { status } = info.file;
     if (status === 'done') {
@@ -33,9 +34,9 @@ class ModelForm extends Component{
     }
   }
   render() {
-    // const {com_name,merchant,com_price,integral,amount,com_dec} = this.props.commInfor;
     const {com_id,handlePost}= this.props;
     const { getFieldDecorator} = this.props.form;
+    // 设置form表单的基础样式配置
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
@@ -185,7 +186,6 @@ const mapDispatch = dispatch => ({
     dispatch(upDateComm(data,id,url,flag,handlePost))
   },
   pushUrl(url) {
-    console.log(url)
     dispatch(pushUrl(url));
   }
 })

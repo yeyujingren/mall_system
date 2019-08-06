@@ -7,6 +7,7 @@ import {
 import '../../style/main.less';
 
 class WorkHeader extends Component {
+  // 点击退出登录触发
   handleLogOut() {
     this.props.logout()
   }
@@ -35,13 +36,10 @@ class WorkHeader extends Component {
   }
 }
 
-const mapState = state => ({
-
-})
 const mapDispatch = dispatch => ({
   logout() {
     dispatch(logout())
   }
 })
 
-export default connect(mapState,mapDispatch)(WorkHeader);
+export default connect(null,mapDispatch)(WorkHeader);

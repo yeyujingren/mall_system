@@ -1,8 +1,8 @@
 /*
- * @Author: Yifeng Tao 
- * @Date: 2019-07-24 09:34:32 
- * @Last Modified by: 
- * @Last Modified time: 2019-07-31 11:32:49
+ * @Author: Yifeng Tao
+ * @Date: 2019-07-24 09:34:32
+ * @Last Modified by
+ * @Last Modified time: 2019-08-06 18:20:26
  */
 'use strict';
 
@@ -12,7 +12,6 @@ class RegisterServerService extends Service {
    // 注册用户
    async logon(user_name,psd,email) {
     const user = await this.app.mysql.insert('user',{ user_name, psd, email });
-    console.log(user)
     return { user };
   }
 

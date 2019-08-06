@@ -2,9 +2,8 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:14:03 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-06 10:09:31
+ * @Last Modified time: 2019-08-06 19:50:31
  */
-
 import React,{ Component, Fragment } from 'react';
 import {connect} from 'react-redux';
 import {
@@ -146,15 +145,12 @@ const mapState = state => ({
 
 // 派发disPatch
 const mapDispatch = dispatch => ({
-  // 获取商品类表数据
   getCommList() {
     dispatch(getCommList())
   },
-  //删除商品数据
   deleteComm(com_id) {
     dispatch(deleteComm(com_id));
   },
-  // 点击修改按钮，弹出模态框
   handleModelVisible(record,handlePost) {
     const flag = true;
     const id = record.com_id;

@@ -2,8 +2,9 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-24 15:13:19 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-01 10:09:18
+ * @Last Modified time: 2019-08-06 19:03:57
  */
+import { CHANGE_LOAD_TO_TRUE, HANDLE_LOAD_TO_FALSE_CHANGE_LOGIN_STATUS } from './actionType'
 // 定义默认state
 const defaultState = {
   login:false,
@@ -12,12 +13,12 @@ const defaultState = {
 
 export default(state = defaultState,action) => {
   switch (action.type) {
-    case 'change-loading-to-true':
+    case CHANGE_LOAD_TO_TRUE:
       return {
         ...state,
         loading: action.loading
       }
-    case 'handle-loading-to-false-and-change-login-status':
+    case HANDLE_LOAD_TO_FALSE_CHANGE_LOGIN_STATUS:
       return {
         ...state,
         loading: action.loading,

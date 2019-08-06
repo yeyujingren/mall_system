@@ -6,9 +6,8 @@ import { routerMiddleware } from 'react-router-redux';
 
 const middleware = routerMiddleware(createHistory())
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
+const store = createStore(reducer, composeEnhancers(
   applyMiddleware(thunk),
   applyMiddleware(middleware)
 ));
-// const store = createStore(reduer) ;
 export default store;

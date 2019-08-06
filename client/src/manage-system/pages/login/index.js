@@ -16,7 +16,6 @@ class Login extends Component {
   handleSubmit(e) {
     // 取消默认的form提交事件
     e.preventDefault();
-    // 派发dispatch更改loading状态
     this.props.handleLoading();
     const userInfro = this.props.form.getFieldsValue();
     // 设置1秒延时，展示loading效果
@@ -25,7 +24,7 @@ class Login extends Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { loading, login } = this.props;
+    const { loading } = this.props;
 
     // 通过判断cookie判断用户是否登录
     let cookies = document.cookie.indexOf('EGG_COOK=');
@@ -87,7 +86,6 @@ class Login extends Component {
     )
   }
 }
-// export default Form.create()(Login);
 const from = Form.create()(Login);
 
 const mapState = state => ({
@@ -97,10 +95,9 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   handleLoading() {
-    dispatch(loading())
+    dispatch(loading());
   },
   handleLogin(userInfro){
-    // console.log('handleLogin:',userInfro)
     dispatch(login(userInfro));
   }
 })

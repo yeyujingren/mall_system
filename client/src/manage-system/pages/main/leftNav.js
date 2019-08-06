@@ -3,7 +3,7 @@ import { Layout, Menu, Icon } from 'antd';
 
 class LeftNav extends Component {
   render() {
-    const { Header, Content, Footer, Sider } = Layout;
+    const { Sider } = Layout;
     return(
       <Layout className="left-nav">
         <Sider

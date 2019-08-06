@@ -1,10 +1,9 @@
 /*
- * @Author: Yifeng Tao 
- * @Date: 2019-07-31 11:44:16 
+ * @Author: Yifeng Tao
+ * @Date: 2019-07-31 11:44:16
  * @Last Modified by: 
- * @Last Modified time: 2019-08-06 10:05:21
+ * @Last Modified time: 2019-08-06 19:49:38
  */
-// 定义默认state
 /**
  * userData: 用来存储会员数据
  * willChangeInfor: 点击修改时，存储要修改的数据
@@ -13,6 +12,13 @@
  * url: 上传图片返回的链接
  * handlePost:标识请求类型，1代表商品修改请求，2代表商品增加请求
  */
+import {
+  GET_USER_LIST,
+  WILL_CHANGE_INFOR,
+  CHANGE_VISIBLE_FLAG,
+  GET_COMM_LIST,
+  PUSH_URL
+} from './actionType';
 const defaultState = {
   userData:[],
   willChangeInfor:{},
@@ -24,12 +30,12 @@ const defaultState = {
 }
 export default(state = defaultState,action) => {
   switch (action.type){
-    case 'GET_USER_LIST':
+    case GET_USER_LIST:
       return {
         ...state,
         userData: action.data
       }
-    case 'WILL_CHANGE_INFOR':
+    case WILL_CHANGE_INFOR:
       return {
         ...state,
         willChangeInfor: action.infor,
@@ -38,17 +44,17 @@ export default(state = defaultState,action) => {
         url: action.url,
         handlePost:action.handlePost
       }
-    case 'CHANGE_VISIBLE_FLAG':
+    case CHANGE_VISIBLE_FLAG:
       return {
         ...state,
         visible: action.visible
       }
-    case 'GET_COMM_LIST':
+    case GET_COMM_LIST:
       return {
         ...state,
         commData: action.data
       }
-    case 'PUSH_URL':
+    case PUSH_URL:
       return {
         ...state,
         url: action.url

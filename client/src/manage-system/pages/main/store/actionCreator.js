@@ -2,27 +2,32 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 11:41:45 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-06 10:12:30
+ * @Last Modified time: 2019-08-06 19:47:52
  */
 import axios from 'axios';
 import { message } from 'antd';
+import {
+  GET_USER_LIST,
+  WILL_CHANGE_INFOR,
+  CHANGE_VISIBLE_FLAG,
+  GET_COMM_LIST,
+  PUSH_URL
+} from './actionType'
 
 /**=============== 会员管理Begin ============= */
 // 退出登录
 export const logout = () => {
-  return (dispatch) => {
+  return () => {
     axios.get('/logout')
       .then(res => {
         if(res.data.success){
           message.success(res.data.message);
-          // dispatch(push('/admin'))
         } else {
-          message.error(res.data.message)
+          message.error(res.data.message);
         }
       })
-      .catch((e)=>{
-        console.log(e);
-        message.error('出现未知错误！')
+      .catch(()=>{
+        message.error('出现未知错误！');
       })
   }
 }
@@ -33,12 +38,11 @@ export const getList = () => {
     axios.get('/getUserList')
       .then(res => {
         dispacth({
-          type: 'GET_USER_LIST',
+          type: GET_USER_LIST,
           data: res.data.result
         })
       })
-      .catch((e)=>{
-        console.log(e);
+      .catch(()=>{
         message.error('获取用户列表数据失败！')
       })
   }
@@ -71,7 +75,7 @@ export const deleteUser = (user_id) => {
 
 // 获取要修改的数据
 export const willChangeInfor = (infor, id, flag,handlePost) => ({
-  type: 'WILL_CHANGE_INFOR',
+  type: WILL_CHANGE_INFOR,
   infor: infor,
   user_id: id,
   visible: flag,
@@ -80,7 +84,7 @@ export const willChangeInfor = (infor, id, flag,handlePost) => ({
 })
 // 控制模态框是否显示
 export const changeVisible = (flag) => ({
-  type: 'CHANGE_VISIBLE_FLAG',
+  type: CHANGE_VISIBLE_FLAG,
   visible: flag
 })
 // 更新数据
@@ -120,7 +124,7 @@ export const getCommList = () => {
       .then( res => {
         if(res.data.code ==200){
           dispatch({
-            type: 'GET_COMM_LIST',
+            type: GET_COMM_LIST,
             data: res.data.result
           })
         } else {
@@ -135,7 +139,7 @@ export const getCommList = () => {
 // 删除商品数据
 export const deleteComm = (com_id) => {
   return dispatch => {
-    axios.post('/deleteComm',{'com_id':com_id},{
+    axios.delete('/deleteComm/'+com_id ,{
       headers:{
         'contentType':'json',
         'x-csrf-token':window._csrf
@@ -156,7 +160,7 @@ export const deleteComm = (com_id) => {
 }
 // 将上传成功的图片的路径保存在state中
 export const pushUrl = url => ({
-  type: 'PUSH_URL',
+  type: PUSH_URL,
   url: url
 })
  /**
@@ -197,14 +201,12 @@ export const upDateComm = (data,id,url,flag, handlePost) => {
       }
     }
   }
-  console.log(posturl(),willPushData())
   // 判断url是否为空，若为空则表示没有修改图片，否则为修改图片
   if(url){
     let key = 'com_photo';
     let value = url;
     comm_infor[key] = value;
   }
-  console.log(comm_infor)
   return (dispatch) => {
     axios.post(posturl(),willPushData(),{
         headers:{

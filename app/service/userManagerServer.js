@@ -1,8 +1,8 @@
 /*
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:28:53
- * @Last Modified by: 
- * @Last Modified time: 2019-07-30 20:01:07
+ * @Last Modified by
+ * @Last Modified time: 2019-08-06 18:21:42
  */
 
 'use strict';
@@ -29,7 +29,6 @@ class UserManagerServerService extends Service {
     })
     return results;
   }
-  
   // 假删除用户账户
   async deleteUser(user_id) {
     const result = await this.app.mysql.update('user',{flag:1},{

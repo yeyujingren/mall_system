@@ -11,6 +11,7 @@ import {
 } from './store/actionCreator';
 const { Option } = Select;
 class ModelForm extends Component{
+  // 点击确认按钮触发
   changUserInfor = (e,id) => {
     e.preventDefault();
     const data = this.props.form.getFieldsValue()
@@ -34,8 +35,6 @@ class ModelForm extends Component{
     return(
       <Form {...formItemLayout}
           onSubmit={e=>this.changUserInfor(e,user_id)}
-          // onChange={()=>this.changUserInfor()}
-          // onChange={() => console.log(getFieldsValue())}
       >
         <Form.Item label="会员昵称">
           {getFieldDecorator('user_name', {
