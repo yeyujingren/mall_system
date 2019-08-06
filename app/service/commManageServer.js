@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:52:13 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-05 15:41:47
+ * @Last Modified time: 2019-08-06 10:15:51
  */
 'use strict';
 
@@ -21,7 +21,8 @@ class CommManageServerService extends Service {
 
   // 增加商品
   async addComm(data) {
-    const result = await this.app.mysql.insert('commodity',data);
+    console.log('===++++++++++++===',data)
+    const result = await this.app.mysql.insert('commodity',data.comm_infor);
     return result;
   }
 

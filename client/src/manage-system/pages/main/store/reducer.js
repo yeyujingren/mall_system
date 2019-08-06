@@ -2,16 +2,25 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 11:44:16 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-05 15:50:20
+ * @Last Modified time: 2019-08-06 10:05:21
  */
 // 定义默认state
+/**
+ * userData: 用来存储会员数据
+ * willChangeInfor: 点击修改时，存储要修改的数据
+ * userId: 点击修改时，存储要修改的id
+ * visible: 控制模态框是否展示
+ * url: 上传图片返回的链接
+ * handlePost:标识请求类型，1代表商品修改请求，2代表商品增加请求
+ */
 const defaultState = {
   userData:[],
   willChangeInfor:{},
   userId:-1,
   visible: false,
   commData:[],
-  url:null
+  url:null,
+  handlePost:null
 }
 export default(state = defaultState,action) => {
   switch (action.type){
@@ -26,7 +35,8 @@ export default(state = defaultState,action) => {
         willChangeInfor: action.infor,
         userId: action.user_id,
         visible: action.visible,
-        url: action.url
+        url: action.url,
+        handlePost:action.handlePost
       }
     case 'CHANGE_VISIBLE_FLAG':
       return {
