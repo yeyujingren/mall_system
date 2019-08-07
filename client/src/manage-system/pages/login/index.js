@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, Spin } from 'antd';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import QueuiAnim from 'rc-queue-anim';
 import {
@@ -26,11 +26,11 @@ class Login extends Component {
     const { getFieldDecorator } = this.props.form;
     const { loading } = this.props;
 
-    // // 通过判断cookie判断用户是否登录
-    // let cookies = document.cookie.indexOf('EGG_COOK=');
-    // if(cookies !== -1){
-    //   return <Redirect to="/index" />
-    // }
+    // 通过判断cookie判断用户是否登录
+    let cookies = document.cookie.indexOf('EGG_COOK=');
+    if(cookies !== -1){
+      return <Redirect to="/index" />
+    }
     return(
       <div className="login">
         <div className="title">

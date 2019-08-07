@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-24 15:13:29 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 11:40:37
+ * @Last Modified time: 2019-08-07 14:59:15
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -38,7 +38,6 @@ export const login = userInfro => {
           loading: false,
           login: true
         });
-        dispatch(this.props.history('/index'))
         message.success(res.data.message)
       } else {
         dispatch({
@@ -46,7 +45,6 @@ export const login = userInfro => {
           loading: false,
           login: false
         })
-        dispatch(this.props.history('/'))
         message.error(res.data.message)
       }
     })
