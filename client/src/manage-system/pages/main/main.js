@@ -34,11 +34,11 @@ class ManageIndex extends Component {
               <Route path="/index/comm"
                   component={CommManage}
               />
-              <Route path="/index/user"
-                  component={UserManage}
-              />
               <Route path="/index/order"
                   component={OrderManage}
+              />
+              <Route path="/index"
+                  component={UserManage}
               />
             </Switch>
           </Content>

@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-24 15:13:29 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-06 19:03:31
+ * @Last Modified time: 2019-08-07 11:40:37
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -19,7 +19,6 @@ export const loading = () => ({
 
 // 登录
 export const login = userInfro => {
-  // console.log(userInfro.username,userInfro.password)
   // 封装用户名和用户密码
   const data = {
     'user_name':userInfro.username,
@@ -38,7 +37,8 @@ export const login = userInfro => {
           type: HANDLE_LOAD_TO_FALSE_CHANGE_LOGIN_STATUS,
           loading: false,
           login: true
-        })
+        });
+        dispatch(this.props.history('/index'))
         message.success(res.data.message)
       } else {
         dispatch({
@@ -46,6 +46,7 @@ export const login = userInfro => {
           loading: false,
           login: false
         })
+        dispatch(this.props.history('/'))
         message.error(res.data.message)
       }
     })

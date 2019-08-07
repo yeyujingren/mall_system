@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, Spin } from 'antd';
-import { Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import QueuiAnim from 'rc-queue-anim';
 import {
@@ -26,7 +26,7 @@ class Login extends Component {
     const { getFieldDecorator } = this.props.form;
     const { loading } = this.props;
 
-    // 通过判断cookie判断用户是否登录
+    // // 通过判断cookie判断用户是否登录
     // let cookies = document.cookie.indexOf('EGG_COOK=');
     // if(cookies !== -1){
     //   return <Redirect to="/index" />
@@ -102,4 +102,4 @@ const mapDispatch = dispatch => ({
   }
 })
 
-export default connect(mapState, mapDispatch)(from);
+export default withRouter(connect(mapState, mapDispatch)(from));
