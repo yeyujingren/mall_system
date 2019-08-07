@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-31 11:44:16
  * @Last Modified by: 
- * @Last Modified time: 2019-08-06 19:49:38
+ * @Last Modified time: 2019-08-07 18:20:20
  */
 /**
  * userData: 用来存储会员数据
@@ -17,14 +17,14 @@ import {
   WILL_CHANGE_INFOR,
   CHANGE_VISIBLE_FLAG,
   GET_COMM_LIST,
-  PUSH_URL
+  PUSH_URL,
+  GET_ORDER_LIST
 } from './actionType';
 const defaultState = {
-  userData:[],
+  data:[],
   willChangeInfor:{},
   userId:-1,
   visible: false,
-  commData:[],
   url:null,
   handlePost:null
 }
@@ -33,7 +33,7 @@ export default(state = defaultState,action) => {
     case GET_USER_LIST:
       return {
         ...state,
-        userData: action.data
+        data: action.data
       }
     case WILL_CHANGE_INFOR:
       return {
@@ -52,12 +52,17 @@ export default(state = defaultState,action) => {
     case GET_COMM_LIST:
       return {
         ...state,
-        commData: action.data
+        data: action.data
       }
     case PUSH_URL:
       return {
         ...state,
         url: action.url
+      }
+    case GET_ORDER_LIST:
+      return {
+        ...state,
+        data: action.data
       }
     default:
       return state;

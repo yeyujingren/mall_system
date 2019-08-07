@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-07 14:26:10 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 15:39:06
+ * @Last Modified time: 2019-08-07 19:36:04
  */
 
 import React, { Component } from 'react';
@@ -12,17 +12,15 @@ import {
   Button,
   Popconfirm
 } from 'antd';
-import {} from './store/actionCreator';
+import {getOrderList} from './store/actionCreator';
 
 class OrderManage extends Component {
+  // 加载订单数据
+  componentDidMount() {
+    this.props.getOrderList();
+  }
   render(){
-    const dataSource =[{
-      'order_id': 1,
-      'user_name': 'tyf',
-      'comms': ['nodejs','vue','react'],
-      'create_time': '2019/8/6 下午2:25:34',
-      'ispay': 0
-    }]
+    const { dataSource } = this.props;
     // 设置表头
     const columns = [
       {
@@ -40,11 +38,16 @@ class OrderManage extends Component {
         dataIndex: '',
         key: 'comms',
         render: (record) => {
-          const comms = record.comms;
+          const comms = record.comms?record.comms:[];
           return comms.map(item=>{
             return item;
         }).join(',');
         }
+      },
+      {
+        title: '总金额（/￥）',
+        dataIndex: 'total_price',
+        key: 'total_price'
       },
       {
         title: '下单时间',
@@ -81,11 +84,13 @@ class OrderManage extends Component {
 }
 
 const mapState = state => ({
-  
+  dataSource: state.main.data
 })
 
 const mapDispatch = dispatch => ({
-  
+  getOrderList() {
+    dispatch(getOrderList());
+  }
 })
 
 export default connect(mapState, mapDispatch)(OrderManage);

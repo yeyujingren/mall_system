@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 15:57:37 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-05 09:54:54
+ * @Last Modified time: 2019-08-07 18:12:22
  */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
@@ -129,7 +129,7 @@ class UserManage extends Component {
 
 
 const mapState = state => ({
-  dataLits: state.main.userData,
+  dataLits: state.main.data,
   willChangeUserInfor: state.main.willChangeInfor,
   user_id: state.main.userId,
   visible: state.main.visible

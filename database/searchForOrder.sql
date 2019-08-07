@@ -1,0 +1,1 @@
+select orderform.order_id,user.user_name,commodity.com_price,commodity.com_name,orderform.create_time,orderform.ispay from user join orderform on user.user_id = orderform.user_id join assocform on orderform.order_id = assocform.order_id join commodity on assocform.com_id = commodity.com_id 

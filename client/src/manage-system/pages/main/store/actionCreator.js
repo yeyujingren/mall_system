@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 11:41:45 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 09:08:34
+ * @Last Modified time: 2019-08-07 19:34:33
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -11,7 +11,8 @@ import {
   WILL_CHANGE_INFOR,
   CHANGE_VISIBLE_FLAG,
   GET_COMM_LIST,
-  PUSH_URL
+  PUSH_URL,
+  GET_ORDER_LIST
 } from './actionType'
 
 /**=============== 会员管理Begin ============= */
@@ -227,3 +228,26 @@ export const upDateComm = (data,id,url,flag, handlePost) => {
   }
 }
 /**=============== 商品管理End ============= */
+
+/**=============== 订单管理Begin ============= */
+// 获取订单列表数据
+export const getOrderList = () => {
+  return (dispatch) => {
+    axios.get('/getOrderList')
+      .then( res => {
+        console.log(res);
+        if(res.data.code ==200){
+          dispatch({
+            type: GET_ORDER_LIST,
+            data: res.data.result
+          })
+        } else {
+          message.error(res.data.message);
+        }
+      })
+      .catch(()=>{
+        message.error('网络不可用！');
+      })
+  }
+}
+/**=============== 订单管理End ============= */

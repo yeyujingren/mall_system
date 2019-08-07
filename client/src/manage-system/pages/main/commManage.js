@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:14:03 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-06 19:50:31
+ * @Last Modified time: 2019-08-07 19:32:18
  */
 import React,{ Component, Fragment } from 'react';
 import {connect} from 'react-redux';
@@ -103,7 +103,7 @@ class CommManage extends Component {
             >修改</a>
             <Divider type="vertical" />
             <Popconfirm
-                title="确认删除该用户？"
+                title="确认删除该商品？"
                 onConfirm={() => this.confirmDelete(record.com_id)}
                 onCancel={()=>{}}
                 okText="确认"
@@ -139,7 +139,7 @@ class CommManage extends Component {
 }
 
 const mapState = state => ({
-  dataSource: state.main.commData,
+  dataSource: state.main.data,
   visible: state.main.visible
 })
 
