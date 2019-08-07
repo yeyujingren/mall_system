@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-07 14:26:10 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 19:36:04
+ * @Last Modified time: 2019-08-07 19:54:52
  */
 
 import React, { Component } from 'react';
@@ -12,12 +12,16 @@ import {
   Button,
   Popconfirm
 } from 'antd';
-import {getOrderList} from './store/actionCreator';
+import { getOrderList, comfirmPay } from './store/actionCreator';
 
 class OrderManage extends Component {
   // 加载订单数据
   componentDidMount() {
     this.props.getOrderList();
+  }
+  // 修改订单状态
+  confirmPay(order_id){
+    this.props.comfirmPay(order_id)
   }
   render(){
     const { dataSource } = this.props;
@@ -63,7 +67,7 @@ class OrderManage extends Component {
             ? <Button disabled type="primary">已支付</Button>
             : <Popconfirm
                 title="确认将订单状态修改为已支付？"
-                onConfirm={() => this.confirmDelete(record.user_id)}
+                onConfirm={() => this.confirmPay(record.order_id)}
                 onCancel={()=>{}}
                 okText="确认"
                 cancelText="取消"
@@ -90,6 +94,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getOrderList() {
     dispatch(getOrderList());
+  },
+  comfirmPay(order_id) {
+    dispatch(comfirmPay(order_id));
   }
 })
 

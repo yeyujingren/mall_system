@@ -18,7 +18,7 @@ module.exports = app => {
   router.post('/upload',controller.commManage.upload);
   // 订单管理路由控制
   router.get('/getOrderList',controller.orderManage.getOrderList);
-  // router.put('/upDateOrderStatus',controller.orderManage.handleOrderStatus);
+  router.put('/upDateOrderStatus',controller.orderManage.handleOrderStatus);
 
   // 访问未知路径或者更目录时指向路径
   router.get('/(/?)**', controller.home.shop);

@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 11:41:45 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 19:34:33
+ * @Last Modified time: 2019-08-07 20:05:40
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -66,8 +66,8 @@ export const deleteUser = (user_id) => {
           message.error(res.data.message);
         }
       })
-      .catch(e=>{
-        console.log(e);
+      .catch(()=>{
+        message.error('出现未知错误！');
       })
   }
 }
@@ -88,7 +88,6 @@ export const changeVisible = (flag) => ({
 })
 // 更新数据
 export const upDateUser = (user_infor,id,flag) => {
-  // console.log(user_infor,id)
   return (dispatch) => {
     axios.put('/upDateUser',{
         user_id:id,
@@ -108,8 +107,8 @@ export const upDateUser = (user_infor,id,flag) => {
         message.error(res.data.message);
       }
     })
-    .catch(e=>{
-      console.log(e);
+    .catch(()=>{
+      message.error('出现未知错误！');
     })
   }
 }
@@ -235,7 +234,6 @@ export const getOrderList = () => {
   return (dispatch) => {
     axios.get('/getOrderList')
       .then( res => {
-        console.log(res);
         if(res.data.code ==200){
           dispatch({
             type: GET_ORDER_LIST,
@@ -250,4 +248,25 @@ export const getOrderList = () => {
       })
   }
 }
-/**=============== 订单管理End ============= */
+// 更新订单状态
+export const comfirmPay = (order_id) => {
+  return (dispatch) => {
+    axios.put('/upDateOrderStatus',{'order_id':order_id},{
+      headers:{
+        'contentType':'json',
+        'x-csrf-token':window._csrf
+      }
+    })
+      .then( res => {
+        if(res.data.code ==200){
+          dispatch(getOrderList())
+          message.success(res.data.message);
+        } else {
+          message.error(res.data.message);
+        }
+      })
+      .catch(()=>{
+        message.error('网络不可用！');
+      })
+  }
+}

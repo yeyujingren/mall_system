@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-07 16:28:36 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 18:05:48
+ * @Last Modified time: 2019-08-07 20:00:37
  */
 
 'use strict';
@@ -38,6 +38,18 @@ class OrderManageServerService extends Service {
       orderInfo.ispay = order.ispay;
     })
     return data;
+  }
+
+  // 更新订单状态
+  async handleStatus(order_id){
+    const result = await this.app.mysql.update('orderform',{
+      'ispay':1
+    },{
+      where: {
+        order_id
+      }
+    });
+    return result;
   }
 }
 
