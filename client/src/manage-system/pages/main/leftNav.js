@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Icon } from 'antd';
+import {Link} from 'react-router-dom';
 
 class LeftNav extends Component {
   render() {
@@ -20,16 +21,22 @@ class LeftNav extends Component {
               defaultSelectedKeys={['1']}
           >
             <Menu.Item key="1">
-              <Icon className="nav-icon" type="contacts" theme="twoTone" />
-              <span className="nav-text">会员管理</span>
+              <Link to="/index/user">
+                <Icon className="nav-icon" type="contacts" theme="twoTone" />
+                <span className="nav-text">会员管理</span>
+              </Link>
             </Menu.Item>
             <Menu.Item key="2">
-              <Icon className="nav-icon" type="dollar" theme="twoTone" />
-              <span className="nav-text">商品管理</span>
+              <Link to="/index/comm">
+                <Icon className="nav-icon" type="dollar" theme="twoTone" />
+                <span className="nav-text">商品管理</span>
+              </Link>
             </Menu.Item>
             <Menu.Item key="3">
-              <Icon className="nav-icon" type="reconciliation" theme="twoTone" />
-              <span className="nav-text">订单管理</span>
+              <Link to="/index/order">
+                <Icon className="nav-icon" type="reconciliation" theme="twoTone" />
+                <span className="nav-text">订单管理</span>
+              </Link>
             </Menu.Item>
           </Menu>
         </Sider>

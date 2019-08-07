@@ -9,7 +9,7 @@ module.exports = app => {
   // 会员管理界面路由控制
   router.get('/getUserList',userauthMiddleware,controller.userManage.getUserList);
   router.put('/upDateUser',userauthMiddleware,controller.userManage.handleUserStatus);
-  router.delete('/deleteUser',userauthMiddleware,controller.userManage.deleteUser);
+  router.delete('/deleteUser/:id',userauthMiddleware,controller.userManage.deleteUser);
   // 商品管理路由控制
   router.get('/getCommList',controller.commManage.getCommList);
   router.post('/addComm',controller.commManage.addComm);

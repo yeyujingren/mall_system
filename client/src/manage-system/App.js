@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { HashRouter  , Route, Switch } from 'react-router-dom';
+import { BrowserRouter  , Route, Switch } from 'react-router-dom';
 import store from './store/index';
 import Login from './pages/login/index';
 import ManageIndex from './pages/main/main';
@@ -9,12 +9,12 @@ class App extends Component {
   render() {
     return(
       <Provider store={store}>
-          <HashRouter>
+          <BrowserRouter basename="/admin">
             <Switch>
-              <Route path="/" exact component={Login}></Route>
-              <Route path="/index" exact component={ManageIndex}></Route>
+              <Route path="/index" component={ManageIndex}></Route>
+              <Route path="/" component={Login}></Route>
             </Switch>
-          </HashRouter>
+          </BrowserRouter>
       </Provider>
     );
   }

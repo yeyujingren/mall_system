@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 import WorkHeader from './header';
 import LeftNav from './leftNav';
 import UserManage from './userManage';
-import CommManage from './commManage'
+import CommManage from './commManage';
+import OrderManage from './orderManage';
 
 const { Sider, Content } = Layout;
 class ManageIndex extends Component {
   render() {
     // 通过判断cookie判断用户是否登录
     let cookies = document.cookie.indexOf('EGG_COOK=');
-    if(cookies === -1){
+    if (cookies === -1) {
       return <Redirect to="/" />
     }
-    return(
+    return (
       <Layout>
         <WorkHeader />
         <Layout>
@@ -29,8 +30,17 @@ class ManageIndex extends Component {
                 minHeight: 280
               }}
           >
-            {/* <UserManage /> */}
-            <CommManage />
+            <Switch>
+              <Route path="/index/comm"
+                  component={CommManage}
+              />
+              <Route path="/index/user"
+                  component={UserManage}
+              />
+              <Route path="/index/order"
+                  component={OrderManage}
+              />
+            </Switch>
           </Content>
         </Layout>
       </Layout>

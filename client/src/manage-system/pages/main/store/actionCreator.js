@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 11:41:45 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-06 19:47:52
+ * @Last Modified time: 2019-08-07 09:08:34
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -51,9 +51,7 @@ export const getList = () => {
 // 删除用户账户
 export const deleteUser = (user_id) => {
   return (dispatch) => {
-    axios.post('/deleteUser',{
-      user_id:user_id
-    },{
+    axios.delete('/deleteUser/'+user_id,{
       headers:{
         'contentType':'json',
         'x-csrf-token':window._csrf
@@ -91,7 +89,7 @@ export const changeVisible = (flag) => ({
 export const upDateUser = (user_infor,id,flag) => {
   // console.log(user_infor,id)
   return (dispatch) => {
-    axios.post('/upDateUser',{
+    axios.put('/upDateUser',{
         user_id:id,
         user_infor:user_infor
       },{

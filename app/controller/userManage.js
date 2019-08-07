@@ -1,8 +1,8 @@
 /*
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
- * @Last Modified by
- * @Last Modified time: 2019-08-06 18:18:34
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-07 09:07:32
  */
 
 'use strict';
@@ -54,7 +54,7 @@ class UserManageController extends Controller {
   // 删除会员，采用假删除方式
   async deleteUser() {
     const {ctx} = this;
-    let user_id = ctx.request.body.user_id;
+    let user_id = ctx.params.id;
     const result = await ctx.service.userManagerServer.deleteUser(user_id);
     // 判断是否修改成功
     const isSuc = result.affectedRows === 1;

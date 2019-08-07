@@ -27,10 +27,10 @@ class Login extends Component {
     const { loading } = this.props;
 
     // 通过判断cookie判断用户是否登录
-    let cookies = document.cookie.indexOf('EGG_COOK=');
-    if(cookies !== -1){
-      return <Redirect to="/index" />
-    }
+    // let cookies = document.cookie.indexOf('EGG_COOK=');
+    // if(cookies !== -1){
+    //   return <Redirect to="/index" />
+    // }
     return(
       <div className="login">
         <div className="title">
