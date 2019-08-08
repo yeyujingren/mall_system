@@ -1,7 +1,12 @@
+/*
+ * @Author: Yifeng Tao 
+ * @Date: 2019-07-24 10:19:39 
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-08 13:33:37
+ */
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import store from './store/index';
 import Login from './pages/login/index';
 import ManageIndex from './pages/main/main';
@@ -12,7 +17,6 @@ class App extends Component {
       <Provider store={store}>
           <BrowserRouter
               basename="/admin"
-              history={createBrowserHistory()}
           >
             <Switch>
               <Route path="/index" component={ManageIndex}></Route>
