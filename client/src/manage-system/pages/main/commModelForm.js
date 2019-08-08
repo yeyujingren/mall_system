@@ -11,7 +11,7 @@ import{
 import {
   upDateComm,
   pushUrl
-} from './store/actionCreator';
+} from './store/actionCreators/commActionCreator';
 const { TextArea } = Input;
 class ModelForm extends Component{
   // 点击确认按钮后获取form表单值

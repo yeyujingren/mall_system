@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 09:20:44
+ * @Last Modified time: 2019-08-08 10:31:37
  */
 'use strict';
 
@@ -28,14 +28,14 @@ class RegesterController extends Controller {
       // 设置session
       let session =  ctx.session.user = userInfor.user_name;
       ctx.body = {
-        'success': true,
+        'code': 200,
         'message': '登陆成功！',
         cookie,
         session
       }
     } else {
       ctx.body = {
-        'success': false,
+        'code': 500,
         'message': '登陆失败！'
       }
     }
@@ -47,7 +47,7 @@ class RegesterController extends Controller {
     ctx.session = null;
     ctx.cookies.set('EGG_COOK', null);
     ctx.body = {
-      'success': true,
+      'code': 200,
       'message': '您已经安全退出登录!'
     }
   }

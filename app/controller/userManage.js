@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 09:07:32
+ * @Last Modified time: 2019-08-08 09:53:49
  */
 
 'use strict';
@@ -19,7 +19,7 @@ class UserManageController extends Controller {
       'contentType': 'json'
     });
     ctx.body = {
-      'success': true,
+      'code': 200,
       'message': '数据获取成功！',
       'len': result.length,
       result
@@ -40,12 +40,12 @@ class UserManageController extends Controller {
     // 设置返回值
     if(isSuc){
       ctx.body = {
-        'success': true,
+        'code': 200,
         'message': '修改成功！'
       }
     } else {
       ctx.body = {
-        'success': false,
+        'code': 500,
         'message': '修改失败！'
       }
     }
@@ -63,12 +63,12 @@ class UserManageController extends Controller {
     });
     if(isSuc){
       ctx.body = {
-        'success': true,
+        'code': 200,
         'message': '删除成功！'
       }
     } else {
       ctx.body = {
-        'success': false,
+        'code': 500,
         'message': '删除失败！'
       }
     }

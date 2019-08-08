@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-07 14:26:10 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 19:54:52
+ * @Last Modified time: 2019-08-08 10:29:52
  */
 
 import React, { Component } from 'react';
@@ -12,7 +12,7 @@ import {
   Button,
   Popconfirm
 } from 'antd';
-import { getOrderList, comfirmPay } from './store/actionCreator';
+import { getOrderList, comfirmPay } from './store/actionCreators/orderActionCreator';
 
 class OrderManage extends Component {
   // 加载订单数据

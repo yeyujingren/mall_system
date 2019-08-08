@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:14:03 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 19:32:18
+ * @Last Modified time: 2019-08-08 10:13:22
  */
 import React,{ Component, Fragment } from 'react';
 import {connect} from 'react-redux';
@@ -19,7 +19,7 @@ import {
   deleteComm,
   willChangeInfor,
   changeVisible
-} from './store/actionCreator';
+} from './store/actionCreators/commActionCreator';
 import CommModelHandle from './commModelForm';
 
 class CommManage extends Component {

@@ -8,7 +8,7 @@ import{
 } from 'antd';
 import {
   upDateUser
-} from './store/actionCreator';
+} from './store/actionCreators/userActionCreator';
 const { Option } = Select;
 class ModelForm extends Component{
   // 点击确认按钮触发

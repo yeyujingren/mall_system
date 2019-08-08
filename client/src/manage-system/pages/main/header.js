@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Row, Col, Icon } from 'antd';
 import {
   logout
-} from './store/actionCreator'
+} from './store/actionCreators/logoutActionCreator'
 import '../../style/main.less';
 
 class WorkHeader extends Component {

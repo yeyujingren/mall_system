@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-24 15:13:29 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 14:59:15
+ * @Last Modified time: 2019-08-08 09:54:54
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -32,24 +32,24 @@ export const login = userInfro => {
       }
     })
     .then(res => {
-      if(res.data.success){
+      if(res.data.code === 200){
         dispatch({
           type: HANDLE_LOAD_TO_FALSE_CHANGE_LOGIN_STATUS,
           loading: false,
           login: true
         });
-        message.success(res.data.message)
+        message.success(res.data.message);
       } else {
         dispatch({
           type: HANDLE_LOAD_TO_FALSE_CHANGE_LOGIN_STATUS,
           loading: false,
           login: false
         })
-        message.error(res.data.message)
+        message.error(res.data.message);
       }
     })
-    .catch(e => {
-      console.log('error'+e)
+    .catch(() => {
+      message.error('出现未知错误');
     })
   }
 }
