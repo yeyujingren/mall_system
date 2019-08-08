@@ -2,8 +2,9 @@ module.exports = app => {
   const { router, controller } = app;
   var userauthMiddleware = app.middleware.userauth({}, app);
   // apps
-  router.get('/admin(/?)**', controller.home.admin);
   // 登录注册路由控制
+  router.get('/searchName/:name',controller.register.searchName);
+  router.post('/logon',controller.register.logon);
   router.post('/login', controller.register.login);
   router.get('/logout',userauthMiddleware,controller.register.logout);
   // 会员管理界面路由控制
@@ -21,5 +22,6 @@ module.exports = app => {
   router.put('/upDateOrderStatus',controller.orderManage.handleOrderStatus);
 
   // 访问未知路径或者更目录时指向路径
+  router.get('/admin(/?)**', controller.home.admin);
   router.get('/(/?)**', controller.home.shop);
 }
