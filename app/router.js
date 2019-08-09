@@ -4,6 +4,8 @@ module.exports = app => {
   // apps
   // 登录注册路由控制
   router.get('/searchName/:name',controller.register.searchName);
+  router.get('/verify/:flag', controller.register.verify);
+  router.post('/confVerify', controller.register.confVerify);
   router.post('/logon',controller.register.logon);
   router.post('/login', controller.register.login);
   router.get('/logout',userauthMiddleware,controller.register.logout);

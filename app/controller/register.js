@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
  * @Last Modified by: 
- * @Last Modified time: 2019-08-08 14:29:04
+ * @Last Modified time: 2019-08-09 13:23:09
  */
 'use strict';
 
@@ -31,6 +31,33 @@ class RegesterController extends Controller {
     }
   }
 
+  // 返回验证码
+  async verify() {
+    const {ctx} = this;
+    const flag = ctx.params.flag;
+    let captcha = await this.service.registerServer.verify(flag);
+    ctx.response.type = 'image/svg+xml';
+    ctx.body = captcha.data;
+  }
+
+  // 验证验证码是否正确
+  async confVerify() {
+    const {ctx} = this;
+    const data = ctx.request.body;
+    const result = await ctx.service.registerServer.confVerify(data);
+    console.log(result)
+    if(result){
+      ctx.body = {
+        code: 200,
+        message:'验证成功！'
+      }
+    } else {
+      ctx.body = {
+        code: 403,
+        message: '验证码错误！'
+      }
+    }
+  }
 
   // 用户注册
   async logon() {
