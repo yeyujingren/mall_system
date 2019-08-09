@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-08 10:01:54 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-08 10:05:42
+ * @Last Modified time: 2019-08-09 09:55:52
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -11,6 +11,7 @@ import {
   WILL_CHANGE_INFOR,
   CHANGE_VISIBLE_FLAG
 } from '../actionType';
+// 获取用户数据
 export const getList = () => {
   return (dispacth) => {
     axios.get('/getUserList')

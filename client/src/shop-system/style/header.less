@@ -1,0 +1,95 @@
+@import '~antd/dist/antd.css';
+@baseHeight:72px;
+@baseFontSize: 16px;
+@baseLayout: inline-block;
+@bgColor: #fff;
+@baseShadow:0 4px 8px 0 rgba(7, 17, 27, 0.1);
+.header{
+  display: flex;
+  box-shadow: @baseShadow;
+  background-color: @bgColor;
+  .left{
+    width: 200px;
+    margin-left:50px;
+    img{
+      width: 180px;
+      height: 72px;
+    }
+  }
+  .center{
+    flex:1;
+    position: relative;
+    .list{
+      position: absolute;
+      ul{
+        line-height: 72px;
+        left:15%;
+        overflow: hidden;
+        li{
+          float: left;
+          margin:0 15px;
+          font-size: @baseFontSize;
+          cursor: pointer;
+          &:hover{
+            color:red;
+          }
+          sup{
+            display: inline;
+            font-size: 8px;
+            background-color: red;
+            color:white;
+          }
+        }
+      }
+    }
+    .search{
+      position: absolute;
+      display: inline-block;
+      top:50%;
+      left:70%;
+      font-size: 16px;
+      margin-top: -15px;
+      margin-left: -119px;
+      padding:0 5px;
+      border-bottom: 1px solid #D9DDE1;
+      input{
+        outline:none;
+        border: 0px;
+      }
+    }
+  }
+  .right{
+    width: 400px;
+    color: #787d82;
+    line-height: 72px;
+    .download{
+      display:@baseLayout;
+      font-size: @baseFontSize;
+      cursor: pointer;
+      &:hover{
+        color:red;
+      }
+    }
+    .shopping-cart{
+      width:104px;
+      height: 36px;
+      margin-left: 30px;
+      font-size: @baseFontSize;
+      display: @baseLayout;
+      box-sizing: border-box;
+      text-align: center;
+      border-radius: 18px;
+      border: 1px solid rgba(53,35,35,0.2);
+      line-height: 34px;
+      cursor: pointer;
+      &:hover{
+        color:red;
+      }
+    }
+    .regest{
+      float: right;
+      margin-right: 30px;
+      display: @baseLayout;
+    }
+  }
+}
