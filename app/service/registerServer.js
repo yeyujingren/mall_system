@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-24 09:34:32
  * @Last Modified by: 
- * @Last Modified time: 2019-08-09 13:27:18
+ * @Last Modified time: 2019-08-09 18:04:38
  */
 'use strict';
 
@@ -20,8 +20,8 @@ class RegisterServerService extends Service {
     const captcha = svgCaptcha.create({
       size: 4,
       fontSize: 50,
-      width: 100,
-      height: 40,
+      width: 85,
+      height: 32,
       background: '#ffefdb'
     });
     // 通过flag判定是登录验证码，还是注册验证码：0标识注册验证码，1标识登录验证码
@@ -61,10 +61,7 @@ class RegisterServerService extends Service {
   async login(userInfor) {
     let user_name = userInfor.user_name;
     let psd = userInfor.psd;
-    const result = await this.app.mysql.select('user',{
-      where: {user_name, psd},
-      columns: ['user_name', 'psd']
-    });
+    const result = await this.app.mysql.get('user',{user_name,psd})
     return result
   }
 }

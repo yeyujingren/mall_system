@@ -2,11 +2,11 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-09 10:23:00
+ * @Last Modified time: 2019-08-10 14:45:04
  */
 import axios from 'axios';
 import { message } from 'antd';
-import {HANDLE_MODEL_VISIBLE} from './actionType';
+import {HANDLE_MODEL_VISIBLE, GET_VERIFY_CODE, HANDLE_CODE_FLAG, HANDLE_LOGIN} from './actionType';
 
 // 登录注册模态框控制
 export const handleModel = (visible,flag) => ({
@@ -14,3 +14,115 @@ export const handleModel = (visible,flag) => ({
   visible,
   flag
 })
+
+// 获取验证码
+export const getVerify = (flag) => {
+  return (dispatch) => {
+    axios.get('/verify/'+flag)
+      .then( res => {
+        dispatch({
+          type: GET_VERIFY_CODE,
+          verifyCode: res.data
+        })
+      })
+      .catch(() => {
+        message.error('获取验证码失败，请稍后再试');
+      })
+  }
+}
+
+// 验证验证码
+export const confVerify = (code,flag) => {
+  const verifyCode = code.code;
+  return (dispatch) => {
+    axios.post('/confVerify',{code:verifyCode,flag},{
+      headers: {
+        'contentType':'json',
+        'x-csrf-token':window._csrf
+      }
+    })
+      .then(res => {
+        if(res.data.code === 200 ) {
+          dispatch({
+            type: HANDLE_CODE_FLAG,
+            isConf: true
+          })
+        } else {
+          dispatch({
+            type: HANDLE_CODE_FLAG,
+            isConf: false
+          })
+        }
+      })
+  }
+}
+
+// 登录
+export const login = data => {
+  // 封装用户名和用户密码
+  const userInfor = {
+    'user_name':data.user_name,
+    'psd': data.psd
+  }
+  return (dispatch) => {
+    axios.post('/login',userInfor,{
+      headers: {
+        'contentType':'json',
+        'x-csrf-token': window._csrf
+      }
+    })
+    .then(res => {
+      if(res.data.code === 200){
+        const {user_name,user_photo} = res.data.data;
+        // 在localStorage中存储用户名和用户头像等信息
+        localStorage.setItem('user_name',user_name);
+        localStorage.setItem('user_photo',user_photo);
+        message.success('欢迎回来，我们已经等候多时^.^');
+        dispatch(handleModel(false,null));
+        dispatch({
+          type: HANDLE_LOGIN,
+          isLogin: true
+        })
+      } else {
+        message.error('呀，用户名或者密码有问题呦，再想想看(*╹▽╹*)');
+        dispatch(handleModel(true,null));
+      }
+    })
+    .catch(() => {
+      message.error('出现未知错误');
+    })
+  }
+}
+
+// 验证是否登录
+export const handleLogin = (isLogin) => ({
+  type: HANDLE_LOGIN,
+  isLogin: isLogin
+})
+
+// 退出登录
+export const handleLogout = () => {
+  return (dispatch) => {
+    axios.get('/logout')
+      .then( res => {
+        console.log(res)
+        if(res.data.code === 200) {
+          // 删除存储在localStorage中的用户信息
+          localStorage.removeItem('user_name');
+          localStorage.removeItem('user_photo');
+          
+          dispatch({
+            type: HANDLE_LOGIN,
+            isLogin: false
+          })
+          message.success('您已经安全退出了');
+        } else {
+          message.error('opps,退出失败，请稍等再试');
+        }
+      })
+      .catch(() => {
+        message('出现异常')
+      })
+  }
+}
+
