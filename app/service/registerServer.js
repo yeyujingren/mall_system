@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-24 09:34:32
  * @Last Modified by: 
- * @Last Modified time: 2019-08-09 18:04:38
+ * @Last Modified time: 2019-08-12 11:35:55
  */
 'use strict';
 
@@ -30,7 +30,6 @@ class RegisterServerService extends Service {
     } else {
       this.ctx.session.login_code = captcha.text;
     }
-    this.ctx.session.maxAge = 1000 * 60 * 3;
     return captcha;
   }
 
@@ -59,10 +58,19 @@ class RegisterServerService extends Service {
 
   // 登录时向数据库查询用户名和用户密码是否存在，一致
   async login(userInfor) {
+    const {login_code} = this.ctx.session;
     let user_name = userInfor.user_name;
     let psd = userInfor.psd;
-    const result = await this.app.mysql.get('user',{user_name,psd})
-    return result
+    if(userInfor.code){
+      let code = userInfor.code;
+      if(login_code===code){
+        const result = await this.app.mysql.get('user',{user_name,psd});
+        return result
+      }
+      return false;
+    }
+    
+    
   }
 }
 

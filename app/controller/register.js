@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
  * @Last Modified by: 
- * @Last Modified time: 2019-08-10 14:30:03
+ * @Last Modified time: 2019-08-10 16:21:25
  */
 'use strict';
 
@@ -117,7 +117,6 @@ class RegesterController extends Controller {
 
   // 退出登录
   async logout(){
-    console.log('==============')
     const {ctx} = this;
     ctx.session = null;
     ctx.cookies.set('EGG_COOK', null);

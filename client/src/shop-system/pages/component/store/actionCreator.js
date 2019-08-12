@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-10 14:45:04
+ * @Last Modified time: 2019-08-12 11:53:21
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -57,12 +57,33 @@ export const confVerify = (code,flag) => {
   }
 }
 
+// 验证注册用户名是否重复
+export const verifyUserName = (user_name) => {
+  return dispatch => {
+    axios.get('/searchName/'+ user_name)
+    .then( res => {
+      if(res.data.code === 200) {
+        message.success('昵称可以用！');
+        dispatch({
+          type:'wqertyu'
+        })
+      } else {
+        message.error('哎呀，昵称已经被注册了，请再想一个');
+      }
+    })
+    .catch(() => {
+      message('出现异常')
+    })
+  }
+}
+
 // 登录
 export const login = data => {
   // 封装用户名和用户密码
   const userInfor = {
     'user_name':data.user_name,
-    'psd': data.psd
+    'psd': data.psd,
+    'code': data.code
   }
   return (dispatch) => {
     axios.post('/login',userInfor,{
@@ -84,8 +105,8 @@ export const login = data => {
           isLogin: true
         })
       } else {
-        message.error('呀，用户名或者密码有问题呦，再想想看(*╹▽╹*)');
-        dispatch(handleModel(true,null));
+        message.error('呀，请仔细检查所填是否有误！');
+        dispatch(handleModel(true,1));
       }
     })
     .catch(() => {
@@ -105,7 +126,6 @@ export const handleLogout = () => {
   return (dispatch) => {
     axios.get('/logout')
       .then( res => {
-        console.log(res)
         if(res.data.code === 200) {
           // 删除存储在localStorage中的用户信息
           localStorage.removeItem('user_name');

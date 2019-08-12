@@ -13,6 +13,7 @@ class Header extends Component {
       this.props.handleLogin(isLogin);
     }
   }
+
   // 控制模态框展示
   modelShow(flag) {
     this.props.handleModel(flag);
@@ -20,14 +21,30 @@ class Header extends Component {
 
   // 退出登录
   logout() {
+    let persion = document.getElementById('persion');
     this.props.handleLogout();
+    persion.style.display = 'none';
   }
+
   render(){
     const {isLogin} = this.props;
     // 从localStorage中获取用户名和头像链接
     const user_name =  localStorage.getItem('user_name');
     const user_photo =  localStorage.getItem('user_photo');
-    console.log(user_name,user_photo)
+    let persion = document.getElementById('persion');
+    let timer = null;
+    // 鼠标悬浮显示用户详情框
+    // flag用来标识在头像上滑出还是滑入：0标识滑入、1标识滑出
+    const handleDisplay =(flag)=>{
+      if(!flag){
+        clearTimeout(timer);
+        persion.style.display = 'block';
+      } else {
+        timer = setTimeout(() => {
+          persion.style.display = 'none';
+        },1000);
+      }
+    }
     return(
       <header className="header">
         <div className="left">
@@ -64,16 +81,27 @@ class Header extends Component {
                   <Button onClick={()=>{this.modelShow(0)}} type="link">注册</Button>
                 </Fragment>
               : <Fragment>
-                  <img className="user-photo" src={user_photo} alt=""/>
+                  <img
+                      className="user-photo"
+                      src={user_photo}
+                      alt=""
+                      onMouseOver={() => handleDisplay(0)}
+                      onMouseOut={() => handleDisplay(1)}
+                  />
                   <sup></sup>
                 </Fragment>
             }
-            <div className="persion">
+            <div
+                id="persion"
+                className="persion"
+                onMouseOver={() => handleDisplay(0)}
+                onMouseOut={() => handleDisplay(1)}
+            >
               <div className="top">
                 <img src={user_photo} alt="会员头像"/>
                 <div className="top-right">
                   <div className="user_name">
-                    admin
+                    {user_name}
                   </div>
                   <div className="core">
                     <span>

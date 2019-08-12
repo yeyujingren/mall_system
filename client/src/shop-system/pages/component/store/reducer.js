@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:47:08 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-09 20:52:33
+ * @Last Modified time: 2019-08-10 17:43:48
  */
 import { HANDLE_MODEL_VISIBLE, GET_VERIFY_CODE, HANDLE_CODE_FLAG, HANDLE_LOGIN } from './actionType';
 
