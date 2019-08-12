@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:14:03
  * @Last Modified by: 
- * @Last Modified time: 2019-08-12 13:05:40
+ * @Last Modified time: 2019-08-12 16:09:03
  */
 import React,{ Component, Fragment } from 'react';
 import {connect} from 'react-redux';
@@ -52,48 +52,57 @@ class CommManage extends Component {
       {
         title: '课程名称',
         dataIndex: 'com_name',
-        key: 'com_name'
+        key: 'com_name',
+        align:'center'
       },
       {
         title: '课程教师',
         dataIndex: 'merchant',
-        key: 'merchant'
+        key: 'merchant',
+        align:'center'
       },
       {
         title: '课程难度',
         dataIndex: 'difficulty',
-        key: 'difficulty'
+        key: 'difficulty',
+        align:'center'
       },
       {
         title: '课程时长',
         dataIndex: 'course_time',
-        key: 'course_time'
+        key: 'course_time',
+        align:'center'
       },
       {
         title: '售价金额',
         dataIndex: 'com_price',
-        key: 'com_price'
+        key: 'com_price',
+        align:'center'
       },
       {
         title: '积分',
         dataIndex: 'integral',
-        key: 'integral'
+        key: 'integral',
+        align:'center'
       },
       {
         title: '已购买数量',
         dataIndex: 'amount',
-        key: 'amount'
+        key: 'amount',
+        align:'center'
       },
       {
         title: '简介',
         dataIndex: 'com_dec',
-        key: 'com_key'
+        key: 'com_key',
+        align:'center'
       },
       {
         title: '课程图像',
         dataIndex: '',
         key: 'com_photo',
-        width: 200,
+        align:'center',
+        width: 100,
         render: (record) => {
           return (
             <img src={record.com_photo}
@@ -106,6 +115,7 @@ class CommManage extends Component {
       {
         title: '操作',
         key: 'action',
+        align:'center',
         render: (record) => (
           <span>
             <a href="javascript:;"
