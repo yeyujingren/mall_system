@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-24 09:34:32
  * @Last Modified by: 
- * @Last Modified time: 2019-08-12 11:35:55
+ * @Last Modified time: 2019-08-12 12:50:09
  */
 'use strict';
 
@@ -64,12 +64,14 @@ class RegisterServerService extends Service {
     if(userInfor.code){
       let code = userInfor.code;
       if(login_code===code){
-        const result = await this.app.mysql.get('user',{user_name,psd});
-        return result
+        const userResult = await this.app.mysql.get('user',{user_name,psd,'flag':0});
+        return userResult
       }
       return false;
+    } else {
+      const adminResult = await this.app.mysql.get('user',{user_name,psd,'flag':2});
+      return adminResult;
     }
-    
     
   }
 }

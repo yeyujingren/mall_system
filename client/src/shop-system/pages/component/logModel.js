@@ -27,8 +27,6 @@ class LogModel extends Component {
         that.props.regest(flag,values);
       }
     });
-    // const data = this.props.form.getFieldsValue()
-    // this.props.regest(flag,data);
   }
 
   handleCancel(flag) {

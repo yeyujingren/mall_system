@@ -14,12 +14,16 @@ const FormItem = Form.Item;
 class Login extends Component {
   // 点击登录时触发的事件
   handleSubmit(e) {
+    const that = this;
     // 取消默认的form提交事件
     e.preventDefault();
-    this.props.handleLoading();
-    const userInfro = this.props.form.getFieldsValue();
-    // 设置1秒延时，展示loading效果
-    setTimeout(() => {this.props.handleLogin(userInfro)}, 1000);
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.handleLoading();
+        // 设置1秒延时，展示loading效果
+        setTimeout(() => {that.props.handleLogin(values)}, 1000);
+      }
+    });
   }
 
   render() {

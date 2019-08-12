@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-08 10:08:21 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-09 10:09:45
+ * @Last Modified time: 2019-08-12 13:22:51
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -93,7 +93,9 @@ export const upDateComm = (data,id,url,flag, handlePost) => {
     'integral': data.integral,
     'com_price': data.com_price,
     'com_dec': data.com_dec,
-    'amount': data.amount
+    'amount': data.amount,
+    'difficulty': data.difficulty,
+    'course_time': data.course_time
   }
   // 判断不同的标识来分发不同的请求
   const posturl = () => {

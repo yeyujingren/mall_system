@@ -19,6 +19,8 @@ create table commodity(
 com_id int(10) not null auto_increment primary key comment '商品id',
 com_name varchar(100) not null default '' comment '商品名称',
 merchant varchar(50) not null default '' comment '商家名称',
+difficulty varchar(100) not null default '简单' comment '等级',
+course_time int(8) not null default 0 comment '时长',
 com_price int(10) not null comment'商品价格',
 amount int(10) not null  comment'商品总数',
 integral int(10) default 0 comment'用户积分',

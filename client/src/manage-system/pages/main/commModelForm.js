@@ -6,21 +6,27 @@ import{
   Button,
   Upload,
   Icon,
-  message
+  message,
+  Select
 } from 'antd';
 import {
   upDateComm,
   pushUrl
 } from './store/actionCreators/commActionCreator';
 const { TextArea } = Input;
+const { Option } = Select;
 class ModelForm extends Component{
   // 点击确认按钮后获取form表单值
   changCommInfor = (e,id,handlePost) => {
+    const that = this;
     e.preventDefault();
-    const data = this.props.form.getFieldsValue()
     const url = this.props.url;
-    this.props.changeInfor(data,id,url,handlePost)
-    this.props.form.resetFields()
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        that.props.changeInfor(values,id,url,handlePost);
+        this.props.form.resetFields();
+      }
+    });
   }
   // 上传图片
   pushPhotoUrl(info){
@@ -51,7 +57,7 @@ class ModelForm extends Component{
       <Form {...formItemLayout}
           onSubmit={e=>this.changCommInfor(e,com_id,handlePost)}
       >
-        <Form.Item label="商品名称">
+        <Form.Item label="课程名称">
           {getFieldDecorator('com_name', {
             rules: [
               {
@@ -74,7 +80,36 @@ class ModelForm extends Component{
             initialValue:this.props.commInfor?this.props.commInfor.merchant:null
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="商品价格">
+        <Form.Item label="课程难度">
+        {getFieldDecorator('difficulty', {
+            rules:[
+              {required: true}
+            ],
+            initialValue:this.props.commInfor?this.props.commInfor.difficulty:null
+          })(
+            <Select style={{ width: 150 }}>
+              <Option value="简单">简单</Option>
+              <Option value="中等">中等</Option>
+              <Option value="难">难</Option>
+            </Select>
+          )}
+        </Form.Item>
+        <Form.Item label="课程时长">
+          {getFieldDecorator('course_time', {
+            rules: [
+              {
+                pattern: new RegExp(/^[0-9]\d*$/, 'g'),
+                message: '请填数字！'
+              },
+              {
+                required: true,
+                message: '请填写课程时长'
+              }
+            ],
+            initialValue:this.props.commInfor?this.props.commInfor.course_time:null
+          })(<Input />)}
+        </Form.Item>
+        <Form.Item label="课程价格">
           {getFieldDecorator('com_price', {
             rules: [
               {
@@ -89,7 +124,7 @@ class ModelForm extends Component{
             initialValue:this.props.commInfor?this.props.commInfor.com_price:null
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="商品积分">
+        <Form.Item label="课程积分">
           {getFieldDecorator('integral', {
             rules: [
               {

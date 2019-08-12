@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:14:03
  * @Last Modified by: 
- * @Last Modified time: 2019-08-09 10:09:38
+ * @Last Modified time: 2019-08-12 13:05:40
  */
 import React,{ Component, Fragment } from 'react';
 import {connect} from 'react-redux';
@@ -50,7 +50,7 @@ class CommManage extends Component {
     // 设置table表头
     const columns = [
       {
-        title: '商品名称',
+        title: '课程名称',
         dataIndex: 'com_name',
         key: 'com_name'
       },
@@ -58,6 +58,16 @@ class CommManage extends Component {
         title: '课程教师',
         dataIndex: 'merchant',
         key: 'merchant'
+      },
+      {
+        title: '课程难度',
+        dataIndex: 'difficulty',
+        key: 'difficulty'
+      },
+      {
+        title: '课程时长',
+        dataIndex: 'course_time',
+        key: 'course_time'
       },
       {
         title: '售价金额',
