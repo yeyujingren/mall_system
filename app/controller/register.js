@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
  * @Last Modified by: 
- * @Last Modified time: 2019-08-10 16:21:25
+ * @Last Modified time: 2019-08-12 18:31:39
  */
 'use strict';
 
@@ -67,9 +67,7 @@ class RegesterController extends Controller {
     ctx.set({
       'contentType':'json'
     });
-    // 判断是否修改成功
-    const isSuc = result.affectedRows === 1;
-    if(isSuc){
+    if(result){
       ctx.body = {
         'code': 200,
         'message': '注册成功，赶快去登录吧！'
@@ -77,7 +75,7 @@ class RegesterController extends Controller {
     } else {
       ctx.body = {
         'code': 500,
-        'message': '注册失败，请稍后重试！'
+        'message': '注册失败，是不是验证码写错了？'
       }
     }
   }

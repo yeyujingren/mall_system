@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-24 09:34:32
  * @Last Modified by: 
- * @Last Modified time: 2019-08-12 12:50:09
+ * @Last Modified time: 2019-08-12 18:45:23
  */
 'use strict';
 
@@ -25,7 +25,7 @@ class RegisterServerService extends Service {
       background: '#ffefdb'
     });
     // 通过flag判定是登录验证码，还是注册验证码：0标识注册验证码，1标识登录验证码
-    if(!flag){
+    if(flag == 0){
       this.ctx.session.regester_code = captcha.text;
     } else {
       this.ctx.session.login_code = captcha.text;
@@ -49,11 +49,18 @@ class RegisterServerService extends Service {
 
   // 注册用户
   async logon(userInfor) {
+    const {regester_code} = this.ctx.session;
     const user_name = userInfor.user_name;
     const psd = userInfor.psd;
     const email = userInfor.email;
-    const result = await this.app.mysql.insert('user',{ user_name, psd, email });
-    return result;
+    if(userInfor.code === regester_code){
+      const result = await this.app.mysql.insert('user',{ user_name, psd, email });
+      // 判断是否修改成功
+      const isSuc = result.affectedRows === 1;
+      return isSuc;
+    } else {
+      return false
+    }
   }
 
   // 登录时向数据库查询用户名和用户密码是否存在，一致

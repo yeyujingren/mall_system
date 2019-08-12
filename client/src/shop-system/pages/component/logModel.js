@@ -4,17 +4,44 @@ import {
   Modal,
   Form,
   Input,
-  Icon,
-  message
+  Icon
 } from 'antd';
 import { handleModel, getVerify, confVerify, login, regest, verifyUserName } from './store/actionCreator';
 
 class LogModel extends Component {
-  regest(e,flag){
+  state = {
+    confirmDirty: false
+  };
+
+  handleConfirmBlur = e => {
+    const { value } = e.target;
+    console.log(value,!!value);
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+  };
+  compareToFirstPassword = (rule, value, callback) => {
+    const { form } = this.props;
+    if(value && value !== form.getFieldValue('psd')){
+      callback('两次输入密码不一致！');
+    } else {
+      callback();
+    }
+  }
+
+  validateToNextPassword = (rule, value, callback) => {
+    const { form } = this.props;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['confirm'], { force: true });
+    }
+    callback();
+  }
+
+  regest(e,flag,isRepet){
+    console.log(isRepet)
+    const that = this;
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
+      if (!err && !isRepet) {
+        that.props.regest(flag,values);
       }
     });
   }
@@ -44,9 +71,9 @@ class LogModel extends Component {
       this.props.verifyUserName(user_name.user_name);
     }
   }
+
   render() {
-    const { visible, flag, verifyCode, isConf } = this.props;
-    console.log(isConf)
+    const { visible, flag, verifyCode, isRepet } = this.props;
     const { getFieldDecorator} = this.props.form;
     // 设置form表单的基础样式配置
     const formItemLayout = {
@@ -91,7 +118,15 @@ class LogModel extends Component {
             </Form.Item>
             <Form.Item>
               {getFieldDecorator('psd', {
-                rules: [{ required: true, message: '请填写密码' }]
+                rules: [
+                  {
+                    required: true,
+                    message: '请填写密码'
+                  },
+                  {
+                    validator: this.validateToNextPassword
+                  }
+                ]
               })(
                 <Input.Password
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -132,7 +167,7 @@ class LogModel extends Component {
            </Form>
           :<Form
               {...formItemLayout}
-              onSubmit={(e)=>this.regest(e,flag)}
+              onSubmit={(e)=>this.regest(e,flag,isRepet)}
               className="login-form"
            >
             <Form.Item>
@@ -159,8 +194,43 @@ class LogModel extends Component {
                 ]
               })(
                 <Input
-                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    prefix={<Icon type="global" style={{ color: 'rgba(0,0,0,.25)' }} />}
                     placeholder="请填写邮箱"
+                />,
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('psd', {
+                rules: [
+                  {
+                    required: true,
+                    min: 6,
+                    max: 12,
+                    message: '密码要求6-12位'
+                  },
+                  {
+                    validator: this.validateToNextPassword
+                  }
+                ]
+              })(
+                <Input.Password
+                    prefix={<Icon type="unlock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder="请输入密码"
+                />,
+              )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('confirm ', {
+                rules: [
+                  {
+                    validator: this.compareToFirstPassword
+                  }
+                ]
+              })(
+                <Input.Password
+                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    placeholder="请再次确认密码"
+                    onBlur={this.handleConfirmBlur}
                 />,
               )}
             </Form.Item>
@@ -178,7 +248,6 @@ class LogModel extends Component {
                       type="text"
                       placeholder="请输入验证码"
                       className="code"
-                      onBlur={()=>this.confVerify(flag)}
                   />
                   <div onClick={() => this.reGetCode(flag)}
                       dangerouslySetInnerHTML={{__html:verifyCode}}
@@ -188,26 +257,9 @@ class LogModel extends Component {
               )}
             </Form.Item>
             <Form.Item>
-              {getFieldDecorator('password', {
-                rules: [{ required: true, message: 'Please input your Password!' }],
-              })(
-                <Input
-                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    type="password"
-                    placeholder="Password"
-                />,
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('password', {
-                rules: [{ required: true, message: 'Please input your Password!' }],
-              })(
-                <Input
-                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    type="password"
-                    placeholder="Password"
-                />,
-              )}
+              <button className="regest">
+                注册
+              </button>
             </Form.Item>
            </Form>
         }
@@ -220,7 +272,7 @@ const mapState = state => ({
   visible: state.component.visible,
   flag: state.component.flag,
   verifyCode: state.component.verifyCode,
-  isConf: state.component.isConf
+  isRepet: state.component.isRepet
 })
 
 const mapDispatch = dispatch => ({

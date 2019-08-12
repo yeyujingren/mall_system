@@ -2,17 +2,18 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-12 11:53:21
+ * @Last Modified time: 2019-08-12 18:33:39
  */
 import axios from 'axios';
 import { message } from 'antd';
-import {HANDLE_MODEL_VISIBLE, GET_VERIFY_CODE, HANDLE_CODE_FLAG, HANDLE_LOGIN} from './actionType';
+import {HANDLE_MODEL_VISIBLE, GET_VERIFY_CODE, HANDLE_CODE_FLAG, HANDLE_LOGIN, USER_NAME_IS_REPET} from './actionType';
 
 // 登录注册模态框控制
 export const handleModel = (visible,flag) => ({
   type: HANDLE_MODEL_VISIBLE,
   visible,
-  flag
+  flag,
+  isRepet: false
 })
 
 // 获取验证码
@@ -63,16 +64,52 @@ export const verifyUserName = (user_name) => {
     axios.get('/searchName/'+ user_name)
     .then( res => {
       if(res.data.code === 200) {
-        message.success('昵称可以用！');
         dispatch({
-          type:'wqertyu'
+          type: USER_NAME_IS_REPET,
+          isRepet: false
         })
+        message.success('昵称可以用！');
       } else {
+        dispatch({
+          type: USER_NAME_IS_REPET,
+          isRepet: true
+        })
         message.error('哎呀，昵称已经被注册了，请再想一个');
       }
     })
     .catch(() => {
       message('出现异常')
+    })
+  }
+}
+
+// 用户注册
+export const regest = data => {
+  // 封装用户名和用户密码
+  const userInfor = {
+    'user_name':data.user_name,
+    'psd': data.psd,
+    'email': data.email,
+    'code': data.code
+  };
+  return (dispatch) => {
+    axios.post('/logon',userInfor,{
+      headers: {
+        'contentType':'json',
+        'x-csrf-token': window._csrf
+      }
+    })
+    .then(res => {
+      if(res.data.code === 200){
+        message.success(res.data.message);
+        dispatch(handleModel(false,null));
+      } else {
+        message.error(res.data.message);
+        dispatch(handleModel(true,0));
+      }
+    })
+    .catch(() => {
+      message.error('出现未知错误');
     })
   }
 }
