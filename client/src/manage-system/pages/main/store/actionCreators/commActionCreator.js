@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-08 10:08:21 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-12 13:22:51
+ * @Last Modified time: 2019-08-13 14:55:27
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -90,12 +90,13 @@ export const upDateComm = (data,id,url,flag, handlePost) => {
   let comm_infor = {
     'com_name': data.com_name,
     'merchant': data.merchant,
-    'integral': data.integral,
+    'integral': data.com_price,
     'com_price': data.com_price,
     'com_dec': data.com_dec,
     'amount': data.amount,
     'difficulty': data.difficulty,
-    'course_time': data.course_time
+    'course_time': data.course_time,
+    'type': data.type
   }
   // 判断不同的标识来分发不同的请求
   const posturl = () => {

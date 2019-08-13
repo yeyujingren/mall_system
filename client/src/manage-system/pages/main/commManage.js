@@ -2,10 +2,11 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:14:03
  * @Last Modified by: 
- * @Last Modified time: 2019-08-12 16:09:03
+ * @Last Modified time: 2019-08-13 15:18:34
  */
 import React,{ Component, Fragment } from 'react';
 import {connect} from 'react-redux';
+import '../../style/main.less';
 import {
   Modal,
   Table,
@@ -53,49 +54,59 @@ class CommManage extends Component {
         title: '课程名称',
         dataIndex: 'com_name',
         key: 'com_name',
-        align:'center'
+        align:'center',
+        fixed: 'left',
+        width:150
       },
       {
         title: '课程教师',
         dataIndex: 'merchant',
         key: 'merchant',
-        align:'center'
+        align:'center',
+        fixed: 'left',
+        width:150
       },
       {
         title: '课程难度',
         dataIndex: 'difficulty',
         key: 'difficulty',
-        align:'center'
+        align:'center',
+        width:100
       },
       {
         title: '课程时长',
         dataIndex: 'course_time',
         key: 'course_time',
-        align:'center'
+        align:'center',
+        width:100
       },
       {
         title: '售价金额',
         dataIndex: 'com_price',
         key: 'com_price',
-        align:'center'
+        align:'center',
+        width:100
       },
       {
         title: '积分',
         dataIndex: 'integral',
         key: 'integral',
-        align:'center'
+        align:'center',
+        width:100
       },
       {
         title: '已购买数量',
         dataIndex: 'amount',
         key: 'amount',
-        align:'center'
+        align:'center',
+        width:100
       },
       {
-        title: '简介',
-        dataIndex: 'com_dec',
-        key: 'com_key',
-        align:'center'
+        title: '课程类型',
+        dataIndex: 'type',
+        key: 'type',
+        align:'center',
+        width:100
       },
       {
         title: '课程图像',
@@ -106,16 +117,24 @@ class CommManage extends Component {
         render: (record) => {
           return (
             <img src={record.com_photo}
-                alt="课程图片"
+                alt="img"
                 style={{'width':'30px','height':'30px'}}
             />
           )
         }
       },
       {
+        title: '简介',
+        dataIndex: 'com_dec',
+        key: 'com_key',
+        align:'center'
+      },
+      {
         title: '操作',
         key: 'action',
         align:'center',
+        fixed: 'right',
+        width: 150,
         render: (record) => (
           <span>
             <a href="javascript:;"
@@ -141,6 +160,8 @@ class CommManage extends Component {
             dataSource={dataSource}
             columns={columns}
             rowKey={record => record.com_id}
+            scroll={{ x: 1450 }}
+            className="com-table"
         />
         <Button type="dashed" onClick={() => this.addComm()} style={{ width: '70%' }}>
           <Icon type="plus" /> 新增商品
@@ -159,7 +180,7 @@ class CommManage extends Component {
 }
 
 const mapState = state => ({
-  dataSource: state.main.data,
+  dataSource: state.main.commData,
   visible: state.main.visible
 })
 

@@ -81,7 +81,7 @@ class ModelForm extends Component{
           })(<Input />)}
         </Form.Item>
         <Form.Item label="课程难度">
-        {getFieldDecorator('difficulty', {
+          {getFieldDecorator('difficulty', {
             rules:[
               {required: true}
             ],
@@ -124,20 +124,21 @@ class ModelForm extends Component{
             initialValue:this.props.commInfor?this.props.commInfor.com_price:null
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="课程积分">
-          {getFieldDecorator('integral', {
-            rules: [
-              {
-                pattern: new RegExp(/^[0-9]\d*$/, 'g'),
-                message: '请填数字！'
-              },
-              {
-                required: true,
-                message: '请填写商品积分'
-              }
+        <Form.Item label="课程类别">
+          {getFieldDecorator('type', {
+            rules:[
+              {required: true}
             ],
-            initialValue:this.props.commInfor?this.props.commInfor.integral:null
-          })(<Input />)}
+            initialValue:this.props.commInfor?this.props.commInfor.type:null
+          })(
+            <Select style={{ width: 150 }}>
+              <Option value="Web">Web</Option>
+              <Option value="Java">Java</Option>
+              <Option value="Python">Python</Option>
+              <Option value="Android">Android</Option>
+              <Option value="PHP">PHP</Option>
+            </Select>
+          )}
         </Form.Item>
         {this.props.commInfor?
           <Form.Item label="已购买数量">
@@ -177,7 +178,7 @@ class ModelForm extends Component{
             {getFieldDecorator('dragger',{
               rules: [
                 {
-                  required: true,
+                  required: false,
                   message: '请上传商品图片'
                 }]
             }
@@ -196,11 +197,6 @@ class ModelForm extends Component{
                 </p>
                 <p className="ant-upload-text">支持点击或者拖拽来上传图片</p>
                 <p className="ant-upload-hint">若不需要修改图片信息，请不要上传！</p></div>}
-                {/* <p className="ant-upload-drag-icon">
-                  <Icon type="inbox" />
-                </p>
-                <p className="ant-upload-text">支持点击或者拖拽来上传图片</p>
-                <p className="ant-upload-hint">若不需要修改图片信息，请不要上传！</p> */}
               </Upload.Dragger>,
             )}
           </div>

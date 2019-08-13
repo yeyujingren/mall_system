@@ -3,8 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -95,15 +93,14 @@ module.exports = {
       './client/public/favicon.png',
       './client/public/manifest.json',
       './client/public/healthCheck.html',
-      './client/public/non-healthCheck.html',
+      './client/public/non-healthCheck.html'
     ]),
 
     // LESS to CSS
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash:8].css',
       chunkFilename: '[id].[contenthash:8].chunk.css'
-    }),
-    new CleanWebpackPlugin()
+    })
   ],
 
   optimization: {

@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-31 11:44:16
  * @Last Modified by: 
- * @Last Modified time: 2019-08-08 10:01:18
+ * @Last Modified time: 2019-08-13 14:27:54
  */
 /**
  * userData: 用来存储会员数据
@@ -21,7 +21,9 @@ import {
   GET_ORDER_LIST
 } from './actionType';
 const defaultState = {
-  data:[],
+  userData:[],
+  commData:[],
+  orderData:[],
   willChangeInfor:{},
   userId:-1,
   visible: false,
@@ -33,7 +35,7 @@ export default(state = defaultState,action) => {
     case GET_USER_LIST:
       return {
         ...state,
-        data: action.data
+        userData: action.data
       }
     case WILL_CHANGE_INFOR:
       return {
@@ -52,7 +54,7 @@ export default(state = defaultState,action) => {
     case GET_COMM_LIST:
       return {
         ...state,
-        data: action.data
+        commData: action.data
       }
     case PUSH_URL:
       return {
@@ -62,7 +64,7 @@ export default(state = defaultState,action) => {
     case GET_ORDER_LIST:
       return {
         ...state,
-        data: action.data
+        orderData: action.data
       }
     default:
       return state;

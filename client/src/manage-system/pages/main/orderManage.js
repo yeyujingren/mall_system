@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-07 14:26:10 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-08 10:29:52
+ * @Last Modified time: 2019-08-13 14:25:27
  */
 
 import React, { Component } from 'react';
@@ -88,7 +88,7 @@ class OrderManage extends Component {
 }
 
 const mapState = state => ({
-  dataSource: state.main.data
+  dataSource: state.main.orderData
 })
 
 const mapDispatch = dispatch => ({
