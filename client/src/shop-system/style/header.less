@@ -73,6 +73,7 @@
     .shopping-cart{
       width:104px;
       height: 36px;
+      position: relative;
       margin-left: 30px;
       font-size: @baseFontSize;
       display: @baseLayout;
@@ -84,6 +85,77 @@
       cursor: pointer;
       &:hover{
         color:red;
+      }
+    }
+    .shopping-cart-show{
+      width: 344px;
+      height: 400px;
+      top: 74px;
+      right: 152px;
+      position: absolute;
+      z-index:10;
+      background-color: white;
+      box-shadow: @baseShadow;
+      .cart-top{
+        height: 51px;
+        padding: 13px 12px;
+        box-sizing: border-box;
+        line-height: 20px;
+        border-bottom: 1px solid #ccc;
+        .mycart{
+          color: #1C1f2c;
+          font-size: 14px;
+          font-weight: bold;
+        }
+        .hascourse{
+          font-size: 12px;
+          color: #9199a1;
+          float: right;
+        }
+      }
+      .cart-middle{
+        height: 284px;
+        padding: 13px 12px;
+        box-sizing: border-box;
+        border-bottom: 1px solid #ccc;
+        text-align: center;
+        line-height: 40px;
+        .icon{
+          margin-top: 50px;
+          font-size: 80px;
+          font-weight: 200;
+        }
+        .tit{
+          color: #545c63;
+          font-size: 14px;
+        }
+        .adver{
+          color: #9199a1;
+          font-size: 12px;
+        }
+      }
+      .cart-bottom{
+        line-height: 16px;
+        padding: 16px 13px;
+        .myorder{
+          color: #93999f;
+          font-size: 12px;
+          cursor: pointer;
+        }
+        .gocart{
+          width: 96px;
+          height: 32px;
+          float: right;
+          display: inline-block;
+          font-size: 12px;
+          box-sizing: border-box;
+          padding: 8px 16px;
+          border-radius: 16px;
+          text-align: center;
+          color: white;
+          background-color: rgba(240,20,20,.8);
+          cursor: pointer;
+        }
       }
     }
     .regest{
@@ -112,10 +184,11 @@
         width: 258px;
         height: 196px;
         position: absolute;
+        z-index: 5;
         padding: 24px;
         right: 0;
         top: 100%;
-        display: none;
+        background-color: white;
         border-bottom-right-radius: 8px;
         border-bottom-left-radius: 8px;
         box-sizing: content-box;
