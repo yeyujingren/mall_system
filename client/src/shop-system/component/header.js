@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { Icon, Button } from 'antd';
+import { Icon, Button, message } from 'antd';
 import { connect } from 'react-redux';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import { handleModel, getVerify, handleLogin, handleLogout } from './store/actionCreator';
 import '../style/header.less';
 
@@ -57,6 +58,17 @@ class Header extends Component {
     persion.style.display = 'none';
   }
 
+  // 控制跳转
+  handleLink(url) {
+    // 验证用户是否登录，登录成功后跳转到所到界面，若未登录，提示登录
+    let cookies = document.cookie.indexOf('EGG_COOK=');
+    if (cookies === -1) {
+      message.error('您还未登录呦！请登录再试')
+    } else {
+      this.props.history.push(url);
+    }
+  }
+
   render(){
     const {isLogin} = this.props;
     // 从localStorage中获取用户名和头像链接
@@ -65,7 +77,9 @@ class Header extends Component {
     return(
       <header className="header">
         <div className="left">
-          <img src="https://www.imooc.com/static/img/index/logo.png" alt=""/>
+          <Link to="/">
+            <img src="https://www.imooc.com/static/img/index/logo.png" alt=""/>
+          </Link>
         </div>
         <div className="center">
           <div className="list">
@@ -117,8 +131,8 @@ class Header extends Component {
                 <p className="adver">快去选购你中意的课程吧</p>
               </div>
               <div className="cart-bottom">
-                <span className="myorder">我的订单中心</span>
-                <span className="gocart">去购物车</span>
+                <span onClick={() => this.handleLink('/order')} className="myorder">我的订单中心</span>
+                <span onClick={() => this.handleLink('/cart')} className="gocart">去购物车</span>
               </div>
             </div>
             :
@@ -215,4 +229,4 @@ const mapDispatch = dispatch => ({
   }
 })
 
-export default connect(mapState,mapDispatch)(Header);
+export default withRouter(connect(mapState,mapDispatch)(Header));
