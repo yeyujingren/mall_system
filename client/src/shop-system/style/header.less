@@ -71,10 +71,11 @@
       }
     }
     .shopping-cart{
-      width:104px;
+      // width:104px;
       height: 36px;
       position: relative;
       margin-left: 30px;
+      padding:0 8px;
       font-size: @baseFontSize;
       display: @baseLayout;
       box-sizing: border-box;
@@ -85,6 +86,17 @@
       cursor: pointer;
       &:hover{
         color:red;
+      };
+      .has-add{
+        display: inline-block;
+        width: 18px;
+        height: 16px;
+        font-size: 14px;
+        line-height: 16px;
+        margin: 0 5px;
+        color: white;
+        background-color: #ff4d4f;
+        border-radius: 8px;
       }
     }
     .shopping-cart-show{

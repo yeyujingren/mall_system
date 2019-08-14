@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Icon, Button, message } from 'antd';
 import { connect } from 'react-redux';
-import { Link, Redirect, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { handleModel, getVerify, handleLogin, handleLogout } from './store/actionCreator';
 import '../style/header.less';
 
@@ -106,6 +106,7 @@ class Header extends Component {
             <Icon type="shopping-cart" />&nbsp;
             <span>
               购物车
+              <i className="has-add">3</i>
             </span>
           </div>
           {
