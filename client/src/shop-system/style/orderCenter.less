@@ -1,1 +1,87 @@
 @import '~antd/dist/antd.css';
+body{
+  background-color: #f8fafc;
+}
+.c-myorder{
+  width: 100%;
+  min-height: 550px;
+  .c-list{
+    width: 70%;
+    height: 32px;
+    margin: 20px auto;
+    .c-item{
+      display: inline-block;
+      padding: 9px 20px;
+      font-size: 12px;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+    .c-title{
+      font-size: 16px;
+      color: #07111b;
+      font-weight: 700;
+      padding: 0 20px;
+    }
+    .c-black{
+      &::after{
+        content: '|';
+        height: 20px;
+        width: 1px;
+        color: #d9dde1;
+      }
+    }
+    .c-focus{
+      background-color: #4d555d;
+      color:white;
+    }
+  }
+  .c-desc{
+    width: 70%;
+    height: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px 2px rgba(0,0,0,.1);
+    background-color: #fff;
+    .order-list{
+      font-size: 12px;
+      span{
+        margin:0 15px;
+      }
+      .order-title{
+        padding: 25px;
+        border-bottom: 1px solid #b7bbbf;
+        .order-icon{
+          font-size: 16px;
+          color: #f01414;
+        }
+        .order-id{
+          font-weight: 700;
+          box-sizing: border-box;
+          color: #4d555d;
+        }
+        .order-create-time{
+          font-weight: 500;
+          color: #93999f;
+        }
+      }
+      .c-table{
+        .course-img{
+          width: 160px;
+          height: 90px;
+          display:inline-block;
+          vertical-align:middle
+        }
+        .course-name{
+          font-size: 16px;
+          display: inline-block;
+          color: #07111b;
+          line-height: 24px;
+          padding-left: 20px;
+          box-sizing: border-box;
+          vertical-align:top;
+        }     
+      }
+    }
+  }
+}
