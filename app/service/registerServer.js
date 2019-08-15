@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-24 09:34:32
  * @Last Modified by: 
- * @Last Modified time: 2019-08-12 18:45:23
+ * @Last Modified time: 2019-08-15 14:57:36
  */
 'use strict';
 
@@ -15,6 +15,7 @@ class RegisterServerService extends Service {
     const result = await this.app.mysql.get('user',{ 'user_name':userName });
     return result;
   }
+
   // 生成验证码
   async verify(flag) {
     const captcha = svgCaptcha.create({
@@ -71,7 +72,7 @@ class RegisterServerService extends Service {
     if(userInfor.code){
       let code = userInfor.code;
       if(login_code===code){
-        const userResult = await this.app.mysql.get('user',{user_name,psd,'flag':0});
+        const userResult = await this.app.mysql.get('user',{user_name,psd,'flag':[0,2]});
         return userResult
       }
       return false;

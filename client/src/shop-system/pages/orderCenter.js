@@ -1,5 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import { Icon, Row, Col } from 'antd';
+import {
+  getAllOrder
+} from './store/actionCreator';
 import '../style/orderCenter.less';
 class OrderCenter extends Component {
   constructor(props) {
@@ -9,7 +13,8 @@ class OrderCenter extends Component {
     }
   }
   componentDidMount() {
-    this.handleverify()
+    this.handleverify();
+    this.props.getAllOrder();
   }
   // 验证用户身份，若未登录则跳转到首页
   handleverify() {
@@ -28,7 +33,33 @@ class OrderCenter extends Component {
     }
     this.setState({'isFocus': data});
   }
+
+  // 订单操作栏返回值
+  handleAction(flag){
+    switch (flag) {
+      case 0:
+        return(
+          <Fragment>
+            <span className="pay">立即支付</span>
+            <span className="cancel-order">取消订单</span>
+          </Fragment>
+        )
+      case 1:
+        return(
+          <span className="appending">审核中...</span>
+        )
+      case 2:
+        return(
+          <span className="appending">已完成</span>
+        )
+      default:
+        break;
+    }
+  }
+
   render() {
+    const { orderList } = this.props;
+    console.log(orderList)
     return (
       <div className="c-myorder">
         <div className="c-list">
@@ -52,128 +83,70 @@ class OrderCenter extends Component {
           >已完成</span>
         </div>
         <div className="c-desc">
-          <div className="order-list">
-            <div className="order-title">
-              <span className="order-icon">
-                <Icon type="profile" theme="filled" />
-              </span>
-              <span className="order-id">
-                订单编号：123456
-              </span>
-              <span className="order-create-time">
-                2019/8/6 下午2:25:34
-              </span>
-            </div>
-            <div className="c-table">
-              <Row>
-                <Col className="col-left" span={15}>
-                  <div className="c-col-show">
-                    <img className="course-img"
-                        src="https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg"
-                        alt="img"
-                    />
-                    <div className="c-main-desc">
-                      <p className="course-name">
-                        Electron开发仿网易云音乐播放器
-                      </p>
-                      <p className="course-price">
-                        价格￥6.60
-                      </p>
-                    </div>
+          {
+            orderList.map(item=>{
+              return(
+                <div key={item.order_id} className="order-list">
+                  <div className="order-title">
+                    <span className="order-icon">
+                      <Icon type="profile" theme="filled" />
+                    </span>
+                    <span className="order-id">
+                      订单编号：{item.order_id}
+                    </span>
+                    <span className="order-create-time">
+                      {item.create_time}
+                    </span>
                   </div>
-                  <div className="c-col-show">
-                    <img className="course-img"
-                        src="https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg"
-                        alt="img"
-                    />
-                    <div className="c-main-desc">
-                      <p className="course-name">
-                        Electron开发仿网易云音乐播放器
-                      </p>
-                      <p className="course-price">
-                        价格￥6.60
-                      </p>
-                    </div>
+                  <div className="c-table">
+                    <Row>
+                      <Col className="col-left" span={15}>
+                        {item.comms.map(course => {
+                          return(
+                            <div key={course.com_id} className="c-col-show">
+                              <img className="course-img"
+                                  src={course.com_photo}
+                                  alt="img"
+                              />
+                              <div className="c-main-desc">
+                                <p className="course-name">
+                                  {course.com_name}
+                                </p>
+                                <p className="course-price">
+                                  价格￥{course.com_price}
+                                </p>
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </Col>
+                      <Col className="col-mid" span={4}>
+                        <p>原价：￥{item.total_price}</p>
+                        <p>实付：<i className="real-pay">￥{item.total_price}</i></p>
+                      </Col>
+                      <Col className="col-right" span={5}>
+                        {this.handleAction(item.ispay)}
+                      </Col>
+                    </Row>
                   </div>
-                </Col>
-                <Col className="col-mid" span={4}>
-                  <p>原价：￥ 206</p>
-                  <p>实付：<i className="real-pay">￥ 206</i></p>
-                </Col>
-                <Col className="col-right" span={5}>
-                  <span className="pay">
-                    立即支付
-                  </span>
-                  <span className="cancel-order">
-                    取消订单
-                  </span>
-                </Col>
-              </Row>
-            </div>
-          </div>
-          <div className="order-list">
-            <div className="order-title">
-              <span className="order-icon">
-                <Icon type="profile" theme="filled" />
-              </span>
-              <span className="order-id">
-                订单编号：123456
-              </span>
-              <span className="order-create-time">
-                2019/8/6 下午2:25:34
-              </span>
-            </div>
-            <div className="c-table">
-              <Row>
-                <Col className="col-left" span={15}>
-                  <div className="c-col-show">
-                    <img className="course-img"
-                        src="https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg"
-                        alt="img"
-                    />
-                    <div className="c-main-desc">
-                      <p className="course-name">
-                        Electron开发仿网易云音乐播放器
-                      </p>
-                      <p className="course-price">
-                        价格￥6.60
-                      </p>
-                    </div>
-                  </div>
-                  <div className="c-col-show">
-                    <img className="course-img"
-                        src="https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg"
-                        alt="img"
-                    />
-                    <div className="c-main-desc">
-                      <p className="course-name">
-                        Electron开发仿网易云音乐播放器
-                      </p>
-                      <p className="course-price">
-                        价格￥6.60
-                      </p>
-                    </div>
-                  </div>
-                </Col>
-                <Col className="col-mid" span={4}>
-                  <p>原价：￥ 206</p>
-                  <p>实付：<i className="real-pay">￥ 206</i></p>
-                </Col>
-                <Col className="col-right" span={5}>
-                  <span className="pay">
-                    立即支付
-                  </span>
-                  <span className="cancel-order">
-                    取消订单
-                  </span>
-                </Col>
-              </Row>
-            </div>
-          </div>
+                </div>
+              )
+            })
+          }
         </div>
       </div>
     )
   }
 }
 
-export default OrderCenter;
+const mapState = state => ({
+  orderList: state.main.orderList
+});
+
+const mapDispatch = dispatch => ({
+  getAllOrder() {
+    dispatch(getAllOrder())
+  }
+})
+
+export default connect(mapState,mapDispatch)(OrderCenter);

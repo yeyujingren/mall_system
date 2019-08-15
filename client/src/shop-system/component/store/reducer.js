@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:47:08 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-12 17:58:24
+ * @Last Modified time: 2019-08-15 14:23:41
  */
 import {
   HANDLE_MODEL_VISIBLE,
@@ -13,12 +13,12 @@ import {
 } from './actionType';
 
 /**
- * visible: 控制模态框是否显示
- * flag: 标识点击的是登录还是注册,0标识为注册，1标识为登录
- * verifyCode: 储存验证码
- * isConf: 标识验证码是否正确，默认为true
- * isLogin: 标识是否登录，默认为false
- * isRepet； 标识用户名是否重复，默认为false
+ * @param {boolean} visible: 控制模态框是否显示
+ * @param {number} flag: 标识点击的是登录还是注册,0标识为注册，1标识为登录
+ * @param {string} verifyCode: 储存验证码
+ * @param {boolean} isConf: 标识验证码是否正确，默认为true
+ * @param {boolean} isLogin: 标识是否登录，默认为false
+ * @param {boolean} isRepet； 标识用户名是否重复，默认为false
  */
 const defaultState = {
   visible: false,

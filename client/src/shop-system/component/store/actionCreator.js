@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-12 18:33:39
+ * @Last Modified time: 2019-08-15 14:39:39
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -131,10 +131,11 @@ export const login = data => {
     })
     .then(res => {
       if(res.data.code === 200){
-        const {user_name,user_photo} = res.data.data;
+        const { user_name, user_photo, user_id } = res.data.data;
         // 在localStorage中存储用户名和用户头像等信息
         localStorage.setItem('user_name',user_name);
         localStorage.setItem('user_photo',user_photo);
+        localStorage.setItem('user_id',user_id);
         message.success('欢迎回来，我们已经等候多时^.^');
         dispatch(handleModel(false,null));
         dispatch({

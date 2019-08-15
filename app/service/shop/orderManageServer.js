@@ -25,7 +25,7 @@ class OrderManageServerService extends Service {
   async getOrderList(user_id, flag) {
     let select = this.select(user_id, flag)
     const result = await this.app.mysql.query(`select 
-    orderform.order_id,user.user_name,commodity.com_price,commodity.com_name,commodity.com_photo,orderform.create_time,orderform.ispay 
+    orderform.order_id,user.user_name,commodity.com_price,commodity.com_name,commodity.com_photo,commodity.com_id,orderform.create_time,orderform.ispay
     from user join orderform on user.user_id = orderform.user_id 
     join assocform on orderform.order_id = assocform.order_id 
     join commodity on assocform.com_id = commodity.com_id where ${select}`);
@@ -47,6 +47,7 @@ class OrderManageServerService extends Service {
       com.com_name = order.com_name;
       com.com_price = order.com_price;
       com.com_photo = order.com_photo;
+      com.com_id = order.com_id;
       orderInfo.comms.push(com);
       orderInfo.total_price += order.com_price;
       orderInfo.user_name = order.user_name;

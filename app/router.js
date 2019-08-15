@@ -1,3 +1,10 @@
+/*
+ * @Author: Yifeng Tao 
+ * @Date: 2019-07-31 14:17:25 
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-15 14:17:49
+ */
+
 module.exports = app => {
   const { router, controller } = app;
   var userauthMiddleware = app.middleware.userauth({}, app);

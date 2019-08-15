@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-07 16:28:36 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 20:00:37
+ * @Last Modified time: 2019-08-15 16:13:32
  */
 
 'use strict';
@@ -43,7 +43,7 @@ class OrderManageServerService extends Service {
   // 更新订单状态
   async handleStatus(order_id){
     const result = await this.app.mysql.update('orderform',{
-      'ispay':1
+      'ispay':2
     },{
       where: {
         order_id
