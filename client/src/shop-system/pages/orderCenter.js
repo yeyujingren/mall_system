@@ -45,11 +45,11 @@ class OrderCenter extends Component {
           <span
               onClick={()=>this.handleFocus(2)}
               className={this.state.isFocus[2]?'c-focus c-item':'c-item'}
-          >待发货</span>
+          >待审核</span>
           <span
               onClick={()=>this.handleFocus(3)}
               className={this.state.isFocus[3]?'c-focus c-item':'c-item'}
-          >已支付</span>
+          >已完成</span>
         </div>
         <div className="c-desc">
           <div className="order-list">

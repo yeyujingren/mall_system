@@ -24,7 +24,10 @@ module.exports = app => {
   router.put('/upDateOrderStatus',controller.admin.orderManage.handleOrderStatus);
 
   // 订单查询以及修改
-  router.get('/getAllOrder',controller.orderManage.getOrderList)
+  router.get('/getAllOrder/:id',controller.shop.orderManage.getAllOrder);
+  router.get('/getWillPayOrder/:id',controller.shop.orderManage.getWillPayOrder);
+  router.get('/getWillSendOrder/:id',controller.shop.orderManage.getWillSendOrder);
+  router.get('/getHasFinishOrder/:id',controller.shop.orderManage.getHasFinishOrder);
 
   // 访问未知路径或者更目录时指向路径
   router.get('/admin(/?)**', controller.home.admin);

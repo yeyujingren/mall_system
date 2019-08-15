@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-07 14:26:10 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-13 14:25:27
+ * @Last Modified time: 2019-08-15 13:50:15
  */
 
 import React, { Component } from 'react';
@@ -62,19 +62,23 @@ class OrderManage extends Component {
         title: '订单状态',
         dataIndex: '',
         key: 'ispay',
-        render: (record) => (
-          record.ispay === 1
-            ? <Button disabled type="primary">已支付</Button>
-            : <Popconfirm
+        render: (record) => {
+          if(record.ispay === 2){
+            return <Button disabled style={{'backgroundColor':'#67c23a','borderColor':'#67c23a'}}>已支付</Button>
+          } else if (record.ispay === 1) {
+            return <Popconfirm
                 title="确认将订单状态修改为已支付？"
                 onConfirm={() => this.confirmPay(record.order_id)}
                 onCancel={()=>{}}
                 okText="确认"
                 cancelText="取消"
-              >
-                <Button type="danger">待支付</Button>
-              </Popconfirm>
-        )
+                   >
+              <Button type="danger">待审核</Button>
+            </Popconfirm>
+          } else {
+            return <Button disabled>未支付</Button>
+          }
+        }
       }
     ]
     return (
