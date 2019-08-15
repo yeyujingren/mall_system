@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Row, Col } from 'antd';
 import {
-  getAllOrder
+  getOrderList
 } from './store/actionCreator';
 import '../style/orderCenter.less';
 class OrderCenter extends Component {
@@ -14,7 +14,7 @@ class OrderCenter extends Component {
   }
   componentDidMount() {
     this.handleverify();
-    this.props.getAllOrder();
+    this.props.getOrderList(0);
   }
   // 验证用户身份，若未登录则跳转到首页
   handleverify() {
@@ -32,6 +32,7 @@ class OrderCenter extends Component {
       }
     }
     this.setState({'isFocus': data});
+    this.props.getOrderList(index);
   }
 
   // 订单操作栏返回值
@@ -144,8 +145,8 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  getAllOrder() {
-    dispatch(getAllOrder())
+  getOrderList(flag) {
+    dispatch(getOrderList(flag))
   }
 })
 
