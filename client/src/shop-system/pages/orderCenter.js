@@ -1,10 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Icon, Row, Col } from 'antd';
+import { Icon, Row, Col, Modal } from 'antd';
 import {
-  getOrderList
+  getOrderList,
+  reaclPay,
+  reaclCancel
 } from './store/actionCreator';
 import '../style/orderCenter.less';
+
+const { confirm } = Modal;
+
 class OrderCenter extends Component {
   constructor(props) {
     super(props);
@@ -36,13 +41,13 @@ class OrderCenter extends Component {
   }
 
   // 订单操作栏返回值
-  handleAction(flag){
+  handleAction(flag,order_id){
     switch (flag) {
       case 0:
         return(
           <Fragment>
-            <span className="pay">立即支付</span>
-            <span className="cancel-order">取消订单</span>
+            <span onClick={() => this.verifyPay(this,order_id)} className="pay">立即支付</span>
+            <span onClick={() => this.verifyCancel(this,order_id)} className="cancel-order">取消订单</span>
           </Fragment>
         )
       case 1:
@@ -60,6 +65,31 @@ class OrderCenter extends Component {
     }
   }
 
+  // 用户点击立即支付后弹出确认框，进一步确认
+  verifyPay(e,order_id) {
+    confirm({
+      title: '确认支付？',
+      content: '支付成功后等待管理员审核，通过后您将解锁商品，如果不满意可以发起退货请求。',
+      cancelText: '我再想想',
+      okText: '确认支付',
+      onOk(){
+        e.props.reaclPay(e,order_id);
+      },
+      oncancel(){}
+    })
+  }
+  verifyCancel(e, order_id){
+    confirm({
+      title: '确认取消？',
+      content: '取消后，如您想再买，需要重新拍卖，请您再次确认是否取消',
+      cancelText: '我再想想',
+      okText: '确认取消',
+      onOk(){
+        e.props.reaclCancel(e,order_id);
+      },
+      oncancel(){}
+    })
+  }
   render() {
     const { orderList } = this.props;
     console.log(orderList)
@@ -128,7 +158,7 @@ class OrderCenter extends Component {
                         <p>实付：<i className="real-pay">￥{item.total_price}</i></p>
                       </Col>
                       <Col className="col-right" span={5}>
-                        {this.handleAction(item.ispay)}
+                        {this.handleAction(item.ispay,item.order_id)}
                       </Col>
                     </Row>
                   </div>
@@ -148,7 +178,13 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getOrderList(flag) {
-    dispatch(getOrderList(flag))
+    dispatch(getOrderList(flag));
+  },
+  reaclPay(e,order_id) {
+    dispatch(reaclPay(e,order_id));
+  },
+  reaclCancel(e,order_id) {
+    dispatch(reaclCancel(e,order_id))
   }
 })
 

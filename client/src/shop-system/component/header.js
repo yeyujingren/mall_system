@@ -32,7 +32,7 @@ class Header extends Component {
         clearTimeout(this.state.perTimer);
         this.setState({'handleperShow':true})
       } else {
-        const timer = setTimeout(() => this.setState({'handleperShow':false}),500);
+        const timer = setTimeout(() => this.setState({'handleperShow':false}),300);
         this.setState({'perTimer': timer});
       }
     }
@@ -41,7 +41,7 @@ class Header extends Component {
         clearTimeout(this.state.shopTimer);
         this.setState({'handleCartShow':true})
       } else {
-        const timer = setTimeout(() => this.setState({'handleCartShow':false}),500);
+        const timer = setTimeout(() => this.setState({'handleCartShow':false}),300);
         this.setState({'shopTimer': timer});
       }
     }

@@ -19,7 +19,7 @@ class ShopCart extends Component {
   // 用户点击去结算后弹出确认框，进一步确认
   verifyPay(e) {
     confirm({
-      title: '确认提交订单，并支付？',
+      title: '已生成订单，确认支付？',
       content: '支付成功后等待管理员审核，通过后您将解锁商品，如果不满意可以发起退货请求。',
       cancelText: '我再想想',
       okText: '确认支付',

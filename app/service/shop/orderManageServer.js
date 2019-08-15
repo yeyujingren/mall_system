@@ -56,6 +56,21 @@ class OrderManageServerService extends Service {
     })
     return data;
   }
+  /**
+   * 更新订单状态
+   * @param {number} order_id: 订单id
+   * @param {number} status: 要更新的状态：1标识支付，3标识取消
+   */
+  async confirmPay(order_id,status){
+    const result = await this.app.mysql.update('orderform',{
+      'ispay': status
+    },{
+      where:{
+        order_id
+      }
+    });
+    return result;
+  }
 }
 
 module.exports = OrderManageServerService;
