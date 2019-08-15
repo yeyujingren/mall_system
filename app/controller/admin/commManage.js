@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-08-02 16:42:17
  * @Last Modified by: 
- * @Last Modified time: 2019-08-07 16:35:36
+ * @Last Modified time: 2019-08-15 11:18:27
  */
 'use strict';
 
@@ -12,7 +12,7 @@ class CommManageController extends Controller {
   // 获取商品列表
   async getCommList() {
     const {ctx} = this;
-    const result = await ctx.service.commManageServer.getList();
+    const result = await ctx.service.admin.commManageServer.getList();
     ctx.set({
       'contentType':'json'
     });
@@ -28,7 +28,7 @@ class CommManageController extends Controller {
   async addComm () {
     const {ctx} = this;
     const data = ctx.request.body;
-    const result = await ctx.service.commManageServer.addComm(data);
+    const result = await ctx.service.admin.commManageServer.addComm(data);
     // 判断是否修改成功
     const isSuc = result.affectedRows === 1;
     ctx.set({
@@ -51,7 +51,7 @@ class CommManageController extends Controller {
   async deleteComm (){
     const {ctx} = this;
     const com_id = ctx.params.id;
-    const result = await this.ctx.service.commManageServer.deleteComm(com_id);
+    const result = await this.ctx.service.admin.commManageServer.deleteComm(com_id);
     // 判断是否删除成功
     const isSuc = result.affectedRows === 1;
     ctx.set({
@@ -74,7 +74,7 @@ class CommManageController extends Controller {
     const {ctx} = this;
     const data = ctx.request.body.comm_infor;
     const com_id = ctx.request.body.com_id;
-    const result = await ctx.service.commManageServer.changeComm(data,com_id)
+    const result = await ctx.service.admin.commManageServer.changeComm(data,com_id)
     // 判断是否修改成功
     const isSuc = result.affectedRows === 1;
     ctx.set({
@@ -96,7 +96,7 @@ class CommManageController extends Controller {
   // 上传图片
   async upload () {
     const {ctx} = this;
-    const result =  await ctx.service.commManageServer.upload()
+    const result =  await ctx.service.admin.commManageServer.upload()
     ctx.set({
       'contentType':'json'
     });

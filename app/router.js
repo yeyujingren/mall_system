@@ -10,18 +10,21 @@ module.exports = app => {
   router.post('/login', controller.register.login);
   router.get('/logout',userauthMiddleware,controller.register.logout);
   // 会员管理界面路由控制
-  router.get('/getUserList',userauthMiddleware,controller.userManage.getUserList);
-  router.put('/upDateUser',userauthMiddleware,controller.userManage.handleUserStatus);
-  router.delete('/deleteUser/:id',userauthMiddleware,controller.userManage.deleteUser);
+  router.get('/getUserList',userauthMiddleware,controller.admin.userManage.getUserList);
+  router.put('/upDateUser',userauthMiddleware,controller.admin.userManage.handleUserStatus);
+  router.delete('/deleteUser/:id',userauthMiddleware,controller.admin.userManage.deleteUser);
   // 商品管理路由控制
-  router.get('/getCommList',controller.commManage.getCommList);
-  router.post('/addComm',controller.commManage.addComm);
-  router.delete('/deleteComm/:id',controller.commManage.deleteComm);
-  router.post('/upDateComm',controller.commManage.changeComm);
-  router.post('/upload',controller.commManage.upload);
+  router.get('/getCommList',controller.admin.commManage.getCommList);
+  router.post('/addComm',controller.admin.commManage.addComm);
+  router.delete('/deleteComm/:id',controller.admin.commManage.deleteComm);
+  router.post('/upDateComm',controller.admin.commManage.changeComm);
+  router.post('/upload',controller.admin.commManage.upload);
   // 订单管理路由控制
-  router.get('/getOrderList',controller.orderManage.getOrderList);
-  router.put('/upDateOrderStatus',controller.orderManage.handleOrderStatus);
+  router.get('/getOrderList',controller.admin.orderManage.getOrderList);
+  router.put('/upDateOrderStatus',controller.admin.orderManage.handleOrderStatus);
+
+  // 订单查询以及修改
+  router.get('/getAllOrder',controller.orderManage.getOrderList)
 
   // 访问未知路径或者更目录时指向路径
   router.get('/admin(/?)**', controller.home.admin);

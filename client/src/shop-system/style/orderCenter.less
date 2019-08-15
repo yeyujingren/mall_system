@@ -37,13 +37,12 @@ body{
   }
   .c-desc{
     width: 70%;
-    height: 500px;
-    margin: 0 auto;
-    overflow: hidden;
-    border-radius: 5px;
-    box-shadow: 0 2px 8px 2px rgba(0,0,0,.1);
-    background-color: #fff;
+    margin: 0 auto 50px;
     .order-list{
+      border-radius: 5px;
+      box-shadow: 0 2px 8px 2px rgba(0,0,0,.1);
+      background-color: #fff;
+      margin-top: 20px;
       font-size: 12px;
       span{
         margin:0 15px;
@@ -66,21 +65,58 @@ body{
         }
       }
       .c-table{
-        .course-img{
-          width: 160px;
-          height: 90px;
-          display:inline-block;
-          vertical-align:middle
+        padding:10px;
+        .col-left{
+          border-right: 1px solid #d9dde1;
+          .c-col-show{
+            padding: 10px;
+            .c-main-desc{
+              margin-left: 20px;
+              line-height: 40px;
+              display: inline-block;
+            }
+            .course-img{
+              width: 160px;
+              height: 90px;
+              display:inline-block;
+              vertical-align:middle
+            }
+            .course-name{
+              font-size: 16px;
+              color: #07111b;
+              line-height: 24px;
+              vertical-align:top;
+            }
+            
+          }
         }
-        .course-name{
-          font-size: 16px;
-          display: inline-block;
-          color: #07111b;
-          line-height: 24px;
-          padding-left: 20px;
-          box-sizing: border-box;
-          vertical-align:top;
-        }     
+        .col-mid{
+          padding: 20px;
+          line-height: 30px;
+
+          border-right: 1px solid #d9dde1;
+          .real-pay{
+            font-size: 16px;
+            color: #f01414;
+          }
+        }
+        .col-right{
+          margin-top: 20px;
+          .pay{
+            display: inline-block;
+            padding: 11px 32px;
+            border-radius: 18px;
+            font-size: 14px;
+            cursor: pointer;
+            color: white;
+            background-color: rgba(240,20,20,0.8);
+          }
+          .cancel-order{
+            display: inline-block;
+            padding: 11px 32px;
+            cursor: pointer;
+          }
+        }
       }
     }
   }

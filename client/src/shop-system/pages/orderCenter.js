@@ -66,31 +66,41 @@ class OrderCenter extends Component {
             </div>
             <div className="c-table">
               <Row>
-                <Col span={12}>
-                  <div>
+                <Col className="col-left" span={15}>
+                  <div className="c-col-show">
                     <img className="course-img"
                         src="https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg"
                         alt="img"
                     />
-                    <p className="course-name">
-                      Electron开发仿网易云音乐播放器
-                    </p>
+                    <div className="c-main-desc">
+                      <p className="course-name">
+                        Electron开发仿网易云音乐播放器
+                      </p>
+                      <p className="course-price">
+                        价格￥6.60
+                      </p>
+                    </div>
                   </div>
-                  <div>
+                  <div className="c-col-show">
                     <img className="course-img"
                         src="https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg"
                         alt="img"
                     />
-                    <p className="course-name">
-                      Electron开发仿网易云音乐播放器
-                    </p>
+                    <div className="c-main-desc">
+                      <p className="course-name">
+                        Electron开发仿网易云音乐播放器
+                      </p>
+                      <p className="course-price">
+                        价格￥6.60
+                      </p>
+                    </div>
                   </div>
                 </Col>
-                <Col span={6}>
-                  原价：￥ 206
-                  实付：￥ 206
+                <Col className="col-mid" span={4}>
+                  <p>原价：￥ 206</p>
+                  <p>实付：<i className="real-pay">￥ 206</i></p>
                 </Col>
-                <Col span={6}>
+                <Col className="col-right" span={5}>
                   <span className="pay">
                     立即支付
                   </span>
@@ -99,22 +109,65 @@ class OrderCenter extends Component {
                   </span>
                 </Col>
               </Row>
-              {/* <div className="c-table-left">
-                <ul>
-                  <li className="t-item">
-                    <i></i>
-                  </li>
-                  <li className="t-item">
-
-                  </li>
-                </ul>
-              </div>
-              <div className="c-table-mid">
-                
-              </div>
-              <div className="c-table-right">
-                
-              </div> */}
+            </div>
+          </div>
+          <div className="order-list">
+            <div className="order-title">
+              <span className="order-icon">
+                <Icon type="profile" theme="filled" />
+              </span>
+              <span className="order-id">
+                订单编号：123456
+              </span>
+              <span className="order-create-time">
+                2019/8/6 下午2:25:34
+              </span>
+            </div>
+            <div className="c-table">
+              <Row>
+                <Col className="col-left" span={15}>
+                  <div className="c-col-show">
+                    <img className="course-img"
+                        src="https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg"
+                        alt="img"
+                    />
+                    <div className="c-main-desc">
+                      <p className="course-name">
+                        Electron开发仿网易云音乐播放器
+                      </p>
+                      <p className="course-price">
+                        价格￥6.60
+                      </p>
+                    </div>
+                  </div>
+                  <div className="c-col-show">
+                    <img className="course-img"
+                        src="https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg"
+                        alt="img"
+                    />
+                    <div className="c-main-desc">
+                      <p className="course-name">
+                        Electron开发仿网易云音乐播放器
+                      </p>
+                      <p className="course-price">
+                        价格￥6.60
+                      </p>
+                    </div>
+                  </div>
+                </Col>
+                <Col className="col-mid" span={4}>
+                  <p>原价：￥ 206</p>
+                  <p>实付：<i className="real-pay">￥ 206</i></p>
+                </Col>
+                <Col className="col-right" span={5}>
+                  <span className="pay">
+                    立即支付
+                  </span>
+                  <span className="cancel-order">
+                    取消订单
+                  </span>
+                </Col>
+              </Row>
             </div>
           </div>
         </div>

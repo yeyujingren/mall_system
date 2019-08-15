@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
  * @Last Modified by: 
- * @Last Modified time: 2019-08-08 09:53:49
+ * @Last Modified time: 2019-08-15 11:19:25
  */
 
 'use strict';
@@ -14,7 +14,7 @@ class UserManageController extends Controller {
   async getUserList() {
     const {ctx} = this;
     // 获取server中处理所得到的结果
-    const result = await ctx.service.userManagerServer.getList();
+    const result = await ctx.service.admin.userManagerServer.getList();
     ctx.set({
       'contentType': 'json'
     });
@@ -31,7 +31,7 @@ class UserManageController extends Controller {
     const {ctx} = this;
     let user_id = ctx.request.body.user_id;
     let user_infor = ctx.request.body.user_infor;
-    const result = await ctx.service.userManagerServer.handleStatus(user_id,user_infor);
+    const result = await ctx.service.admin.userManagerServer.handleStatus(user_id,user_infor);
     // 判断是否修改成功
     const isSuc = result.affectedRows === 1;
     ctx.set({
@@ -55,7 +55,7 @@ class UserManageController extends Controller {
   async deleteUser() {
     const {ctx} = this;
     let user_id = ctx.params.id;
-    const result = await ctx.service.userManagerServer.deleteUser(user_id);
+    const result = await ctx.service.admin.userManagerServer.deleteUser(user_id);
     // 判断是否修改成功
     const isSuc = result.affectedRows === 1;
     ctx.set({
