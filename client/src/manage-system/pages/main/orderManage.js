@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-07 14:26:10 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-15 13:50:15
+ * @Last Modified time: 2019-08-15 17:12:13
  */
 
 import React, { Component } from 'react';
@@ -63,20 +63,31 @@ class OrderManage extends Component {
         dataIndex: '',
         key: 'ispay',
         render: (record) => {
-          if(record.ispay === 2){
-            return <Button disabled style={{'backgroundColor':'#67c23a','borderColor':'#67c23a'}}>已支付</Button>
-          } else if (record.ispay === 1) {
-            return <Popconfirm
-                title="确认将订单状态修改为已支付？"
-                onConfirm={() => this.confirmPay(record.order_id)}
-                onCancel={()=>{}}
-                okText="确认"
-                cancelText="取消"
-                   >
-              <Button type="danger">待审核</Button>
-            </Popconfirm>
-          } else {
-            return <Button disabled>未支付</Button>
+          switch (record.ispay) {
+            case 0:
+              return(
+                <Button disabled style={{'backgroundColor':'rgba(230, 162, 60,0.3)','borderColor':'rgba(230, 162, 61,0.3)'}}>未支付</Button>
+              );
+            case 1:
+              return(
+                <Popconfirm
+                    title="确认将订单状态修改为已支付？"
+                    onConfirm={() => this.confirmPay(record.order_id)}
+                    onCancel={()=>{}}
+                    okText="确认"
+                    cancelText="取消"
+                >
+                  <Button type="danger">待审核</Button>
+                </Popconfirm>
+              )
+            case 2:
+              return (
+                <Button disabled style={{'backgroundColor':'rgba(103, 194, 58,0.3)','borderColor':'rgba(103, 194, 58,0.3)'}}>已支付</Button>
+              )
+            default:
+              return(
+                <Button disabled>已取消</Button>
+              )
           }
         }
       }

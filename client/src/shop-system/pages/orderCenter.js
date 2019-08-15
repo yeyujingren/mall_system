@@ -54,7 +54,9 @@ class OrderCenter extends Component {
           <span className="appending">已完成</span>
         )
       default:
-        break;
+        return(
+          <span className="appending">已取消</span>
+        )
     }
   }
 

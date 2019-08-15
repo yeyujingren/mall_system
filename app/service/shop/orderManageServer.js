@@ -12,7 +12,7 @@ class OrderManageServerService extends Service {
       case 2:
         return `user.user_id=${user_id} and orderform.ispay=1`;
       case 3:
-        return `user.user_id=${user_id} and orderform.ispay=2`;  
+        return `user.user_id=${user_id} and orderform.ispay in (2,3)`;
       default:
         break;
     }
