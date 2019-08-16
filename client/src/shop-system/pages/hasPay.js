@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { Timeline, message } from 'antd';
+import { connect } from 'react-redux';
+import { getHasPayList } from './store/actionCreator';
 import '../style/hasPay.less';
 class HasPay extends Component {
+  componentDidMount(){
+    this.hasPayList();
+  }
+  // 获取已购课程列表
+  hasPayList() {
+    this.props.getHasPayList();
+  }
   render() {
     return (
       <div className="hp-myorder">
@@ -65,4 +74,15 @@ class HasPay extends Component {
   }
 }
 
-export default HasPay;
+const mapState = state => ({
+
+});
+
+const mapDispatch = dispatch => ({
+  getHasPayList() {
+    const user_id = localStorage.getItem('user_id');
+    dispatch(getHasPayList(user_id));
+  }
+})
+
+export default connect(mapState,mapDispatch)(HasPay);

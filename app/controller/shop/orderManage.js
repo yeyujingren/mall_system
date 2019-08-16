@@ -76,6 +76,19 @@ class OrderManageController extends Controller {
       }
     }
   }
+
+  // 已购课程获取
+  async getHasPayCourse() {
+    const { ctx } = this;
+    const user_id = ctx.params.id;
+    const result = await ctx.service.shop.orderManageServer.getOrderList(user_id,4);
+    ctx.body = {
+      'code': 200,
+      'message': '数据获取成功！',
+      'len': result.length,
+      result
+    }
+  }
 }
 
 module.exports = OrderManageController;

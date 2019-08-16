@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-15 20:01:11
+ * @Last Modified time: 2019-08-16 13:36:05
  */
 import axios from 'axios';
 import { GET_ORDER_LIST } from './actionType';
@@ -90,5 +90,12 @@ export const reaclCancel = (_this,order_id) => {
         }
       })
       .catch(()=>message.error('取消失败，请检查您的网络是否连接！'))
+  }
+}
+
+// 获取用户已购课程列表
+export const getHasPayList = user_id => {
+  return (dispatch) => {
+    axios.get('/')
   }
 }

@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 14:17:25 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-16 09:18:01
+ * @Last Modified time: 2019-08-16 13:37:41
  */
 
 module.exports = app => {
@@ -36,6 +36,9 @@ module.exports = app => {
   router.get('/getWillSendOrder/:id',controller.shop.orderManage.getWillSendOrder);
   router.get('/getHasFinishOrder/:id',controller.shop.orderManage.getHasFinishOrder);
   router.put('/confirmPay',controller.shop.orderManage.confirmPay);
+
+  // 已购上屏数据接口
+  router.get('/getHasPayCourse/:id',controller.shop.orderManage.getHasPayCourse);
 
   // 访问未知路径或者更目录时指向路径
   router.get('/admin(/?)**', controller.home.admin);

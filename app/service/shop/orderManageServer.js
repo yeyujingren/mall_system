@@ -14,7 +14,7 @@ class OrderManageServerService extends Service {
       case 3:
         return `user.user_id=${user_id} and orderform.ispay in (2,3)`;
       default:
-        break;
+        return `user.user_id=${user_id} and orderform.ispay=2`;
     }
   }
   /**
