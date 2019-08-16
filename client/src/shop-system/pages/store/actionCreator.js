@@ -2,10 +2,10 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-16 13:36:05
+ * @Last Modified time: 2019-08-16 13:53:51
  */
 import axios from 'axios';
-import { GET_ORDER_LIST } from './actionType';
+import { GET_ORDER_LIST, GET_HAS_PAY_COURSE } from './actionType';
 import { message } from 'antd';
 
 // 根据flag来派发不同接口
@@ -96,6 +96,14 @@ export const reaclCancel = (_this,order_id) => {
 // 获取用户已购课程列表
 export const getHasPayList = user_id => {
   return (dispatch) => {
-    axios.get('/')
+    axios.get('/getHasPayCourse/'+user_id)
+      .then(res => {
+        if(res.data.code === 200) {
+          dispatch({
+            type: GET_HAS_PAY_COURSE,
+            data: res.data.result
+          })
+        }
+      })
   }
 }

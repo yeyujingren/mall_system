@@ -12,6 +12,8 @@ class HasPay extends Component {
     this.props.getHasPayList();
   }
   render() {
+    const { courseList } = this.props;
+    console.log(courseList)
     return (
       <div className="hp-myorder">
         <div className="hp-list">
@@ -19,54 +21,37 @@ class HasPay extends Component {
         </div>
         <div className="hp-desc">
           <Timeline pending="下一门会是什么呢..." reverse={true}  className="timeline">
-            <Timeline.Item>
-              <div className="hp-col-show">
-                <img className="course-img"
-                    src="https://img.mukewang.com/549bda090001c53e06000338-240-135.jpg"
-                    alt="img"
-                />
-                <div className="hp-main-desc">
-                  <p>
-                    <span className="course-name">Ajax全面解除</span>
-                    <span className="course-type">[ Web ]</span>
-                  </p>
-                  <p>
-                    <span className="course-price">购买价格：￥123</span>
-                    <span className="course-time">所需时长： 12h</span>
-                    <span className="course-teac">授课老师：<i>难得糊涂</i></span>
-                  </p>
-                  <p>
-                    <span className="begin-start">
-                      开始学习
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </Timeline.Item>
-            <Timeline.Item>
-              <div className="hp-col-show">
-                <img className="course-img"
-                    src="https://img.mukewang.com/549bda090001c53e06000338-240-135.jpg"
-                    alt="img"
-                />
-                <div className="hp-main-desc">
-                  <p>
-                    <span className="course-name">Ajax全面解除</span>
-                    <span className="course-type">[ Web ]</span>
-                  </p>
-                  <p>
-                    <span className="course-price">购买价格：￥123</span>
-                    <span className="course-time">所需时长： 12h</span>
-                    <span className="course-teac">授课老师：<i>难得糊涂</i></span>
-                  </p>
-                  <p>
-                    <span onClick={() => {message.info('恭喜您，距离web界大佬又近了一步^.^')}} className="begin-start">
-                      开始学习
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </Timeline.Item>
+            {
+              courseList.map( item => {
+                return item.comms.map( course => {
+                  return(
+                    <Timeline.Item key={course.com_id}>
+                      <div className="hp-col-show">
+                        <img className="course-img"
+                            src={course.com_photo}
+                            alt="img"
+                        />
+                        <div className="hp-main-desc">
+                          <p>
+                            <span className="course-name">{course.com_name}</span>
+                            <span className="course-type">[ {course.type} ]</span>
+                          </p>
+                          <p>
+                            <span className="course-price">购买价格：￥{course.com_price}</span>
+                            <span className="course-time">所需时长： {course.course_time}h</span>
+                            <span className="course-teac">授课老师：<i>{course.teacher}</i></span>
+                          </p>
+                          <p>
+                            <span onClick={() =>message.info(`恭喜您，距离成为${course.type}界大佬又近了一步^.^`)} className="begin-start">
+                              开始学习
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </Timeline.Item>)
+                })
+              })
+            }
           </Timeline>
         </div>
       </div>
@@ -75,7 +60,7 @@ class HasPay extends Component {
 }
 
 const mapState = state => ({
-
+  courseList: state.main.courseList
 });
 
 const mapDispatch = dispatch => ({
