@@ -85,8 +85,8 @@ class Header extends Component {
           <div className="list">
             <ul className="header-list">
               <li>课程<sup>HOT</sup></li>
-              <li>专栏</li>
-              <li>笔记</li>
+              <li onClick={() => {message.info('暂未开放，敬请期待！')}}>专栏</li>
+              <li onClick={() => {message.info('暂未开放，敬请期待！')}}>笔记</li>
             </ul>
           </div>
           <div className="search">
@@ -95,7 +95,7 @@ class Header extends Component {
           </div>
         </div>
         <div className="right">
-          <div className="download">
+          <div onClick={() => {message.info('攻城狮正在努力开发中，请期待！')}} className="download">
             下载APP
           </div>
           <div
@@ -184,12 +184,16 @@ class Header extends Component {
                 </div>
                 <div className="middle">
                   <ul className="list">
-                    <li className="item">
-                      <Icon type="bank" theme="filled" />已购课程
-                    </li>
-                    <li className="item">
-                      <Icon type="database" theme="filled" />订单中心
-                    </li>
+                    <Link className="link" to="haspay">
+                      <li className="item">
+                        <Icon type="bank" theme="filled" />已购课程
+                      </li>
+                    </Link>
+                    <Link className="link" to="order">
+                      <li className="item">
+                        <Icon type="database" theme="filled" />订单中心
+                      </li>
+                    </Link>
                     <li className="item">
                       <Icon type="setting" theme="filled" />个人设置
                     </li>

@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 14:17:25 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-15 18:14:27
+ * @Last Modified time: 2019-08-16 09:18:01
  */
 
 module.exports = app => {
@@ -42,13 +42,3 @@ module.exports = app => {
   router.get('/(/?)**', controller.home.shop);
 }
 
-// return new Promise((resolve, reject) => {
-//   setTimeout(() => resolve(),1000);
-// })
-//   .then(() => {
-//     if(Math.random()>0.5){
-//       e.props.history.push('/success');
-//     } else {
-//       e.props.history.push('/fail');
-//     }
-//   })

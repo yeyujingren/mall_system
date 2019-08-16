@@ -1,0 +1,84 @@
+@import '~antd/dist/antd.css';
+.hp-myorder{
+  width: 100%;
+  .hp-list{
+    width: 70%;
+    height: 32px;
+    margin: 20px auto;
+    .hp-title{
+      display: inline-block;
+      padding: 9px 20px;
+      font-size: 12px;
+      border-radius: 15px;
+      font-size: 16px;
+      color: #07111b;
+      font-weight: 700;
+      padding: 0 20px;
+    }
+  }
+  .hp-desc{
+    width: 70%;
+    min-height: 550px;
+    margin: 0 auto 50px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px 2px rgba(0,0,0,.1);
+    background-color: #fff;
+    margin-top: 20px;
+    font-size: 12px;
+    span{
+      margin:0 15px;
+    }
+    .timeline{
+      margin: 20px 0 0 20px;
+      .hp-col-show{
+        padding: 10px;
+        .hp-main-desc{
+          margin-left: 20px;
+          line-height: 40px;
+          display: inline-block;
+        }
+        .course-img{
+          width: 200px;
+          height: 116px;
+          display:inline-block;
+          vertical-align:top;
+        }
+        .course-name{
+          font-size: 20px;
+          vertical-align:top;
+          color: #1c1f21;
+          font-weight: 700;
+          cursor: pointer;
+          &:hover{
+            color: #ec1500;
+          }
+        }
+        .course-type, .course-time, .course-teac{
+          font-size: 14px;
+          color: #787d82;
+        }
+        .course-price{
+          font-size: 14px;
+          color: #ec1500;
+        }
+        .course-teac>i:hover{
+          color: #ec1500;
+          cursor: pointer;
+        }
+        .begin-start{
+          font-size: 14px;
+          padding: 8px 25px;
+          box-sizing: border-box;
+          border-radius: 17px;
+          color: white;
+          background-color: rgba(240,20,20,.6);
+          cursor: pointer;
+          &:hover{
+            background-color: #f01414;
+          }
+        }
+      }
+    }   
+  }
+}

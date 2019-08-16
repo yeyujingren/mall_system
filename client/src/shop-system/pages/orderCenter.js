@@ -92,7 +92,6 @@ class OrderCenter extends Component {
   }
   render() {
     const { orderList } = this.props;
-    console.log(orderList)
     return (
       <div className="c-myorder">
         <div className="c-list">
