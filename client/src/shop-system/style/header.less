@@ -132,6 +132,7 @@
         border-bottom: 1px solid #ccc;
         text-align: center;
         line-height: 40px;
+        overflow: scroll;
         .icon{
           margin-top: 50px;
           font-size: 80px;
@@ -144,6 +145,45 @@
         .adver{
           color: #9199a1;
           font-size: 12px;
+        }
+        .cart-item{
+          padding: 8px 0 0 5px;;
+          &:hover{
+            background-color: #F8FAFC;
+          }
+          &:hover .item-desc>.item-footer>.item-action{
+            display: block;
+          }
+          .item-img{
+            width: 100px;
+            height: 56px;
+          }
+          .item-desc{
+            text-align: left;
+            p{
+              line-height: 18px;
+              padding: 0 10px;
+              box-sizing: border-box;
+            }
+            .item-title{
+              color: #07111b;
+              font-size: 12px;
+            }
+            .item-footer{
+              margin-top: 5px;
+              font-size: 12px;
+              color: rgba(240,20,20,.6);
+              .item-prise{
+                float: left;
+              }
+              .item-action{
+                cursor: pointer;
+                display: none;
+                float: right;
+              }
+            }
+          }
+          
         }
       }
       .cart-bottom{
@@ -158,7 +198,6 @@
           width: 96px;
           height: 32px;
           float: right;
-          display: inline-block;
           font-size: 12px;
           box-sizing: border-box;
           padding: 8px 16px;

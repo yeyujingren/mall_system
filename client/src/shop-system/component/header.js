@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Icon, Button, message } from 'antd';
+import { Icon, Button, message, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { handleModel, getVerify, handleLogin, handleLogout } from './store/actionCreator';
@@ -45,7 +45,13 @@ class Header extends Component {
         this.setState({'shopTimer': timer});
       }
     }
-
+    // handleDelShow = (flag) => {
+    //   if(!flag){
+    //     this.setState({'handleDelShow':true})
+    //   } else {
+    //     this.setState({'handleDelShow':false})
+    //   }
+    // }
   // 控制模态框展示
   modelShow(flag) {
     this.props.handleModel(flag);
@@ -74,6 +80,7 @@ class Header extends Component {
     // 从localStorage中获取用户名和头像链接
     const user_name =  localStorage.getItem('user_name');
     const user_photo =  localStorage.getItem('user_photo');
+    const data = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     return(
       <header className="header">
         <div className="left">
@@ -127,9 +134,33 @@ class Header extends Component {
                 </span>
               </div>
               <div className="cart-middle">
-                <Icon className="icon" type="shopping-cart" />
+                {/* <Icon className="icon" type="shopping-cart" />
                 <p className="tit">天呐，购物车竟然空空如也</p>
-                <p className="adver">快去选购你中意的课程吧</p>
+                <p className="adver">快去选购你中意的课程吧</p> */}
+                {
+                  data.map(item => {
+                    return(
+                      <Row
+                          align="middle"
+                          className="cart-item"
+                          key = {item}
+                      >
+                        <Col span={8}>
+                          <img className="item-img" src="https://img4.mukewang.com/szimg/5afb8aa900014cc705400300.jpg" alt=""/>
+                        </Col>
+                        <Col className="item-desc" span={16}>
+                          <p className="item-title">
+                            Spring Boot仿抖音短视频小程序开发 全栈式开发项目
+                          </p>
+                          <p className="item-footer">
+                            <span className="item-prise">￥344</span>
+                            <span className="item-action">删除</span>
+                          </p>
+                        </Col>
+                      </Row>
+                    )
+                  })
+                }
               </div>
               <div className="cart-bottom">
                 <span onClick={() => this.handleLink('/order')} className="myorder">我的订单中心</span>
