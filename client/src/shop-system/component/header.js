@@ -2,7 +2,13 @@ import React, { Component, Fragment } from 'react';
 import { Icon, Button, message, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { handleModel, getVerify, handleLogin, handleLogout, getCartLen } from './store/actionCreator';
+import {
+  handleModel,
+  getVerify,
+  handleLogin,
+  handleLogout,
+  getMycartLen
+} from './store/actionCreator';
 import '../style/header.less';
 
 class Header extends Component {
@@ -74,7 +80,7 @@ class Header extends Component {
   }
 
   render(){
-    const {isLogin} = this.props;
+    const { isLogin, mycartLen } = this.props;
     // 从localStorage中获取用户名和头像链接
     const user_name =  localStorage.getItem('user_name');
     const user_photo =  localStorage.getItem('user_photo');
@@ -110,7 +116,7 @@ class Header extends Component {
             <Icon type="shopping-cart" />&nbsp;
             <span>
               购物车
-              <i className="has-add">3</i>
+              <i className="has-add">{mycartLen}</i>
             </span>
           </div>
           {
@@ -127,15 +133,18 @@ class Header extends Component {
                   我的购物车
                 </span>
                 <span className="hascourse">
-                  已加入0门课程
+                  已加入{mycartLen}门课程
                 </span>
               </div>
               <div className="cart-middle">
-                {/* <Icon className="icon" type="shopping-cart" />
-                <p className="tit">天呐，购物车竟然空空如也</p>
-                <p className="adver">快去选购你中意的课程吧</p> */}
                 {
-                  this.state.mycart.map(item => {
+                  !mycartLen
+                  ?<Fragment>
+                    <Icon className="icon" type="shopping-cart" />
+                    <p className="tit">天呐，购物车竟然空空如也</p>
+                    <p className="adver">快去选购你中意的课程吧</p>
+                  </Fragment>
+                  :this.state.mycart.map(item => {
                     return(
                       <Row
                           align="middle"
@@ -246,7 +255,7 @@ class Header extends Component {
 
 const mapState = state => ({
   isLogin: state.component.isLogin,
-  mycartLen: state.main.mycartLen
+  mycartLen: state.component.mycartLen
 })
 
 const mapDispatch = dispatch => ({
@@ -262,7 +271,7 @@ const mapDispatch = dispatch => ({
     dispatch(handleLogout());
   },
   getMycartLen(){
-    dispatch(getCartLen());
+    dispatch(getMycartLen());
   }
 })
 

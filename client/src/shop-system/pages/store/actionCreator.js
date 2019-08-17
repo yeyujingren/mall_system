@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-17 11:31:54
+ * @Last Modified time: 2019-08-17 13:25:19
  */
 import axios from 'axios';
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, UPDATE_MY_CART_LEN } from './actionType';
@@ -122,14 +122,4 @@ export const getHasPayList = user_id => {
         }
       })
   }
-}
-
-// 获取购物车中课程数量
-export const getCartLen = (dispatch) => {
-  const mycart = JSON.parse(localStorage.getItem('mycart'));
-  const len = mycart.length;
-  dispatch({
-    type: UPDATE_MY_CART_LEN,
-    mycartLen: len
-  })
 }

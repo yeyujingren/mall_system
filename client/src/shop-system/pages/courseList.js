@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Row, Col, message } from 'antd';
 import { getCourseList } from './store/actionCreator';
-
+import { getMycartLen } from '../component/store/actionCreator';
 class CourseList extends Component {
   componentDidMount(){
     this.props.getCourseList();
@@ -29,12 +29,13 @@ class CourseList extends Component {
 
   // 向购物车添加商品
   addToCart(com_id){
-    // 验证用户是否登录，登录成功后跳转到所到界面，若未登录，提示登录
+    // 验证用户是否登录，若未登录，提示登录
     let cookies = document.cookie.indexOf('EGG_COOK=');
     if (cookies === -1) {
       message.error('您还未登录呦！请登录再试')
     } else {
       this.pushCart(com_id);
+      this.props.getMycartLen();
     }
   }
   
@@ -83,6 +84,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getCourseList() {
     dispatch(getCourseList());
+  },
+  getMycartLen(){
+    dispatch(getMycartLen());
   }
 })
 

@@ -2,11 +2,11 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-15 14:39:39
+ * @Last Modified time: 2019-08-17 15:40:42
  */
 import axios from 'axios';
 import { message } from 'antd';
-import {HANDLE_MODEL_VISIBLE, GET_VERIFY_CODE, HANDLE_CODE_FLAG, HANDLE_LOGIN, USER_NAME_IS_REPET} from './actionType';
+import {HANDLE_MODEL_VISIBLE, GET_VERIFY_CODE, HANDLE_CODE_FLAG, HANDLE_LOGIN, USER_NAME_IS_REPET, UPDATE_MY_CART_LEN} from './actionType';
 
 // 登录注册模态框控制
 export const handleModel = (visible,flag) => ({
@@ -181,6 +181,18 @@ export const handleLogout = () => {
       .catch(() => {
         message('出现异常')
       })
+  }
+}
+
+// 获取购物车中课程数量
+export const getMycartLen = () => {
+  return (dispatch) => {
+    const mycart = JSON.parse(localStorage.getItem('mycart'));
+    const len = mycart?mycart.length:0;
+    dispatch({
+      type: UPDATE_MY_CART_LEN,
+      mycartLen: len
+    })
   }
 }
 
