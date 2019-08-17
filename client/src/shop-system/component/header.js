@@ -7,7 +7,9 @@ import {
   getVerify,
   handleLogin,
   handleLogout,
-  getMycartLen
+  getMycartLen,
+  delCourse,
+  getCartList
 } from './store/actionCreator';
 import '../style/header.less';
 
@@ -18,8 +20,7 @@ class Header extends Component {
       handleCartShow: false,
       handleperShow: false,
       shopTimer: null,
-      perTimer: null,
-      mycart:[]
+      perTimer: null
     }
   }
   componentDidMount() {
@@ -47,9 +48,10 @@ class Header extends Component {
   }
   handleCartDisplay =(flag)=>{
     if(!flag){
-      const data = JSON.parse(localStorage.getItem('mycart'));
+      // const data = JSON.parse(localStorage.getItem('mycart'));
+      this.props.getCartList();
       clearTimeout(this.state.shopTimer);
-      this.setState({'mycart': data});
+      // this.setState({'mycart': data});
       this.setState({'handleCartShow':true});
     } else {
       const timer = setTimeout(() => this.setState({'handleCartShow':false}),300);
@@ -79,8 +81,13 @@ class Header extends Component {
     }
   }
 
+  // 购物车中点击删除时删除相应课程
+  handleDelCourse(com_id) {
+    this.props.delCourse(com_id);
+  }
+
   render(){
-    const { isLogin, mycartLen } = this.props;
+    const { isLogin, mycartLen, cartList } = this.props;
     // 从localStorage中获取用户名和头像链接
     const user_name =  localStorage.getItem('user_name');
     const user_photo =  localStorage.getItem('user_photo');
@@ -138,13 +145,13 @@ class Header extends Component {
               </div>
               <div className="cart-middle">
                 {
-                  !mycartLen
+                  cartList.length === 0
                   ?<Fragment>
                     <Icon className="icon" type="shopping-cart" />
                     <p className="tit">天呐，购物车竟然空空如也</p>
                     <p className="adver">快去选购你中意的课程吧</p>
-                  </Fragment>
-                  :this.state.mycart.map(item => {
+                   </Fragment>
+                  :cartList.map(item => {
                     return(
                       <Row
                           align="middle"
@@ -160,7 +167,7 @@ class Header extends Component {
                           </p>
                           <p className="item-footer">
                             <span className="item-prise">￥{item.com_price}</span>
-                            <span className="item-action">删除</span>
+                            <span onClick={() => this.handleDelCourse(item.com_id)} className="item-action">删除</span>
                           </p>
                         </Col>
                       </Row>
@@ -255,7 +262,8 @@ class Header extends Component {
 
 const mapState = state => ({
   isLogin: state.component.isLogin,
-  mycartLen: state.component.mycartLen
+  mycartLen: state.component.mycartLen,
+  cartList: state.component.cartList
 })
 
 const mapDispatch = dispatch => ({
@@ -272,6 +280,12 @@ const mapDispatch = dispatch => ({
   },
   getMycartLen(){
     dispatch(getMycartLen());
+  },
+  delCourse(com_id){
+    dispatch(delCourse(com_id));
+  },
+  getCartList(){
+    dispatch(getCartList())
   }
 })
 

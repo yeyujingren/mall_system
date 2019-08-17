@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:47:08 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-17 13:26:59
+ * @Last Modified time: 2019-08-17 16:58:11
  */
 import {
   HANDLE_MODEL_VISIBLE,
@@ -10,7 +10,8 @@ import {
   HANDLE_CODE_FLAG,
   HANDLE_LOGIN,
   USER_NAME_IS_REPET,
-  UPDATE_MY_CART_LEN
+  UPDATE_MY_CART_LEN,
+  GET_CART_LIST
 } from './actionType';
 
 /**
@@ -21,6 +22,7 @@ import {
  * @param {boolean} isLogin: 标识是否登录，默认为false
  * @param {boolean} isRepet； 标识用户名是否重复，默认为false
  * @param {num} mycartLen: 加入购物车的数量
+ * @param {array} cartList: 加入购物车的课程
  */
 const defaultState = {
   visible: false,
@@ -29,7 +31,8 @@ const defaultState = {
   isConf: true,
   isLogin: false,
   isRepet: false,
-  mycartLen:0
+  mycartLen:0,
+  cartList:[]
 }
 
 export default(state = defaultState,action) => {
@@ -65,6 +68,11 @@ export default(state = defaultState,action) => {
       return {
         ...state,
         mycartLen: action.mycartLen
+      }
+    case GET_CART_LIST :
+      return{
+        ...state,
+        cartList: action.mycartList
       }
     default :
       return state

@@ -2,11 +2,19 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-17 15:40:42
+ * @Last Modified time: 2019-08-17 17:02:22
  */
 import axios from 'axios';
 import { message } from 'antd';
-import {HANDLE_MODEL_VISIBLE, GET_VERIFY_CODE, HANDLE_CODE_FLAG, HANDLE_LOGIN, USER_NAME_IS_REPET, UPDATE_MY_CART_LEN} from './actionType';
+import {
+  HANDLE_MODEL_VISIBLE,
+  GET_VERIFY_CODE,
+  HANDLE_CODE_FLAG,
+  HANDLE_LOGIN,
+  USER_NAME_IS_REPET,
+  UPDATE_MY_CART_LEN,
+  GET_CART_LIST
+} from './actionType';
 
 // 登录注册模态框控制
 export const handleModel = (visible,flag) => ({
@@ -193,6 +201,28 @@ export const getMycartLen = () => {
       type: UPDATE_MY_CART_LEN,
       mycartLen: len
     })
+  }
+}
+
+// 获取购物车中数据列表
+export const getCartList = () => {
+  return (dispatch) => {
+    const mycart = JSON.parse(localStorage.getItem('mycart'));
+    dispatch({
+      type: GET_CART_LIST,
+      mycartList: mycart
+    })
+  }
+}
+
+// 购物车点击删除后删除相应课程
+export const delCourse = (com_id) =>{
+  const mycart = JSON.parse(localStorage.getItem('mycart'));
+  return (dispatch) => {
+    mycart.splice(mycart.findIndex(item => item.com_id === com_id),1);
+    localStorage.setItem('mycart',JSON.stringify(mycart));
+    dispatch(getMycartLen());
+    dispatch(getCartList());
   }
 }
 

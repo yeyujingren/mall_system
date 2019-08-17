@@ -2,9 +2,9 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:18:01 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-17 15:53:06
+ * @Last Modified time: 2019-08-17 16:54:56
  */
-import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, UPDATE_MY_CART_LEN } from './actionType';
+import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, UPDATE_MY_CART_LEN, GET_CART_LIST } from './actionType';
 
 /**
  * @param {array} orderList: 订单数据暂存
