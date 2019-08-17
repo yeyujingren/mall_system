@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Icon, Button, message, Row, Col } from 'antd';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { handleModel, getVerify, handleLogin, handleLogout } from './store/actionCreator';
+import { handleModel, getVerify, handleLogin, handleLogout, getCartLen } from './store/actionCreator';
 import '../style/header.less';
 
 class Header extends Component {
@@ -12,46 +12,44 @@ class Header extends Component {
       handleCartShow: false,
       handleperShow: false,
       shopTimer: null,
-      perTimer: null
+      perTimer: null,
+      mycart:[]
     }
   }
   componentDidMount() {
-    // 通过判断cookie判断用户是否登录
+    this.verifyLogin();
+    this.props.getMycartLen();
+  }
+  // 通过判断cookie判断用户是否登录
+  verifyLogin() {
     let cookies = document.cookie.indexOf('EGG_COOK=');
     if(cookies !== -1){
       const isLogin = true;
       this.props.handleLogin(isLogin);
     }
-
   }
-
-    // 鼠标悬浮显示用户详情框
-    // flag用来标识在头像上滑出还是滑入：0标识滑入、1标识滑出
-    handlePersionDisplay =(flag)=>{
-      if(!flag){
-        clearTimeout(this.state.perTimer);
-        this.setState({'handleperShow':true})
-      } else {
-        const timer = setTimeout(() => this.setState({'handleperShow':false}),300);
-        this.setState({'perTimer': timer});
-      }
+  // 鼠标悬浮显示用户详情框
+  // flag用来标识在头像上滑出还是滑入：0标识滑入、1标识滑出
+  handlePersionDisplay =(flag)=>{
+    if(!flag){
+      clearTimeout(this.state.perTimer);
+      this.setState({'handleperShow':true})
+    } else {
+      const timer = setTimeout(() => this.setState({'handleperShow':false}),300);
+      this.setState({'perTimer': timer});
     }
-    handleCartDisplay =(flag)=>{
-      if(!flag){
-        clearTimeout(this.state.shopTimer);
-        this.setState({'handleCartShow':true})
-      } else {
-        const timer = setTimeout(() => this.setState({'handleCartShow':false}),300);
-        this.setState({'shopTimer': timer});
-      }
+  }
+  handleCartDisplay =(flag)=>{
+    if(!flag){
+      const data = JSON.parse(localStorage.getItem('mycart'));
+      clearTimeout(this.state.shopTimer);
+      this.setState({'mycart': data});
+      this.setState({'handleCartShow':true});
+    } else {
+      const timer = setTimeout(() => this.setState({'handleCartShow':false}),300);
+      this.setState({'shopTimer': timer});
     }
-    // handleDelShow = (flag) => {
-    //   if(!flag){
-    //     this.setState({'handleDelShow':true})
-    //   } else {
-    //     this.setState({'handleDelShow':false})
-    //   }
-    // }
+  }
   // 控制模态框展示
   modelShow(flag) {
     this.props.handleModel(flag);
@@ -80,7 +78,6 @@ class Header extends Component {
     // 从localStorage中获取用户名和头像链接
     const user_name =  localStorage.getItem('user_name');
     const user_photo =  localStorage.getItem('user_photo');
-    const data = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     return(
       <header className="header">
         <div className="left">
@@ -138,22 +135,22 @@ class Header extends Component {
                 <p className="tit">天呐，购物车竟然空空如也</p>
                 <p className="adver">快去选购你中意的课程吧</p> */}
                 {
-                  data.map(item => {
+                  this.state.mycart.map(item => {
                     return(
                       <Row
                           align="middle"
                           className="cart-item"
-                          key = {item}
+                          key={item.com_id}
                       >
                         <Col span={8}>
-                          <img className="item-img" src="https://img4.mukewang.com/szimg/5afb8aa900014cc705400300.jpg" alt=""/>
+                          <img className="item-img" src={item.com_photo} alt=""/>
                         </Col>
                         <Col className="item-desc" span={16}>
                           <p className="item-title">
-                            Spring Boot仿抖音短视频小程序开发 全栈式开发项目
+                            {item.com_name}
                           </p>
                           <p className="item-footer">
-                            <span className="item-prise">￥344</span>
+                            <span className="item-prise">￥{item.com_price}</span>
                             <span className="item-action">删除</span>
                           </p>
                         </Col>
@@ -248,7 +245,8 @@ class Header extends Component {
 }
 
 const mapState = state => ({
-  isLogin: state.component.isLogin
+  isLogin: state.component.isLogin,
+  mycartLen: state.main.mycartLen
 })
 
 const mapDispatch = dispatch => ({
@@ -262,6 +260,9 @@ const mapDispatch = dispatch => ({
   },
   handleLogout(){
     dispatch(handleLogout());
+  },
+  getMycartLen(){
+    dispatch(getCartLen());
   }
 })
 

@@ -1,9 +1,45 @@
 import React, { Component } from 'react';
-import { Icon, Row, Col } from 'antd';
+import { connect } from 'react-redux';
+import { Icon, Row, Col, message } from 'antd';
+import { getCourseList } from './store/actionCreator';
 
 class CourseList extends Component {
+  componentDidMount(){
+    this.props.getCourseList();
+  }
+
+  // 向localStorage中添加数据
+  pushCart(com_id) {
+    const data = this.props.courseList;
+    let coursesList = JSON.parse(localStorage.getItem('mycart'));
+    let course = {}
+    for(let i=0;i<data.length;i++){
+      if(data[i].com_id === com_id) {
+        course = data[i];
+        break;
+      }
+    }
+    if(!coursesList){
+      localStorage.setItem('mycart',JSON.stringify([course]));
+    } else {
+      coursesList.push(course);
+      localStorage.setItem('mycart',JSON.stringify(coursesList));
+    }
+  }
+
+  // 向购物车添加商品
+  addToCart(com_id){
+    // 验证用户是否登录，登录成功后跳转到所到界面，若未登录，提示登录
+    let cookies = document.cookie.indexOf('EGG_COOK=');
+    if (cookies === -1) {
+      message.error('您还未登录呦！请登录再试')
+    } else {
+      this.pushCart(com_id);
+    }
+  }
+  
   render() {
-    const data = [0,0,0,0]
+    const { courseList } = this.props;
     return(
       <div className="home-list">
         <header className="course-header">
@@ -12,44 +48,22 @@ class CourseList extends Component {
         <div className="course-body">
           <Row className="course-row">
             {
-              data.map(item => {
+              courseList.map(item => {
                 return(
-                  <Col key={item} className="course" span={6}>
-                    <img className="course-photo" src="https://img1.mukewang.com/szimg/5d31765d08c90cba06000338.jpg" alt=""/>
+                  <Col key={item.com_id} className="course" span={6}>
+                    <img className="course-photo" src={item.com_photo} alt=""/>
                     <p className="course-top">
-                      玩转算法系列--图论精讲 面试升值必备（Java版）
+                      {item.com_name}
                     </p>
                     <p className="course-middle">
-                      <span>web</span>
-                      <span><Icon type="user" />100</span>
-                      <span>简单</span>
+                      <span>{item.type}</span>
+                      <span><Icon type="user" /> {item.amount}</span>
+                      <span>{item.difficulty}</span>
                     </p>
                     <p className="course-bottom">
-                      <span className="money">￥200</span>
-                      <span className="add-to-cart">加入购物车</span>
-                    </p>
-                  </Col>
-                )
-              })
-            }
-          </Row>
-          <Row className="course-row">
-            {
-              data.map(item => {
-                return(
-                  <Col key={item} className="course" span={6}>
-                    <img className="course-photo" src="https://img1.mukewang.com/szimg/5d31765d08c90cba06000338.jpg" alt=""/>
-                    <p className="course-top">
-                      玩转算法系列--图论精讲 面试升值必备（Java版）
-                    </p>
-                    <p className="course-middle">
-                      <span>web</span>
-                      <span><Icon type="user" />100</span>
-                      <span>简单</span>
-                    </p>
-                    <p className="course-bottom">
-                      <span className="money">￥200</span>
-                      <span className="add-to-cart">加入购物车</span>
+                      <span className="money">￥ {item.com_price}</span>
+                      <span className="buy-now">立即购买</span>
+                      <span onClick={() => {this.addToCart(item.com_id)}} className="add-to-cart">加入购物车</span>
                     </p>
                   </Col>
                 )
@@ -62,4 +76,14 @@ class CourseList extends Component {
   }
 }
 
-export default CourseList;
+const mapState = state => ({
+  courseList: state.main.courseList
+});
+
+const mapDispatch = dispatch => ({
+  getCourseList() {
+    dispatch(getCourseList());
+  }
+})
+
+export default connect(mapState, mapDispatch)(CourseList);

@@ -106,12 +106,16 @@
     }
     .course{
       padding: 20px 0 20px 0;
+      margin-top: 50px;
       box-sizing: border-box;
       border-radius: 5px;
       overflow: hidden;
       text-align: center;
       &:hover{
         box-shadow:0px 3px 3px #c8c8c8;
+      }
+      &:hover .course-bottom>.buy-now{
+        display: inline-block;
       }
     }
     .course-photo{
@@ -155,6 +159,7 @@
         display: inline-block;
         margin-top: 8px;
       }
+
       .add-to-cart{
         margin-right: 20px;
         float: right;
@@ -162,6 +167,15 @@
         background: rgba(242, 13, 13, 0.6);
         color: white;
         border-radius: 13px;
+        cursor: pointer;
+      }
+      .buy-now{
+        display: none;
+        margin-left: 13px;
+        font-weight: 200;
+        padding: 4px;
+        border: 1px dashed #ccc;
+        border-radius: 27px;
         cursor: pointer;
       }
     }
