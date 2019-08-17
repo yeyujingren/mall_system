@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:18:01 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-17 13:26:53
+ * @Last Modified time: 2019-08-17 15:53:06
  */
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, UPDATE_MY_CART_LEN } from './actionType';
 
@@ -12,7 +12,8 @@ import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, UPDATE_MY_CART_LEN
  */
 const defaultState = {
   orderList:[],
-  courseList:[]
+  courseList:[],
+  hasPayList:[]
 }
 export default(state = defaultState,action) => {
   switch(action.type){
@@ -24,7 +25,7 @@ export default(state = defaultState,action) => {
     case GET_HAS_PAY_COURSE :
       return {
         ...state,
-        courseList: action.data
+        hasPayList: action.data
       }
     case GET_COURSE_LIST :
       return {

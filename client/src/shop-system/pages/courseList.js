@@ -22,6 +22,12 @@ class CourseList extends Component {
     if(!coursesList){
       localStorage.setItem('mycart',JSON.stringify([course]));
     } else {
+      for(let j=0;j<coursesList.length;j++){
+        if(course.com_id === coursesList[j].com_id){
+          message.info('您已经添加这门课啦，快去购物车结算吧');
+          return;
+        }
+      }
       coursesList.push(course);
       localStorage.setItem('mycart',JSON.stringify(coursesList));
     }

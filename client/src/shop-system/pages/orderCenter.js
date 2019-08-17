@@ -116,7 +116,8 @@ class OrderCenter extends Component {
         </div>
         <div className="c-desc">
           {
-            orderList.map(item=>{
+            orderList.length !== 0
+            ?orderList.map(item=>{
               return(
                 <div key={item.order_id} className="order-list">
                   <div className="order-title">
@@ -164,6 +165,7 @@ class OrderCenter extends Component {
                 </div>
               )
             })
+            : <div className="order-none">您还没有相关订单呦，去首页看看吧</div>
           }
         </div>
       </div>
