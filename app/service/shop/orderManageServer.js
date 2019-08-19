@@ -3,6 +3,31 @@
 const Service = require('egg').Service;
 
 class OrderManageServerService extends Service {
+  /**
+   * 向订单-商品关联表插入数据
+   * @param {number} orderId:订单id
+   * @param {array} data:购物车中的用户数据
+   */
+  async inserOrder(orderId,data){
+    let results = [];
+    try {
+      for(let i=0;i<data.length;i++){
+        let result = await this.ctx.app.mysql.insert('assocform',{
+          order_id:orderId,
+          com_id: data[i].com_id
+        })
+        results.push(result);
+      }
+      return results;
+    } catch (error) {
+      throw(error);
+    }
+  }
+  /**
+   * 根据不同操作进行不同的条件查询
+   * @param {number} user_id :用户id
+   * @param {number} flag : 标识订单状态操作：0标识查询该用户全部订单，1标识未支付订单，2标识待审核订单，3标识已完成订单，
+   */
   select(user_id, flag){
     switch (flag) {
       case 0:
@@ -17,6 +42,26 @@ class OrderManageServerService extends Service {
         return `user.user_id=${user_id} and orderform.ispay=2`;
     }
   }
+  /**
+   * 生成用户订单
+   * @param {object} data :用户传递的订单数据
+   */
+  async createOrder(data){
+    const user_id = data.user_id;
+    const cartList = data.cartList;
+    const time = new Date();
+    const creatTime = time.toLocaleString();
+    const orderIdObj = await this.app.mysql.insert('orderform',{
+      user_id,
+      create_time: creatTime,
+      ispay:0
+    });
+    const orderId = orderIdObj.insertId;
+    const results = await this.inserOrder(orderId,cartList);
+    return {results,orderId};
+
+  }
+
   /**
    * 查询订单信息
    * @param {number} user_id 用户id

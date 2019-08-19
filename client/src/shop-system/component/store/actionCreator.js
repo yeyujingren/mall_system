@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-19 09:41:05
+ * @Last Modified time: 2019-08-19 15:01:21
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -208,8 +208,10 @@ export const getMycartLen = () => {
 export const getCartList = () => {
   let totalPrice = 0;
   const mycart = JSON.parse(localStorage.getItem('mycart'));
-  for(let i=0;i<mycart.length;i++){
-    totalPrice += mycart[i].com_price;
+  if(mycart){
+    for(let i=0;i<mycart.length;i++){
+      totalPrice += mycart[i].com_price;
+    }
   }
   return (dispatch) => {
     dispatch({
@@ -217,6 +219,15 @@ export const getCartList = () => {
       mycartList: mycart,
       totalPrice
     })
+  }
+}
+
+// 清除localStorage,并更新购物车列表和购物车数量
+export const removeMyCart = () => {
+  return dispatch => {
+    localStorage.removeItem('mycart');
+    dispatch(getCartList());
+    dispatch(getMycartLen());
   }
 }
 

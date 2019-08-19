@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 14:17:25 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-17 09:12:18
+ * @Last Modified time: 2019-08-19 10:12:07
  */
 
 module.exports = app => {
@@ -29,6 +29,9 @@ module.exports = app => {
   // 订单管理接口
   router.get('/getOrderList',controller.admin.orderManage.getOrderList);
   router.put('/upDateOrderStatus',controller.admin.orderManage.handleOrderStatus);
+
+  // 订单生成接口
+  router.post('/createOrder',controller.shop.orderManage.createOrder);
 
   // 订单查询以及修改接口
   router.get('/getAllOrder/:id',controller.shop.orderManage.getAllOrder);

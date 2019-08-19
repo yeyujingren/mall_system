@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Table, Icon, Modal, message } from 'antd';
-import { getCartList, delCourse } from '../component/store/actionCreator';
+import axios from 'axios';
+import {
+  reaclPay
+} from './store/actionCreator';
+import { getCartList, delCourse, removeMyCart } from '../component/store/actionCreator';
 import '../style/shopCart.less';
 
 const { confirm } = Modal;
@@ -25,28 +29,35 @@ class ShopCart extends Component {
   }
 
   // 用户点击去结算后弹出确认框，进一步确认
-  verifyPay(e) {
-    confirm({
-      title: '已生成订单，确认支付？',
-      content: '支付成功后等待管理员审核，通过后您将解锁商品，如果不满意可以发起退货请求。',
-      cancelText: '我再想想',
-      okText: '确认支付',
-      onOk(){
-        return new Promise((resolve, reject) => {
-          setTimeout(() => resolve(),1000);
-        })
-          .then(() => {
-            if(Math.random()>0.5){
-              e.props.history.push('/success');
-            } else {
-              e.props.history.push('/fail');
+  verifyPay(e,cartList) {
+    // 封装请求头
+    const headers = {
+      'contentType': 'json',
+      'x-csrf-token': window._csrf
+    }
+    const user_id = localStorage.getItem('user_id');
+    axios.post('/createOrder',{user_id,cartList},{headers})
+      .then(res => {
+        if(res.data.code === 200 ) {
+          confirm({
+            title: '已生成订单，确认支付？',
+            content: '支付成功后等待管理员审核，通过后您将解锁商品，如果不满意可以发起退货请求。',
+            cancelText: '我再想想',
+            okText: '确认支付',
+            onOk(){
+              e.props.reaclPay(e,res.data.order_id);
+              e.props.comfirmPay();
+            },
+            onCancel(){
+              message.info('您的订单已存放到订单中心!');
+              e.props.cancelOrder(e);
             }
           })
-      },
-      oncancel(){
-        message.info('您的订单已存放到订单中心!');
-      }
-    })
+        } else {
+          message.error('订单生成失败，请稍后重试')
+        }
+      })
+      .catch((e) => {message.error('订单生成失败，请稍后重试');console.log(e)});
   }
   render() {
     const { cartList, totalPrice } = this.props;
@@ -107,10 +118,11 @@ class ShopCart extends Component {
               columns={columns}
               dataSource={cartList}
               pagination={false}
+              rowKey={record => record.com_id}
           />
         </div>
         {
-          cartList.length !== 0
+          cartList
           ?<div className="cart-bottom">
             <div className="settle-account">
             <span className="totle-money">
@@ -124,7 +136,7 @@ class ShopCart extends Component {
               </span>
               <span
                   className="btn-to-pay"
-                  onClick={() => this.verifyPay(this)}
+                  onClick={() => this.verifyPay(this,cartList)}
               >
                 去结算
               </span>
@@ -148,6 +160,15 @@ const mapDispatch = dispatch => ({
   },
   delCom(com_id) {
     dispatch(delCourse(com_id))
+  },
+  reaclPay(e,order_id){
+    dispatch(reaclPay(e,order_id));
+  },
+  cancelOrder(){
+    dispatch(removeMyCart());
+  },
+  comfirmPay() {
+    dispatch(removeMyCart());
   }
 })
 

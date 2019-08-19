@@ -3,6 +3,25 @@
 const Controller = require('egg').Controller;
 
 class OrderManageController extends Controller {
+  // 订单生成
+  async createOrder() {
+    const { ctx } = this;
+    const data = ctx.request.body;
+    const result = await ctx.service.shop.orderManageServer.createOrder(data);
+    if(result.results.length === data.cartList.length){
+      ctx.body = {
+        'code': 200,
+        'message': '订单生成成功！',
+        'order_id':result.orderId
+      }
+    } else {
+      ctx.body = {
+        'code': 400,
+        'message': '订单生成失败，请重试！'
+      }
+    }
+  }
+
   // 获取所有订单
   async getAllOrder() {
     const { ctx } = this;

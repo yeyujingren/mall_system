@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Icon, Row, Col, Modal } from 'antd';
 import {
@@ -113,6 +114,9 @@ class OrderCenter extends Component {
               onClick={()=>this.handleFocus(3)}
               className={this.state.isFocus[3]?'c-focus c-item':'c-item'}
           >已完成</span>
+          <Link to="/cart" className="to-mycart">
+            去购物车
+          </Link>
         </div>
         <div className="c-desc">
           {

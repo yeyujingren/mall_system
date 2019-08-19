@@ -2,10 +2,10 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-17 13:25:19
+ * @Last Modified time: 2019-08-19 14:50:31
  */
 import axios from 'axios';
-import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, UPDATE_MY_CART_LEN } from './actionType';
+import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST } from './actionType';
 import { message } from 'antd';
 
 // 根据flag来派发不同接口
@@ -63,6 +63,7 @@ export const getOrderList = (flag) => {
 
 // 确认支付
 export const reaclPay = (_this,order_id) => {
+  console.log(order_id);
   return (dispatch) => {
     // 封装body
     const orderInfor = {
