@@ -16,6 +16,13 @@ class CourseList extends Component {
 
   // 用户点击去结算后弹出确认框，进一步确认
   buyCourseNow(e,course) {
+    let coursesList = JSON.parse(localStorage.getItem('mycart'));
+    for(let j=0;j<coursesList.length;j++){
+      if(course.com_id === coursesList[j].com_id){
+        message.info('您已经添加这门课到购物车啦，去购物车一起结算吧');
+        return;
+      }
+    }
     let cartList = [];
     // 封装请求头
     const headers = {
@@ -134,7 +141,7 @@ const mapDispatch = dispatch => ({
   },
   reaclPay(e,order_id,user_id,totalPrice){
     dispatch(reaclPay(e,order_id,user_id,totalPrice));
-  },
+  }
 })
 
 export default connect(mapState, mapDispatch)(withRouter(CourseList));

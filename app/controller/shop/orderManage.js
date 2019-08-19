@@ -78,7 +78,7 @@ class OrderManageController extends Controller {
     const { ctx } = this;
     const data = ctx.request.body;
     const result = await ctx.service.shop.orderManageServer.confirmPay(data);
-    const isSuc = result.result.affectedRows === 1 && result.integral && result.vip_level;
+    const isSuc = result.integral?result.result.affectedRows === 1 && result.integral && result.vip_level:result.affectedRows === 1;
     ctx.set({
       'contentType': 'json'
     });
