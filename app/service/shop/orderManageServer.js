@@ -4,6 +4,27 @@ const Service = require('egg').Service;
 
 class OrderManageServerService extends Service {
   /**
+   * 根据用户金额修改用户等级，积分
+   * @param {number} user_id : 用户id
+   * @param {number} totalPrice : 用户购买金额
+   */
+  async upDateUserLevel(user_id,totalPrice){
+    let level = 0;
+    let scoreObj = await this.ctx.app.mysql.select('user',{
+      where:{user_id},
+      columns: 'integral'
+    })
+    let score = scoreObj[0].integral;
+    score += totalPrice;
+    let sum = score;
+    for(let i=0;i*100<=sum;i++){
+      sum -= i*100;
+      level = i;
+    }
+    level += 1;
+    return {level,score};
+  }
+  /**
    * 向订单-商品关联表插入数据
    * @param {number} orderId:订单id
    * @param {array} data:购物车中的用户数据
@@ -108,8 +129,12 @@ class OrderManageServerService extends Service {
    * 更新订单状态
    * @param {number} order_id: 订单id
    * @param {number} status: 要更新的状态：1标识支付，3标识取消
+   * @param {number} user_id: 用户id
+   * @param {number} totalPrice: 购买总金额
    */
-  async confirmPay(order_id,status){
+  async confirmPay(data){
+    const order_id = data.order_id;
+    const status = data.status;
     const result = await this.app.mysql.update('orderform',{
       'ispay': status
     },{
@@ -117,6 +142,17 @@ class OrderManageServerService extends Service {
         order_id
       }
     });
+    if(data.user_id && data.totalPrice){
+      const rs = await this.upDateUserLevel(data.user_id,data.totalPrice);
+      await this.app.mysql.update('user',{
+        'vip_level': rs.level,
+        'integral': rs.score
+      },{
+        where:{
+          user_id:data.user_id
+        }
+      })
+    }
     return result;
   }
 }

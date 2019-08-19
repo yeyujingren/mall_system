@@ -91,6 +91,8 @@ class Header extends Component {
     // 从localStorage中获取用户名和头像链接
     const user_name =  localStorage.getItem('user_name');
     const user_photo =  localStorage.getItem('user_photo');
+    const vip_level =  localStorage.getItem('vip_level');
+    const integral =  localStorage.getItem('integral');
     return(
       <header className="header">
         <div className="left">
@@ -220,10 +222,10 @@ class Header extends Component {
                     </div>
                     <div className="core">
                       <span>
-                        积分:<b>100</b>
+                        积分:<b>{integral}</b>
                       </span>
                       <span>
-                        等级:<b>2</b>
+                        等级:<b>{vip_level}</b>
                       </span>
                     </div>
                   </div>

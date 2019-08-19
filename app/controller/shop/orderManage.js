@@ -76,9 +76,10 @@ class OrderManageController extends Controller {
   // 确认支付订单
   async confirmPay() {
     const { ctx } = this;
-    const order_id = ctx.request.body.order_id;
-    const status = ctx.request.body.status;
-    const result = await ctx.service.shop.orderManageServer.confirmPay(order_id, status);
+    const data = ctx.request.body;
+    // const order_id = ctx.request.body.order_id;
+    // const status = ctx.request.body.status;
+    const result = await ctx.service.shop.orderManageServer.confirmPay(data);
     const isSuc = result.affectedRows === 1;
     ctx.set({
       'contentType': 'json'

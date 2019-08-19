@@ -10,7 +10,7 @@ import {
 import '../style/orderCenter.less';
 
 const { confirm } = Modal;
-
+const user_id = localStorage.getItem('user_id');
 class OrderCenter extends Component {
   constructor(props) {
     super(props);
@@ -42,12 +42,12 @@ class OrderCenter extends Component {
   }
 
   // 订单操作栏返回值
-  handleAction(flag,order_id){
+  handleAction(flag,order_id,total_price){
     switch (flag) {
       case 0:
         return(
           <Fragment>
-            <span onClick={() => this.verifyPay(this,order_id)} className="pay">立即支付</span>
+            <span onClick={() => this.verifyPay(this,order_id,total_price)} className="pay">立即支付</span>
             <span onClick={() => this.verifyCancel(this,order_id)} className="cancel-order">取消订单</span>
           </Fragment>
         )
@@ -67,14 +67,14 @@ class OrderCenter extends Component {
   }
 
   // 用户点击立即支付后弹出确认框，进一步确认
-  verifyPay(e,order_id) {
+  verifyPay(e,order_id,total_price) {
     confirm({
       title: '确认支付？',
       content: '支付成功后等待管理员审核，通过后您将解锁商品，如果不满意可以发起退货请求。',
       cancelText: '我再想想',
       okText: '确认支付',
       onOk(){
-        e.props.reaclPay(e,order_id);
+        e.props.reaclPay(e,order_id,user_id,total_price);
       },
       oncancel(){}
     })
@@ -162,7 +162,7 @@ class OrderCenter extends Component {
                         <p>实付：<i className="real-pay">￥{item.total_price}</i></p>
                       </Col>
                       <Col className="col-right" span={5}>
-                        {this.handleAction(item.ispay,item.order_id)}
+                        {this.handleAction(item.ispay,item.order_id,item.total_price)}
                       </Col>
                     </Row>
                   </div>
@@ -185,8 +185,8 @@ const mapDispatch = dispatch => ({
   getOrderList(flag) {
     dispatch(getOrderList(flag));
   },
-  reaclPay(e,order_id) {
-    dispatch(reaclPay(e,order_id));
+  reaclPay(e,order_id,user_id,total_price) {
+    dispatch(reaclPay(e,order_id,user_id,total_price));
   },
   reaclCancel(e,order_id) {
     dispatch(reaclCancel(e,order_id))

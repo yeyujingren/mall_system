@@ -29,7 +29,7 @@ class ShopCart extends Component {
   }
 
   // 用户点击去结算后弹出确认框，进一步确认
-  verifyPay(e,cartList) {
+  verifyPay(e,cartList,totalPrice) {
     // 封装请求头
     const headers = {
       'contentType': 'json',
@@ -45,7 +45,7 @@ class ShopCart extends Component {
             cancelText: '我再想想',
             okText: '确认支付',
             onOk(){
-              e.props.reaclPay(e,res.data.order_id);
+              e.props.reaclPay(e,res.data.order_id,user_id,totalPrice);
               e.props.comfirmPay();
             },
             onCancel(){
@@ -136,7 +136,7 @@ class ShopCart extends Component {
               </span>
               <span
                   className="btn-to-pay"
-                  onClick={() => this.verifyPay(this,cartList)}
+                  onClick={() => this.verifyPay(this,cartList,totalPrice)}
               >
                 去结算
               </span>
@@ -161,8 +161,8 @@ const mapDispatch = dispatch => ({
   delCom(com_id) {
     dispatch(delCourse(com_id))
   },
-  reaclPay(e,order_id){
-    dispatch(reaclPay(e,order_id));
+  reaclPay(e,order_id,user_id,totalPrice){
+    dispatch(reaclPay(e,order_id,user_id,totalPrice));
   },
   cancelOrder(){
     dispatch(removeMyCart());
