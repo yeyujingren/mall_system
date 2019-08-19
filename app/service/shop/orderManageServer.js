@@ -144,7 +144,7 @@ class OrderManageServerService extends Service {
     });
     if(data.user_id && data.totalPrice){
       const rs = await this.upDateUserLevel(data.user_id,data.totalPrice);
-      await this.app.mysql.update('user',{
+      const update = await this.app.mysql.update('user',{
         'vip_level': rs.level,
         'integral': rs.score
       },{
@@ -152,6 +152,13 @@ class OrderManageServerService extends Service {
           user_id:data.user_id
         }
       })
+      if(update.affectedRows === 1) {
+        return {
+          vip_level: rs.level,
+          integral: rs.score,
+          result
+        };
+      }
     }
     return result;
   }

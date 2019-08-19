@@ -189,7 +189,7 @@ const mapDispatch = dispatch => ({
     dispatch(reaclPay(e,order_id,user_id,total_price));
   },
   reaclCancel(e,order_id) {
-    dispatch(reaclCancel(e,order_id))
+    dispatch(reaclCancel(e,order_id));
   }
 })
 

@@ -77,17 +77,19 @@ class OrderManageController extends Controller {
   async confirmPay() {
     const { ctx } = this;
     const data = ctx.request.body;
-    // const order_id = ctx.request.body.order_id;
-    // const status = ctx.request.body.status;
     const result = await ctx.service.shop.orderManageServer.confirmPay(data);
-    const isSuc = result.affectedRows === 1;
+    const isSuc = result.result.affectedRows === 1 && result.integral && result.vip_level;
     ctx.set({
       'contentType': 'json'
     });
     if (isSuc) {
       ctx.body = {
         'code': 200,
-        'message': '订单已支付！'
+        'message': '订单已支付！',
+        data:{
+          integral:result.integral,
+          vip_level:result.vip_level
+        }
       }
     } else {
       ctx.body = {

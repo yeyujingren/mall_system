@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-19 17:09:07
+ * @Last Modified time: 2019-08-19 17:32:07
  */
 import axios from 'axios';
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST } from './actionType';
@@ -79,6 +79,8 @@ export const reaclPay = (_this,order_id,user_id,totalPrice) => {
     axios.put('/confirmPay',orderInfor,{headers})
       .then( res => {
         if(res.data.code === 200 ){
+          localStorage.setItem('integral',res.data.data.integral);
+          localStorage.setItem('vip_level',res.data.data.vip_level);
           _this.props.history.push('/success');
         } else {
           _this.props.history.push('/fail');
