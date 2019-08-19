@@ -8,6 +8,7 @@ class Success extends Component {
           status="success"
           title="您已经成功支付！"
           subTitle="您的订单号为12345，如有任何疑问，请联系客服"
+          style={{'marginTop':'80px'}}
           extra={[
             <Link to="/" key="home">
               <Button type="primary">返回首页</Button>
