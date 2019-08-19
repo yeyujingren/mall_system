@@ -147,7 +147,7 @@ class Header extends Component {
               </div>
               <div className="cart-middle">
                 {
-                  !cartList
+                  !cartList.length
                   ?<Fragment>
                     <Icon className="icon" type="shopping-cart" />
                     <p className="tit">天呐，购物车竟然空空如也</p>

@@ -122,7 +122,7 @@ class ShopCart extends Component {
           />
         </div>
         {
-          cartList
+          cartList.length
           ?<div className="cart-bottom">
             <div className="settle-account">
             <span className="totle-money">
