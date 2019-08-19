@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Table, Icon, Modal, message } from 'antd';
 import '../style/shopCart.less';
 
 const { confirm } = Modal;
 class ShopCart extends Component {
   componentDidMount() {
-    this.handleverify()
+    this.handleverify();
+    // this.props.getMyCart();
   }
   // 验证用户身份，若未登录则跳转到首页
   handleverify() {
@@ -35,33 +37,13 @@ class ShopCart extends Component {
             }
           })
       },
-      oncancel(){}
+      oncancel(){
+        message.info('您的订单已存放到订单中心!');
+      }
     })
   }
   render() {
-    const dataSource = [
-      {
-        com_id: 1,
-        com_name: 'nodejs',
-        type: 'web',
-        com_price: 100,
-        com_photo: 'https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg'
-      },
-      {
-        com_id: 2,
-        com_name: 'nodejs',
-        type: 'web',
-        com_price: 100,
-        com_photo: 'https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg'
-      },
-      {
-        com_id: 3,
-        com_name: 'nodejs',
-        type: 'web',
-        com_price: 100,
-        com_photo: 'https://szimg.mukewang.com/5c18d2d8000141c506000338-160-90.jpg'
-      }
-    ]
+    const { cartList, totalPrice } = this.props;
     const columns = [
       {
         title:'课程',
@@ -111,29 +93,44 @@ class ShopCart extends Component {
         <div className="cart-body">
           <Table
               columns={columns}
-              dataSource={dataSource}
+              dataSource={cartList}
               pagination={false}
           />
         </div>
-        <div className="cart-bottom">
-          <div className="settle-account">
-            <span className="totle-money">
-              总计金额：
-              <i className="money">
-                ￥ 300
-              </i>
-            </span>
-            <span
-                className="btn-to-pay"
-                onClick={() => this.verifyPay(this)}
-            >
-              去结算
-            </span>
-          </div>
-        </div>
+        {
+          cartList.length !== 0
+          ?<div className="cart-bottom">
+            <div className="settle-account">
+              <span className="totle-money">
+                总计金额：
+                <i className="money">
+                  ￥ {totalPrice}
+                </i>
+              </span>
+              <span
+                  className="btn-to-pay"
+                  onClick={() => this.verifyPay(this)}
+              >
+                去结算
+              </span>
+            </div>
+            </div>
+          :null
+        }
       </div>
     )
   }
 }
 
-export default withRouter(ShopCart);
+const mapState = state => ({
+  cartList: state.component.cartList,
+  totalPrice: state.component.totalPrice
+});
+
+const mapDispatch = dispatch => ({
+  // getMyCart() {
+  //   dispatch
+  // }
+})
+
+export default connect(mapState,mapDispatch)(withRouter(ShopCart));

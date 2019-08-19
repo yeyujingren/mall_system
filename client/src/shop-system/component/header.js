@@ -123,7 +123,9 @@ class Header extends Component {
             <Icon type="shopping-cart" />&nbsp;
             <span>
               购物车
-              <i className="has-add">{mycartLen}</i>
+              {
+                mycartLen === 0 ? null : <i className="has-add">{mycartLen}</i>
+              }
             </span>
           </div>
           {

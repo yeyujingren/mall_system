@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-17 17:02:22
+ * @Last Modified time: 2019-08-19 09:41:05
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -206,11 +206,16 @@ export const getMycartLen = () => {
 
 // 获取购物车中数据列表
 export const getCartList = () => {
+  let totalPrice = 0;
+  const mycart = JSON.parse(localStorage.getItem('mycart'));
+  for(let i=0;i<mycart.length;i++){
+    totalPrice += mycart[i].com_price;
+  }
   return (dispatch) => {
-    const mycart = JSON.parse(localStorage.getItem('mycart'));
     dispatch({
       type: GET_CART_LIST,
-      mycartList: mycart
+      mycartList: mycart,
+      totalPrice
     })
   }
 }

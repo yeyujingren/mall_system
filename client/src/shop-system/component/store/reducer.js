@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:47:08 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-17 16:58:11
+ * @Last Modified time: 2019-08-19 09:42:44
  */
 import {
   HANDLE_MODEL_VISIBLE,
@@ -23,6 +23,7 @@ import {
  * @param {boolean} isRepet； 标识用户名是否重复，默认为false
  * @param {num} mycartLen: 加入购物车的数量
  * @param {array} cartList: 加入购物车的课程
+ * @param {number} totalPrice: 购物车中的总金额
  */
 const defaultState = {
   visible: false,
@@ -32,7 +33,8 @@ const defaultState = {
   isLogin: false,
   isRepet: false,
   mycartLen:0,
-  cartList:[]
+  cartList:[],
+  totalPrice:0
 }
 
 export default(state = defaultState,action) => {
@@ -72,7 +74,8 @@ export default(state = defaultState,action) => {
     case GET_CART_LIST :
       return{
         ...state,
-        cartList: action.mycartList
+        cartList: action.mycartList,
+        totalPrice: action.totalPrice
       }
     default :
       return state
