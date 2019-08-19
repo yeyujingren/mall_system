@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Table, Icon, Modal, message } from 'antd';
+import { getCartList, delCourse } from '../component/store/actionCreator';
 import '../style/shopCart.less';
 
 const { confirm } = Modal;
 class ShopCart extends Component {
   componentDidMount() {
     this.handleverify();
-    // this.props.getMyCart();
+    this.props.getMyCart();
   }
   // 验证用户身份，若未登录则跳转到首页
   handleverify() {
@@ -16,6 +17,11 @@ class ShopCart extends Component {
     if (cookies === -1) {
       this.props.history.push('/')
     }
+  }
+
+  // 删除删除按钮删除购物车中的课程
+  delSourse(com_id) {
+    this.props.delCom(com_id);
   }
 
   // 用户点击去结算后弹出确认框，进一步确认
@@ -73,7 +79,13 @@ class ShopCart extends Component {
         dataIndex: '',
         key: 'action',
         render: (record) => {
-          return(<Icon type="close-circle" />)
+          return(
+            <Icon
+                className="delCourse"
+                type="close-circle"
+                onClick={() => this.delSourse(record.com_id)}
+            />
+          )
         }
       }
     ];
@@ -101,6 +113,9 @@ class ShopCart extends Component {
           cartList.length !== 0
           ?<div className="cart-bottom">
             <div className="settle-account">
+            <span className="totle-money">
+                您总计选择：{cartList.length}门
+              </span>
               <span className="totle-money">
                 总计金额：
                 <i className="money">
@@ -128,9 +143,12 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  // getMyCart() {
-  //   dispatch
-  // }
+  getMyCart() {
+    dispatch(getCartList())
+  },
+  delCom(com_id) {
+    dispatch(delCourse(com_id))
+  }
 })
 
 export default connect(mapState,mapDispatch)(withRouter(ShopCart));
