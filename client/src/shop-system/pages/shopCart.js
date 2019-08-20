@@ -106,9 +106,11 @@ class ShopCart extends Component {
           <span className="name">
             我的购物车
           </span>
-          <span className="sum">
-            您已经添加了<i>3</i>门
-          </span>
+          {
+            cartList.length
+            ?<span className="sum">您已经添加了<i>{cartList.length}</i>门</span>
+            :<span className="sum">您暂时还未添加任何课程</span>
+          }
           <Link to="/order">
             <span className="myorder">我的历史订单</span>
           </Link>
