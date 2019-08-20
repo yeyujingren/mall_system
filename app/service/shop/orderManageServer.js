@@ -19,7 +19,6 @@ class OrderManageServerService extends Service {
     } catch (error) {
       console.log(error);
     }
-    
   }
   /**
    * 根据用户金额修改用户等级，积分
@@ -181,6 +180,21 @@ class OrderManageServerService extends Service {
       }
     }
     return result;
+  }
+  /**
+   * 通过订单id查询订单中包含的商品
+   * @param {number} order_id: 订单id
+   */
+  async hasPay (order_id){
+    let hasPayCourse = [];
+    let results = await this.ctx.app.mysql.select('assocform',{
+      where:{order_id},
+      columns: 'com_id'
+    })
+    results.map(item => {
+      hasPayCourse.push(item.com_id);
+    })
+    return hasPayCourse;
   }
 }
 

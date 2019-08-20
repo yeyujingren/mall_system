@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 10:35:33
+ * @Last Modified time: 2019-08-20 11:07:04
  */
 'use strict';
 
@@ -83,7 +83,6 @@ class RegesterController extends Controller {
 
   // 用户登录
   async login() {
-    console.log(1111111111111)
     const {ctx} = this;
     const userInfor = ctx.request.body;
     const result = await ctx.service.registerServer.login(userInfor);

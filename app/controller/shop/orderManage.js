@@ -78,6 +78,7 @@ class OrderManageController extends Controller {
     const { ctx } = this;
     const data = ctx.request.body;
     const result = await ctx.service.shop.orderManageServer.confirmPay(data);
+    const hasPay = await ctx.service.shop.orderManageServer.hasPay(data.order_id);
     const isSuc = result.integral?result.result.affectedRows === 1 && result.integral && result.vip_level:result.affectedRows === 1;
     ctx.set({
       'contentType': 'json'
@@ -88,7 +89,8 @@ class OrderManageController extends Controller {
         'message': '订单已支付！',
         data:{
           integral:result.integral,
-          vip_level:result.vip_level
+          vip_level:result.vip_level,
+          hasPay
         }
       }
     } else {
