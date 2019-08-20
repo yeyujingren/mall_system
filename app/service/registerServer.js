@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-24 09:34:32
  * @Last Modified by: 
- * @Last Modified time: 2019-08-15 14:57:36
+ * @Last Modified time: 2019-08-20 10:16:58
  */
 'use strict';
 
@@ -80,7 +80,6 @@ class RegisterServerService extends Service {
       const adminResult = await this.app.mysql.get('user',{user_name,psd,'flag':2});
       return adminResult;
     }
-    
   }
 }
 

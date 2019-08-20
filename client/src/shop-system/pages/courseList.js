@@ -13,14 +13,28 @@ class CourseList extends Component {
   componentDidMount(){
     this.props.getCourseList();
   }
-
+  // 验证是否已经购买
+  isPay (com_id) {
+    let hasPay = JSON.parse(localStorage.getItem('hasPay'));
+    for(let i=0; i<hasPay.length; i++){
+      if(com_id === hasPay[i]){
+        message.info('您已经购买这门课程啦，快去已购课程学习吧');
+        return true;
+      }
+    }
+  }
   // 用户点击去结算后弹出确认框，进一步确认
   buyCourseNow(e,course) {
     let coursesList = JSON.parse(localStorage.getItem('mycart'));
-    for(let j=0;j<coursesList.length;j++){
-      if(course.com_id === coursesList[j].com_id){
-        message.info('您已经添加这门课到购物车啦，去购物车一起结算吧');
-        return;
+    if(this.isPay(course.com_id)){
+      return;
+    }
+    if(coursesList){
+      for(let j=0;j<coursesList.length;j++){
+        if(course.com_id === coursesList[j].com_id){
+          message.info('您已经添加这门课到购物车啦，去购物车一起结算吧');
+          return;
+        }
       }
     }
     let cartList = [];
@@ -56,6 +70,9 @@ class CourseList extends Component {
   // 向localStorage中添加数据
   pushCart(com_id) {
     const data = this.props.courseList;
+    if(this.isPay(com_id)){
+      return;
+    }
     let coursesList = JSON.parse(localStorage.getItem('mycart'));
     let course = {}
     for(let i=0;i<data.length;i++){

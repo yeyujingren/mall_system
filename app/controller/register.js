@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
  * @Last Modified by: 
- * @Last Modified time: 2019-08-12 18:31:39
+ * @Last Modified time: 2019-08-20 10:35:33
  */
 'use strict';
 
@@ -83,6 +83,7 @@ class RegesterController extends Controller {
 
   // 用户登录
   async login() {
+    console.log(1111111111111)
     const {ctx} = this;
     const userInfor = ctx.request.body;
     const result = await ctx.service.registerServer.login(userInfor);
@@ -90,6 +91,15 @@ class RegesterController extends Controller {
       'contentType':'json'
     });
     if(result) {
+      const courses = []
+      const hasPayCourse = await ctx.service.shop.orderManageServer.getOrderList(result.user_id,2);
+      hasPayCourse.map(item => {
+        item.comms.map(course => {
+          courses.push(course.com_id);
+        })
+      })
+      
+      
       // 设置cookie
       let cookie = ctx.cookies.set('EGG_COOK',userInfor.user_name,{
         httpOnly: false,
@@ -101,17 +111,17 @@ class RegesterController extends Controller {
       ctx.body = {
         'code': 200,
         'message': '登陆成功！',
-        data: result,
+        data: {result,courses},
         cookie,
         session
       }
-      } else {
-        ctx.body = {
-          'code': 500,
-          'message': '登陆失败！'
-        }
+    } else {
+      ctx.body = {
+        'code': 500,
+        'message': '登陆失败！'
       }
     }
+  }
 
   // 退出登录
   async logout(){
