@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-08 10:08:21 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-13 14:55:27
+ * @Last Modified time: 2019-08-20 15:41:15
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -30,15 +30,18 @@ export const willChangeInfor = (infor, id, flag,handlePost) => ({
 })
 
 // 获取商品列表
-export const getCommList = () => {
+export const getCommList = (_this) => {
   return (dispatch) => {
     axios.get('/getCommList')
       .then( res => {
-        if(res.data.code ==200){
+        if(res.data.code === 200){
           dispatch({
             type: GET_COMM_LIST,
             data: res.data.result
           })
+        } else if(res.data.code === 403 ){
+          message.info('请使用管理员账号登录！');
+          _this.props.history.push('/admin');
         } else {
           message.error(res.data.message);
         }
@@ -50,7 +53,7 @@ export const getCommList = () => {
 }
 
 // 删除商品数据
-export const deleteComm = (com_id) => {
+export const deleteComm = (com_id,_this) => {
   return dispatch => {
     axios.delete('/deleteComm/'+com_id ,{
       headers:{
@@ -62,6 +65,9 @@ export const deleteComm = (com_id) => {
         if(res.data.code == 200) {
           message.success(res.data.message);
           dispatch(getCommList());
+        } else if(res.data.code === 403 ){
+          message.info('请使用管理员账号登录！');
+          _this.props.history.push('/admin');
         } else {
           message.error(res.data.message);
         }
@@ -86,7 +92,7 @@ export const pushUrl = url => ({
   * @param {boolean} flag 控制模态框是否显示
   * @param {number}handlePost: 标识请求类型，1代表商品修改请求，2代表商品增加请求
   */
-export const upDateComm = (data,id,url,flag, handlePost) => {
+export const upDateComm = (data,id,url,flag, handlePost,_this) => {
   let comm_infor = {
     'com_name': data.com_name,
     'merchant': data.merchant,
@@ -137,12 +143,16 @@ export const upDateComm = (data,id,url,flag, handlePost) => {
         message.success(res.data.message);
         dispatch(changeVisible(flag));
         dispatch(getCommList());
+      } else if(res.data.code === 403 ){
+        message.info('请使用管理员账号登录！');
+        _this.props.history.push('/admin');
       } else {
         message.error(res.data.message);
       }
     })
-    .catch(()=>{
-      message.error('网络连接失败')
+    .catch((e)=>{
+      message.error('网络连接失败');
+      console.log(e)
     })
   }
 }

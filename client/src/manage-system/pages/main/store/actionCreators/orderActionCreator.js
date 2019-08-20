@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-08 10:26:56 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-08 10:27:57
+ * @Last Modified time: 2019-08-20 15:51:29
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -11,7 +11,7 @@ import {
 } from '../actionType';
 
 // 获取订单列表数据
-export const getOrderList = () => {
+export const getOrderList = (_this) => {
   return (dispatch) => {
     axios.get('/getOrderList')
       .then( res => {
@@ -20,6 +20,9 @@ export const getOrderList = () => {
             type: GET_ORDER_LIST,
             data: res.data.result
           })
+        } else if(res.data.code === 403 ){
+          message.info('请使用管理员账号登录！');
+          _this.props.history.push('/admin');
         } else {
           message.error(res.data.message);
         }
@@ -30,7 +33,7 @@ export const getOrderList = () => {
   }
 }
 // 更新订单状态
-export const comfirmPay = (order_id) => {
+export const comfirmPay = (order_id,_this) => {
   return (dispatch) => {
     axios.put('/upDateOrderStatus',{'order_id':order_id},{
       headers:{
@@ -42,6 +45,9 @@ export const comfirmPay = (order_id) => {
         if(res.data.code ==200){
           dispatch(getOrderList())
           message.success(res.data.message);
+        } else if (res.data.code === 403 ){
+          message.info('请使用管理员账号登录！');
+          _this.props.history.push('/admin');
         } else {
           message.error(res.data.message);
         }

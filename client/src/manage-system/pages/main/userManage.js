@@ -2,9 +2,10 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 15:57:37 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-13 14:25:09
+ * @Last Modified time: 2019-08-20 15:57:50
  */
 import React, { Component, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   Modal,
@@ -23,11 +24,11 @@ import UserModelHandle from './userModelForm';
 class UserManage extends Component {
   // 获取用户列表
   componentDidMount() {
-    this.props.getUserList();
+    this.props.getUserList(this);
   }
   // 删除用户
   confirmDelete(user_id) {
-    this.props.deleteUser(user_id)
+    this.props.deleteUser(user_id,this)
   }
   // 模态框状态控制
   showModal = (record) => {
@@ -136,19 +137,19 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  getUserList() {
-    dispatch(getList())
+  getUserList(_this) {
+    dispatch(getList(_this))
   },
-  deleteUser(user_id) {
-    dispatch(deleteUser(user_id))
+  deleteUser(user_id,_this) {
+    dispatch(deleteUser(user_id,_this))
   },
   handleWillChangeUser(userInfor) {
     const id = userInfor.user_id;
     const flag = true;
     dispatch(willChangeInfor(userInfor,id,flag))
   },
-  upDateUser(userInfor,id){
-    dispatch(upDateUser(userInfor,id))
+  upDateUser(userInfor,id,_this){
+    dispatch(upDateUser(userInfor,id,_this))
   },
   handleVisible() {
     const flag = false;
@@ -156,4 +157,4 @@ const mapDispatch = dispatch => ({
   }
 })
 
-export default connect(mapState,mapDispatch)(UserManage);
+export default connect(mapState,mapDispatch)(withRouter(UserManage));

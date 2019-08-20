@@ -2,10 +2,11 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 15:57:37 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-09 09:43:57
+ * @Last Modified time: 2019-08-20 16:04:13
  */
 
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import{
   Form,
@@ -20,10 +21,14 @@ const { Option } = Select;
 class ModelForm extends Component{
   // 点击确认按钮触发
   changUserInfor = (e,id) => {
+    const that = this;
     e.preventDefault();
-    const data = this.props.form.getFieldsValue()
-    this.props.changeInfor(data,id)
-    this.props.form.resetFields()
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        that.props.changeInfor(values,id,that);
+        that.props.form.resetFields();
+      }
+    });
   }
   render() {
     const {user_name,email,integral,account_status} = this.props.userinfor;
@@ -114,9 +119,9 @@ const mapState = state => ({
   userinfor: state.main.willChangeInfor
 })
 const mapDispatch = dispatch => ({
-  changeInfor(data,id) {
+  changeInfor(data,id,_this) {
     const flag = false;
-    dispatch(upDateUser(data,id,flag))
+    dispatch(upDateUser(data,id,flag,_this))
   }
-})
-export default connect(mapState,mapDispatch)(UserModelHandle)
+});
+export default connect(mapState,mapDispatch)(withRouter(UserModelHandle));

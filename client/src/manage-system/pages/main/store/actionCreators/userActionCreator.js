@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-08 10:01:54 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-09 09:55:52
+ * @Last Modified time: 2019-08-20 15:56:05
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -12,7 +12,7 @@ import {
   CHANGE_VISIBLE_FLAG
 } from '../actionType';
 // 获取用户数据
-export const getList = () => {
+export const getList = (_this) => {
   return (dispacth) => {
     axios.get('/getUserList')
       .then(res => {
@@ -21,6 +21,9 @@ export const getList = () => {
             type: GET_USER_LIST,
             data: res.data.result
           })
+        } else if (res.data.code === 403 ){
+          message.info('请使用管理员账号登录！');
+          _this.props.history.push('/admin');
         }
       })
       .catch(()=>{
@@ -30,7 +33,7 @@ export const getList = () => {
 }
 
 // 删除用户账户
-export const deleteUser = (user_id) => {
+export const deleteUser = (user_id,_this) => {
   return (dispatch) => {
     axios.delete('/deleteUser/'+user_id,{
       headers:{
@@ -42,6 +45,9 @@ export const deleteUser = (user_id) => {
         if(res.data.code === 200){
           dispatch(getList());
           message.success(res.data.message);
+        } else if (res.data.code === 403 ){
+          message.info('请使用管理员账号登录！');
+          _this.props.history.push('/admin');
         } else {
           message.error(res.data.message);
         }
@@ -67,7 +73,7 @@ export const changeVisible = (flag) => ({
   visible: flag
 })
 // 更新数据
-export const upDateUser = (user_infor,id,flag) => {
+export const upDateUser = (user_infor,id,flag,_this) => {
   return (dispatch) => {
     axios.put('/upDateUser',{
         user_id:id,
@@ -83,6 +89,9 @@ export const upDateUser = (user_infor,id,flag) => {
         dispatch(getList());
         dispatch(changeVisible(flag));
         message.success(res.data.message);
+      } else if (res.data.code === 403 ){
+        message.info('请使用管理员账号登录！');
+        _this.props.history.push('/admin');
       } else {
         message.error(res.data.message);
       }

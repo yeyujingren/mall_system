@@ -2,10 +2,11 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-07 14:26:10 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-15 17:12:13
+ * @Last Modified time: 2019-08-20 15:53:25
  */
 
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   Table,
@@ -17,11 +18,11 @@ import { getOrderList, comfirmPay } from './store/actionCreators/orderActionCrea
 class OrderManage extends Component {
   // 加载订单数据
   componentDidMount() {
-    this.props.getOrderList();
+    this.props.getOrderList(this);
   }
   // 修改订单状态
   confirmPay(order_id){
-    this.props.comfirmPay(order_id)
+    this.props.comfirmPay(order_id,this)
   }
   render(){
     const { dataSource } = this.props;
@@ -107,12 +108,12 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  getOrderList() {
-    dispatch(getOrderList());
+  getOrderList(_this) {
+    dispatch(getOrderList(_this));
   },
-  comfirmPay(order_id) {
-    dispatch(comfirmPay(order_id));
+  comfirmPay(order_id,_this) {
+    dispatch(comfirmPay(order_id,_this));
   }
 })
 
-export default connect(mapState, mapDispatch)(OrderManage);
+export default connect(mapState, mapDispatch)(withRouter(OrderManage));

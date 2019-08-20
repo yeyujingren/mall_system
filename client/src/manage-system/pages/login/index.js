@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, Spin } from 'antd';
-import { withRouter, Redirect } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import QueuiAnim from 'rc-queue-anim';
 import {
@@ -21,7 +21,7 @@ class Login extends Component {
       if (!err) {
         this.props.handleLoading();
         // 设置1秒延时，展示loading效果
-        setTimeout(() => {that.props.handleLogin(values)}, 1000);
+        setTimeout(() => {that.props.handleLogin(values,this)}, 1000);
       }
     });
   }
@@ -30,11 +30,6 @@ class Login extends Component {
     const { getFieldDecorator } = this.props.form;
     const { loading } = this.props;
 
-    // 通过判断cookie判断用户是否登录
-    let cookies = document.cookie.indexOf('EGG_COOK=');
-    if(cookies !== -1){
-      return <Redirect to="/index" />
-    }
     return(
       <div className="login">
         <div className="title">
@@ -101,9 +96,9 @@ const mapDispatch = dispatch => ({
   handleLoading() {
     dispatch(loading());
   },
-  handleLogin(userInfro){
-    dispatch(login(userInfro));
+  handleLogin(userInfro,_this){
+    dispatch(login(userInfro,_this));
   }
 })
 
-export default withRouter(connect(mapState, mapDispatch)(from));
+export default connect(mapState, mapDispatch)(withRouter(from));

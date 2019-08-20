@@ -2,9 +2,10 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:14:03
  * @Last Modified by: 
- * @Last Modified time: 2019-08-13 15:18:34
+ * @Last Modified time: 2019-08-20 15:27:29
  */
 import React,{ Component, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import '../../style/main.less';
 import {
@@ -26,11 +27,11 @@ import CommModelHandle from './commModelForm';
 class CommManage extends Component {
   // 在页面加载完成后加载展示数据
   componentDidMount() {
-    this.props.getCommList();
+    this.props.getCommList(this);
   }
   // 删除用户
   confirmDelete(com_id) {
-    this.props.deleteComm(com_id);
+    this.props.deleteComm(com_id,this);
   }
   // 点击显示按钮显示模态框
   showModal(record) {
@@ -186,11 +187,11 @@ const mapState = state => ({
 
 // 派发disPatch
 const mapDispatch = dispatch => ({
-  getCommList() {
-    dispatch(getCommList())
+  getCommList(_this) {
+    dispatch(getCommList(_this))
   },
-  deleteComm(com_id) {
-    dispatch(deleteComm(com_id));
+  deleteComm(com_id,_this) {
+    dispatch(deleteComm(com_id,_this));
   },
   handleModelVisible(record,handlePost) {
     const flag = true;
@@ -207,4 +208,4 @@ const mapDispatch = dispatch => ({
   }
 })
 
-export default connect(mapState,mapDispatch)(CommManage);
+export default connect(mapState,mapDispatch)(withRouter(CommManage));

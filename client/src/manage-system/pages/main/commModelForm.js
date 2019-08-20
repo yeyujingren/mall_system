@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import{
   Form,
@@ -23,8 +24,8 @@ class ModelForm extends Component{
     const url = this.props.url;
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        that.props.changeInfor(values,id,url,handlePost);
-        this.props.form.resetFields();
+        that.props.changeInfor(values,id,url,handlePost,that);
+        that.props.form.resetFields();
       }
     });
   }
@@ -219,12 +220,12 @@ const mapState = state => ({
   handlePost: state.main.handlePost
 })
 const mapDispatch = dispatch => ({
-  changeInfor(data,id,url,handlePost) {
+  changeInfor(data,id,url,handlePost,_this) {
     const flag = false;
-    dispatch(upDateComm(data,id,url,flag,handlePost))
+    dispatch(upDateComm(data,id,url,flag,handlePost,_this))
   },
   pushUrl(url) {
     dispatch(pushUrl(url));
   }
 })
-export default connect(mapState,mapDispatch)(CommModelHandle)
+export default connect(mapState,mapDispatch)(withRouter(CommModelHandle));

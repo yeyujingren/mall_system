@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Row, Col, Icon } from 'antd';
 import {
@@ -9,7 +10,7 @@ import '../../style/main.less';
 class WorkHeader extends Component {
   // 点击退出登录触发
   handleLogOut() {
-    this.props.logout()
+    this.props.logout(this);
   }
   render() {
     return(
@@ -37,9 +38,9 @@ class WorkHeader extends Component {
 }
 
 const mapDispatch = dispatch => ({
-  logout() {
-    dispatch(logout())
+  logout(_this) {
+    dispatch(logout(_this))
   }
 })
 
-export default connect(null,mapDispatch)(WorkHeader);
+export default connect(null,mapDispatch)(withRouter(WorkHeader));
