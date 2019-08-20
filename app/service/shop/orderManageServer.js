@@ -47,7 +47,6 @@ class OrderManageServerService extends Service {
    * @param {array} data:购物车中的用户数据
    */
   async inserOrder(orderId,data){
-    console.log(data);
     let results = [];
     try {
       for(let i=0;i<data.length;i++){

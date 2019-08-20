@@ -5,20 +5,20 @@ module.exports = (opt,app) => {
     if(userInfo) {
       // 查询数据库判断是否存在当前用户
       let result = await app.mysql.select('user',{
-        where:{user_name:userInfo,flag:[0,2]}
+        where:{user_name:userInfo,flag:0,account_status:'frozen'}
       })
       if(result){
-        await next();
-      } else {
         ctx.body = {
           'code': 400,
-          'message': '您尚未登录，请登录后重试！'
+          'message': '您的账号已被冻结，请联系管理员解冻，再选择购买商品！'
         }
+      } else {
+        await next();
       }
     } else {
       ctx.body = {
-        'code': 400,
-        'message': '您尚未登录，请登录后重试！'
+        'code': 500,
+        'message': '操作出现未知错误，请稍后重试'
       }
     }
   }

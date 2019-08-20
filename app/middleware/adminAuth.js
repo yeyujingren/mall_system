@@ -5,20 +5,20 @@ module.exports = (opt,app) => {
     if(userInfo) {
       // 查询数据库判断是否存在当前用户
       let result = await app.mysql.select('user',{
-        where:{user_name:userInfo,flag:[0,2]}
+        where:{user_name:userInfo,flag:2}
       })
-      if(result){
+      if(result.length){
         await next();
       } else {
         ctx.body = {
-          'code': 400,
-          'message': '您尚未登录，请登录后重试！'
+          'code': 403,
+          'message': '非管理员'
         }
       }
     } else {
       ctx.body = {
-        'code': 400,
-        'message': '您尚未登录，请登录后重试！'
+        'code': 403,
+        'message': '非管理员'
       }
     }
   }

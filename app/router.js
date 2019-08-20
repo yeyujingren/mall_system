@@ -2,12 +2,14 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 14:17:25 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-19 10:12:07
+ * @Last Modified time: 2019-08-20 15:05:27
  */
 
 module.exports = app => {
   const { router, controller } = app;
-  var userauthMiddleware = app.middleware.userauth({}, app);
+  var adminauthMiddleware = app.middleware.adminAuth({}, app);
+  var userauthMiddleware = app.middleware.userAuth({}, app);
+  var verifyUserStatusMiddleware = app.middleware.verifyUserStatus({}, app);
   // apps
   // 登录注册接口
   router.get('/searchName/:name',controller.register.searchName);
@@ -17,18 +19,18 @@ module.exports = app => {
   router.post('/login', controller.register.login);
   router.get('/logout',userauthMiddleware,controller.register.logout);
   // 会员管理界面接口
-  router.get('/getUserList',userauthMiddleware,controller.admin.userManage.getUserList);
-  router.put('/upDateUser',userauthMiddleware,controller.admin.userManage.handleUserStatus);
-  router.delete('/deleteUser/:id',userauthMiddleware,controller.admin.userManage.deleteUser);
+  router.get('/getUserList',adminauthMiddleware,controller.admin.userManage.getUserList);
+  router.put('/upDateUser',adminauthMiddleware,controller.admin.userManage.handleUserStatus);
+  router.delete('/deleteUser/:id',adminauthMiddleware,controller.admin.userManage.deleteUser);
   // 商品管理接口
-  router.get('/getCommList',controller.admin.commManage.getCommList);
-  router.post('/addComm',controller.admin.commManage.addComm);
-  router.delete('/deleteComm/:id',controller.admin.commManage.deleteComm);
-  router.post('/upDateComm',controller.admin.commManage.changeComm);
-  router.post('/upload',controller.admin.commManage.upload);
+  router.get('/getCommList',adminauthMiddleware,controller.admin.commManage.getCommList);
+  router.post('/addComm',adminauthMiddleware,controller.admin.commManage.addComm);
+  router.delete('/deleteComm/:id',adminauthMiddleware,controller.admin.commManage.deleteComm);
+  router.post('/upDateComm',adminauthMiddleware,controller.admin.commManage.changeComm);
+  router.post('/upload',adminauthMiddleware,controller.admin.commManage.upload);
   // 订单管理接口
-  router.get('/getOrderList',controller.admin.orderManage.getOrderList);
-  router.put('/upDateOrderStatus',controller.admin.orderManage.handleOrderStatus);
+  router.get('/getOrderList',adminauthMiddleware,controller.admin.orderManage.getOrderList);
+  router.put('/upDateOrderStatus',adminauthMiddleware,controller.admin.orderManage.handleOrderStatus);
 
   // 订单生成接口
   router.post('/createOrder',controller.shop.orderManage.createOrder);
