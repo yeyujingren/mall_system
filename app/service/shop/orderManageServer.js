@@ -4,6 +4,24 @@ const Service = require('egg').Service;
 
 class OrderManageServerService extends Service {
   /**
+   * 通过订单id查询订单商品，当支付后商品数量增加
+   * @param {number} order_id 订单id
+   */
+  async addComAmount (order_id){
+    const results = await this.app.mysql.select('assocform',{
+      where: {order_id},
+      columns: 'com_id'
+    })
+    try {
+      await results.map(item => {
+        this.app.mysql.query(`update commodity set amount=amount+1 where com_id = ${item.com_id}`);
+      })
+    } catch (error) {
+      console.log(error);
+    }
+    
+  }
+  /**
    * 根据用户金额修改用户等级，积分
    * @param {number} user_id : 用户id
    * @param {number} totalPrice : 用户购买金额
@@ -144,6 +162,7 @@ class OrderManageServerService extends Service {
       }
     });
     if(data.user_id && data.totalPrice){
+      await this.addComAmount(order_id);
       const rs = await this.upDateUserLevel(data.user_id,data.totalPrice);
       const update = await this.app.mysql.update('user',{
         'vip_level': rs.level,
