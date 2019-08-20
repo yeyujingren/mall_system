@@ -36,7 +36,7 @@ class ShopCart extends Component {
       'x-csrf-token': window._csrf
     }
     const user_id = localStorage.getItem('user_id');
-    axios.post('/createOrder',{user_id,cartList},{headers})
+    axios.post('/shop/createOrder',{user_id,cartList},{headers})
       .then(res => {
         if(res.data.code === 200 ) {
           confirm({

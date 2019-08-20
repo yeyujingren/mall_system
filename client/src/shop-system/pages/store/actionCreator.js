@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 16:35:12
+ * @Last Modified time: 2019-08-20 16:51:26
  */
 import axios from 'axios';
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST } from './actionType';
@@ -12,13 +12,13 @@ import { message } from 'antd';
 const seletApi = (user_id,flag) => {
   switch(flag){
     case 0:
-      return `/getAllOrder/${user_id}`;
+      return `/shop/getAllOrder/${user_id}`;
     case 1:
-      return `/getWillPayOrder/${user_id}`;
+      return `/shop/getWillPayOrder/${user_id}`;
     case 2:
-      return `/getWillSendOrder/${user_id}`;
+      return `/shop/getWillSendOrder/${user_id}`;
     case 3:
-      return `/getHasFinishOrder/${user_id}`;
+      return `/shop/getHasFinishOrder/${user_id}`;
     default:
       break;
   }
@@ -76,7 +76,7 @@ export const reaclPay = (_this,order_id,user_id,totalPrice) => {
       'contentType':'json',
       'x-csrf-token': window._csrf
     };
-    axios.put('/confirmPay',orderInfor,{headers})
+    axios.put('/shop/confirmPay',orderInfor,{headers})
       .then( res => {
         if(res.data.code === 200 ){
           let hasPay = JSON.parse(localStorage.getItem('hasPay'));
@@ -108,7 +108,7 @@ export const reaclCancel = (_this,order_id) => {
       'contentType':'json',
       'x-csrf-token': window._csrf
     };
-    axios.put('/confirmPay',orderInfor,{headers})
+    axios.put('/shop/confirmCancel',orderInfor,{headers})
       .then( res => {
         if(res.data.code === 200 ){
           message.success('您已经成功取消订单！');
@@ -126,7 +126,7 @@ export const reaclCancel = (_this,order_id) => {
 // 获取用户已购课程列表
 export const getHasPayList = user_id => {
   return (dispatch) => {
-    axios.get('/getHasPayCourse/'+user_id)
+    axios.get('/shop/getHasPayCourse/'+user_id)
       .then(res => {
         if(res.data.code === 200) {
           dispatch({

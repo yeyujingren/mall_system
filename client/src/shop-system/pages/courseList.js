@@ -45,7 +45,7 @@ class CourseList extends Component {
     }
     const user_id = localStorage.getItem('user_id');
     cartList.push(course);
-    axios.post('/createOrder',{user_id,cartList},{headers})
+    axios.post('/shop/createOrder',{user_id,cartList},{headers})
       .then(res => {
         if(res.data.code === 200 ) {
           confirm({

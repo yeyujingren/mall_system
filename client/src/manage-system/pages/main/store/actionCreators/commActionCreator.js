@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-08 10:08:21 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 15:41:15
+ * @Last Modified time: 2019-08-20 16:42:43
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -32,7 +32,7 @@ export const willChangeInfor = (infor, id, flag,handlePost) => ({
 // 获取商品列表
 export const getCommList = (_this) => {
   return (dispatch) => {
-    axios.get('/getCommList')
+    axios.get('/admin/getCommList')
       .then( res => {
         if(res.data.code === 200){
           dispatch({
@@ -55,7 +55,7 @@ export const getCommList = (_this) => {
 // 删除商品数据
 export const deleteComm = (com_id,_this) => {
   return dispatch => {
-    axios.delete('/deleteComm/'+com_id ,{
+    axios.delete('/admin/deleteComm/'+com_id ,{
       headers:{
         'contentType':'json',
         'x-csrf-token':window._csrf
@@ -107,9 +107,9 @@ export const upDateComm = (data,id,url,flag, handlePost,_this) => {
   // 判断不同的标识来分发不同的请求
   const posturl = () => {
     if(handlePost == 1) {
-      return '/upDateComm'
+      return '/admin/upDateComm'
     } else {
-      return '/addComm'
+      return '/admin/addComm'
     }
   }
   // 判断不同的标识来确定是在请求body中添加com_id字段
@@ -152,7 +152,6 @@ export const upDateComm = (data,id,url,flag, handlePost,_this) => {
     })
     .catch((e)=>{
       message.error('网络连接失败');
-      console.log(e)
     })
   }
 }

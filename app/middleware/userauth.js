@@ -7,7 +7,7 @@ module.exports = (opt,app) => {
       let result = await app.mysql.select('user',{
         where:{user_name:userInfo,flag:[0,2]}
       })
-      if(result){
+      if(result.length){
         await next();
       } else {
         ctx.body = {
