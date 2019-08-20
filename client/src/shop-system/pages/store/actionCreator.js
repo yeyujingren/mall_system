@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 11:23:37
+ * @Last Modified time: 2019-08-20 16:35:12
  */
 import axios from 'axios';
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST } from './actionType';
@@ -27,7 +27,7 @@ const seletApi = (user_id,flag) => {
 // 获取首页课程数据
 export const getCourseList = () => {
   return (dispatch) => {
-    axios.get('/getCommList')
+    axios.get('/shop/getCommList')
       .then( res => {
         if(res.data.code === 200){
           dispatch({
@@ -87,6 +87,8 @@ export const reaclPay = (_this,order_id,user_id,totalPrice) => {
           });
           localStorage.setItem('hasPay',JSON.stringify(hasPay));
           _this.props.history.push('/success');
+        } else if (res.data.code === 403 ){
+          message.info('您的账号已被冻结，请联系管理员解冻，再进行支付操作！');
         } else {
           _this.props.history.push('/fail');
         }
@@ -111,6 +113,8 @@ export const reaclCancel = (_this,order_id) => {
         if(res.data.code === 200 ){
           message.success('您已经成功取消订单！');
           _this.props.history.push('/');
+        } else if (res.data.code === 403 ){
+          message.info('您的账号已被冻结，请联系管理员解冻，再进行取消订单操作！');
         } else {
           message.error('取消订单失败，请稍后重试！');
         }

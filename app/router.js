@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 14:17:25 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 15:05:27
+ * @Last Modified time: 2019-08-20 16:31:12
  */
 
 module.exports = app => {
@@ -17,7 +17,7 @@ module.exports = app => {
   router.post('/confVerify', controller.register.confVerify);
   router.post('/logon',controller.register.logon);
   router.post('/login', controller.register.login);
-  router.get('/logout',userauthMiddleware,controller.register.logout);
+  router.get('/logout',controller.register.logout);
   // 会员管理界面接口
   router.get('/getUserList',adminauthMiddleware,controller.admin.userManage.getUserList);
   router.put('/upDateUser',adminauthMiddleware,controller.admin.userManage.handleUserStatus);
@@ -33,17 +33,19 @@ module.exports = app => {
   router.put('/upDateOrderStatus',adminauthMiddleware,controller.admin.orderManage.handleOrderStatus);
 
   // 订单生成接口
-  router.post('/createOrder',controller.shop.orderManage.createOrder);
+  router.post('/createOrder',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.orderManage.createOrder);
 
+  // 获取商品信息
+  router.get('/shop/getCommList',controller.admin.commManage.getCommList);
   // 订单查询以及修改接口
-  router.get('/getAllOrder/:id',controller.shop.orderManage.getAllOrder);
-  router.get('/getWillPayOrder/:id',controller.shop.orderManage.getWillPayOrder);
-  router.get('/getWillSendOrder/:id',controller.shop.orderManage.getWillSendOrder);
-  router.get('/getHasFinishOrder/:id',controller.shop.orderManage.getHasFinishOrder);
-  router.put('/confirmPay',controller.shop.orderManage.confirmPay);
+  router.get('/getAllOrder/:id',userauthMiddleware,controller.shop.orderManage.getAllOrder);
+  router.get('/getWillPayOrder/:id',userauthMiddleware,controller.shop.orderManage.getWillPayOrder);
+  router.get('/getWillSendOrder/:id',userauthMiddleware,controller.shop.orderManage.getWillSendOrder);
+  router.get('/getHasFinishOrder/:id',userauthMiddleware,controller.shop.orderManage.getHasFinishOrder);
+  router.put('/confirmPay',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.orderManage.confirmPay);
 
   // 已购商品数据接口
-  router.get('/getHasPayCourse/:id',controller.shop.orderManage.getHasPayCourse);
+  router.get('/getHasPayCourse/:id',userauthMiddleware,controller.shop.orderManage.getHasPayCourse);
   // 首页课程数据获取
   router.get('/getCommList',controller.admin.commManage.getCommList);
   // 访问未知路径或者更目录时指向路径

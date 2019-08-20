@@ -9,7 +9,7 @@ module.exports = (opt,app) => {
       })
       if(result){
         ctx.body = {
-          'code': 400,
+          'code': 403,
           'message': '您的账号已被冻结，请联系管理员解冻，再选择购买商品！'
         }
       } else {

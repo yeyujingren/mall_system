@@ -60,6 +60,8 @@ class CourseList extends Component {
               message.info('您的订单已存放到订单中心!');
             }
           })
+        } else if (res.data.code === 403 ){
+          message.info('您的账号已被冻结，请联系管理员解冻，再选择购买商品！');
         } else {
           message.error('订单生成失败，请稍后重试')
         }
