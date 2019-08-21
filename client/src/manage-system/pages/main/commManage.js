@@ -1,9 +1,3 @@
-/*
- * @Author: Yifeng Tao 
- * @Date: 2019-08-02 16:14:03
- * @Last Modified by: 
- * @Last Modified time: 2019-08-21 11:03:18
- */
 import React,{ Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';

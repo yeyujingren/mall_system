@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 import {  Icon, Modal, Form, Input, Tooltip } from 'antd';
 import { changePersionInfor } from './store/actionCreator';
 import '../style/persion.less';
@@ -12,6 +13,12 @@ class Persion extends Component {
       flag:0 // 0标识邮箱，1标识密码
     }
   }
+  componentDidMount(){
+    let cookies = document.cookie.indexOf('EGG_COOK_U=');
+    if (cookies === -1) {
+      this.props.history.push('/')
+    }
+  }
   handleVisible(visible,flag) {
     this.setState({visible});
     this.setState({flag})
@@ -22,7 +29,7 @@ class Persion extends Component {
     const that = this;
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        that.props.changeInfor(flag,values,id);
+        that.props.changeInfor(flag,values,id,this);
         this.setState({'visible': false});
         that.props.form.resetFields();
       }
@@ -229,9 +236,9 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  changeInfor(flag,values,id) {
-    dispatch(changePersionInfor(flag,values,id))
+  changeInfor(flag,values,id,_this) {
+    dispatch(changePersionInfor(flag,values,id,_this))
   }
 })
 
-export default connect(mapState,mapDispatch)(Form.create({ name: 'form' })(Persion));
+export default connect(mapState,mapDispatch)(Form.create({ name: 'form' })(withRouter(Persion)));

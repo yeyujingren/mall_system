@@ -2,10 +2,11 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-21 17:35:13
+ * @Last Modified time: 2019-08-21 20:02:02
  */
 import axios from 'axios';
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST } from './actionType';
+import { handleLogin } from '../../component/store/actionCreator';
 import { message } from 'antd';
 
 // 根据flag来派发不同接口
@@ -140,7 +141,7 @@ export const getHasPayList = user_id => {
 
 // 修改密码或者邮箱
 // 0标识邮箱，1标识密码
-export const changePersionInfor = (flag,values,id) => {
+export const changePersionInfor = (flag,values,id,_this) => {
   // 封装body
   const data = {
     'user_id': id,
@@ -170,7 +171,10 @@ export const changePersionInfor = (flag,values,id) => {
     axios.put('/shop/changePsd',data,{headers})
       .then( res => {
         if(res.data.code === 200 ){
+          localStorage.clear()
           message.success('您已经成功修改密码，请重新登录！');
+          dispatch(handleLogin(false));
+          _this.props.history.push('/');
         } else if (res.data.code === 403 ){
           message.info('您的账号已被冻结，请联系管理员解冻，再进行修改密码操作！');
         } else {
@@ -180,3 +184,4 @@ export const changePersionInfor = (flag,values,id) => {
       .catch(()=>message.error('修改密码失败，请检查您的网络是否连接！'))
   }
 }
+

@@ -1,10 +1,3 @@
-/*
- * @Author: Yifeng Tao 
- * @Date: 2019-08-21 09:36:38 
- * @Last Modified by: 
- * @Last Modified time: 2019-08-21 12:25:18
- */
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Row, Col, message, Modal } from 'antd';

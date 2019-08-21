@@ -1,3 +1,9 @@
+/*
+ * @Author: Yifeng Tao 
+ * @Date: 2019-08-08 10:08:21 
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-21 20:09:29
+ */
 export const GET_USER_LIST = 'get_user_list';
 export const WILL_CHANGE_INFOR = 'will_change_infor';
 export const CHANGE_VISIBLE_FLAG = 'change_visible_flag';

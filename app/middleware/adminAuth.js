@@ -1,3 +1,10 @@
+/*
+ * @Author: Yifeng Tao 
+ * @Date: 2019-08-20 20:07:05 
+ * @Last Modified by:    
+ * @Last Modified time: 2019-08-21 20:07:05 
+ */
+
 module.exports = (opt,app) => {
   return async function init(ctx,next){
     // 判断用户是否登录
