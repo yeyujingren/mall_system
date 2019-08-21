@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-02 16:14:03
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 15:27:29
+ * @Last Modified time: 2019-08-21 11:03:18
  */
 import React,{ Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
@@ -155,6 +155,10 @@ class CommManage extends Component {
         )
       }
     ]
+    // 配置每页展示数量
+    const pagination = {
+      pageSize: 5
+    }
     return(
       <Fragment>
         <Table
@@ -163,6 +167,7 @@ class CommManage extends Component {
             rowKey={record => record.com_id}
             scroll={{ x: 1450 }}
             className="com-table"
+            pagination={pagination}
         />
         <Button type="dashed" onClick={() => this.addComm()} style={{ width: '70%' }}>
           <Icon type="plus" /> 新增商品

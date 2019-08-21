@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 14:17:25 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 16:51:10
+ * @Last Modified time: 2019-08-21 12:46:41
  */
 
 module.exports = app => {
@@ -17,7 +17,7 @@ module.exports = app => {
   router.post('/confVerify', controller.register.confVerify);
   router.post('/logon',controller.register.logon);
   router.post('/login', controller.register.login);
-  router.get('/logout',controller.register.logout);
+  router.get('/logout/:type',controller.register.logout);
   // 会员管理界面接口
   router.get('/admin/getUserList',adminauthMiddleware,controller.admin.userManage.getUserList);
   router.put('/admin/upDateUser',adminauthMiddleware,controller.admin.userManage.handleUserStatus);

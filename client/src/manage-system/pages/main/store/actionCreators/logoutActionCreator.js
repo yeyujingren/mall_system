@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 11:41:45 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 15:36:17
+ * @Last Modified time: 2019-08-21 12:47:07
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -10,7 +10,7 @@ import { message } from 'antd';
 // 退出登录
 export const logout = (_this) => {
   return (dispatch) => {
-    axios.get('/logout')
+    axios.get('/logout/2')
       .then(res => {
         if(res.data.code === 200){
           message.success(res.data.message);

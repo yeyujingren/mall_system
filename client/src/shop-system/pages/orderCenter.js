@@ -24,7 +24,7 @@ class OrderCenter extends Component {
   }
   // 验证用户身份，若未登录则跳转到首页
   handleverify() {
-    let cookies = document.cookie.indexOf('EGG_COOK=');
+    let cookies = document.cookie.indexOf('EGG_COOK_U=');
     if (cookies === -1) {
       this.props.history.push('/')
     }

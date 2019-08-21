@@ -1,8 +1,8 @@
 /*
  * @Author: Yifeng Tao 
  * @Date: 2019-08-21 09:36:38 
- * @Last Modified by:    
- * @Last Modified time: 2019-08-21 09:36:38 
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-21 12:25:18
  */
 
 import React, { Component } from 'react';
@@ -33,6 +33,12 @@ class CourseList extends Component {
   // 用户点击去结算后弹出确认框，进一步确认
   buyCourseNow(e,course) {
     let coursesList = JSON.parse(localStorage.getItem('mycart'));
+    // 验证用户是否登录，若未登录，提示登录
+    let cookies = document.cookie.indexOf('EGG_COOK_U=');
+    if (cookies === -1) {
+      message.error('您还未登录呦！请登录再试');
+      return;
+    }
     if(this.isPay(course.com_id)){
       return;
     }
@@ -107,9 +113,9 @@ class CourseList extends Component {
   // 向购物车添加商品
   addToCart(com_id){
     // 验证用户是否登录，若未登录，提示登录
-    let cookies = document.cookie.indexOf('EGG_COOK=');
+    let cookies = document.cookie.indexOf('EGG_COOK_U=');
     if (cookies === -1) {
-      message.error('您还未登录呦！请登录再试')
+      message.error('您还未登录呦！请登录再试');
     } else {
       this.pushCart(com_id);
       this.props.getMycartLen();

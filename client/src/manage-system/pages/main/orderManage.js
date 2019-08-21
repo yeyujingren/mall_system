@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-07 14:26:10 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 15:53:25
+ * @Last Modified time: 2019-08-21 11:04:25
  */
 
 import React, { Component } from 'react';
@@ -93,11 +93,16 @@ class OrderManage extends Component {
         }
       }
     ]
+    // 配置每页展示数量
+    const pagination = {
+      pageSize: 5
+    }
     return (
       <Table
           dataSource={dataSource}
           columns={columns}
           rowKey={record => record.order_id}
+          pagination={pagination}
       />
     )
   }

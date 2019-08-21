@@ -29,7 +29,7 @@ class Header extends Component {
   }
   // 通过判断cookie判断用户是否登录
   verifyLogin() {
-    let cookies = document.cookie.indexOf('EGG_COOK=');
+    let cookies = document.cookie.indexOf('EGG_COOK_U=');
     if(cookies !== -1){
       const isLogin = true;
       this.props.handleLogin(isLogin);
@@ -73,7 +73,7 @@ class Header extends Component {
   // 控制跳转
   handleLink(url) {
     // 验证用户是否登录，登录成功后跳转到所到界面，若未登录，提示登录
-    let cookies = document.cookie.indexOf('EGG_COOK=');
+    let cookies = document.cookie.indexOf('EGG_COOK_U=');
     if (cookies === -1) {
       message.error('您还未登录呦！请登录再试')
     } else {

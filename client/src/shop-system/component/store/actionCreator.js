@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 10:42:44
+ * @Last Modified time: 2019-08-21 12:48:52
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -174,7 +174,7 @@ export const handleLogin = (isLogin) => ({
 // 退出登录
 export const handleLogout = () => {
   return (dispatch) => {
-    axios.get('/logout')
+    axios.get('/logout/0')
       .then( res => {
         if(res.data.code === 200) {
           // 删除存储在localStorage中的用户信息

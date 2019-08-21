@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 11:07:04
+ * @Last Modified time: 2019-08-21 13:16:03
  */
 'use strict';
 
@@ -98,15 +98,26 @@ class RegesterController extends Controller {
         })
       })
       
-      
-      // 设置cookie
-      let cookie = ctx.cookies.set('EGG_COOK',userInfor.user_name,{
-        httpOnly: false,
-        encrypt: true,
-        maxAge: 1000*60*60*24
-      })
-      // 设置session
-      let session =  ctx.session.user = userInfor.user_name;
+      let session = null;
+      let cookie = null;
+      if(userInfor.code){
+        // 设置session
+        session =  ctx.session.user = userInfor.user_name;
+        // 设置cookie
+        cookie = ctx.cookies.set('EGG_COOK_U',userInfor.user_name,{
+          httpOnly: false,
+          encrypt: true,
+          maxAge: 1000*60*60*24
+        })
+      } else {
+        session =  ctx.session.admin = userInfor.user_name;
+        // 设置cookie
+        cookie = ctx.cookies.set('EGG_COOK_A',userInfor.user_name,{
+          httpOnly: false,
+          encrypt: true,
+          maxAge: 1000*60*60*24
+        })
+      }
       ctx.body = {
         'code': 200,
         'message': '登陆成功！',
@@ -123,10 +134,17 @@ class RegesterController extends Controller {
   }
 
   // 退出登录
+  // type：标识平台，0：商品展示平台，2： 后台管理平台
   async logout(){
     const {ctx} = this;
-    ctx.session = null;
-    ctx.cookies.set('EGG_COOK', null);
+    const type = parseInt(ctx.params.type);
+    if(type === 0 ){
+      ctx.session.user = null;
+      ctx.cookies.set('EGG_COOK_U', null);
+    } else {
+      ctx.session.admin = null;
+      ctx.cookies.set('EGG_COOK_A', null);
+    }
     ctx.body = {
       'code': 200,
       'message': '您已经安全退出登录!'

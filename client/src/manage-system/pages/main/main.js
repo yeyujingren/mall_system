@@ -11,7 +11,7 @@ const { Sider, Content } = Layout;
 class ManageIndex extends Component {
   render() {
     // 通过判断cookie判断用户是否登录
-    let cookies = document.cookie.indexOf('EGG_COOK=');
+    let cookies = document.cookie.indexOf('EGG_COOK_A=');
     if (cookies === -1) {
       return <Redirect to="/" />
     }

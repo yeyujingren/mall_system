@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 15:57:37 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 15:57:50
+ * @Last Modified time: 2019-08-21 11:05:14
  */
 import React, { Component, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
@@ -106,12 +106,17 @@ class UserManage extends Component {
         )
       }
     ]
+    // 配置每页展示数量
+    const pagination = {
+      pageSize: 5
+    }
     return(
       <Fragment>
         <Table
             dataSource={dataSource}
             columns={columns}
             rowKey={record => record.user_id}
+            pagination={pagination}
         />
         <Modal
             title="修改会员信息"
