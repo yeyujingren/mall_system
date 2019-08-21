@@ -232,20 +232,22 @@ class Header extends Component {
                 </div>
                 <div className="middle">
                   <ul className="list">
-                    <Link className="link" to="haspay">
+                    <Link className="link" to="/haspay">
                       <li className="item">
                         <Icon type="bank" theme="filled" />已购课程
                       </li>
                     </Link>
-                    <Link className="link" to="order">
+                    <Link className="link" to="/order">
                       <li className="item">
                         <Icon type="database" theme="filled" />订单中心
                       </li>
                     </Link>
-                    <li className="item">
-                      <Icon type="setting" theme="filled" />个人设置
-                    </li>
-                    <li className="item">
+                    <Link className="link" to="/persion">
+                      <li className="item">
+                        <Icon type="setting" theme="filled" />个人设置
+                      </li>
+                    </Link>
+                    <li className="item" onClick={() => {message.info('嘘，别提需求啦，小心攻城狮咬人，超凶的！')}}>
                       <Icon type="android" theme="filled" />开发ing
                     </li>
                   </ul>

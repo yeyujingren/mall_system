@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-08 13:32:46 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-16 09:46:00
+ * @Last Modified time: 2019-08-20 17:09:31
  */
 import React, { Component, Fragment } from 'react';
 import { Provider } from 'react-redux';
@@ -14,6 +14,7 @@ import LogModel from './component/logModel';
 import OrderCenter from './pages/orderCenter';
 import ShopCart from './pages/shopCart';
 import HasPay from './pages/hasPay';
+import Persion from './pages/persion';
 import Success from './component/success';
 import Fail from './component/fail';
 class App extends Component {
@@ -30,6 +31,7 @@ class App extends Component {
               <Route path="/haspay" component={HasPay} />
               <Route path="/success" component={Success} />
               <Route path="/fail" component={Fail} />
+              <Route path="/persion" component={Persion} />
               <Route path="/" component={Home} />
             </Switch>
           </Fragment>
