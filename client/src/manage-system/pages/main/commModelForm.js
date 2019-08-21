@@ -26,6 +26,14 @@ class ModelForm extends Component{
       if (!err) {
         that.props.changeInfor(values,id,url,handlePost,that);
         that.props.form.resetFields();
+      } else {
+        // let errArry = []
+        // for(let key in err) {
+        //   errArry.push(key);
+        // }
+        setTimeout(() => {
+          that.props.form.resetFields();
+        },1000)
       }
     });
   }

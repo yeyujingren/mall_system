@@ -2,7 +2,6 @@ module.exports = (opt,app) => {
   return async function init(ctx,next){
     // 判断用户是否登录
     let userInfo = ctx.session.user;
-    console.log('11111111111111',userInfo)
     if(userInfo) {
       // 查询数据库判断是否存在当前用户
       let result = await app.mysql.select('user',{
