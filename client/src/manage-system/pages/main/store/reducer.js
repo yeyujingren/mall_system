@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-31 11:44:16
  * @Last Modified by: 
- * @Last Modified time: 2019-08-13 14:27:54
+ * @Last Modified time: 2019-08-21 10:24:19
  */
 /**
  * userData: 用来存储会员数据
@@ -18,7 +18,8 @@ import {
   CHANGE_VISIBLE_FLAG,
   GET_COMM_LIST,
   PUSH_URL,
-  GET_ORDER_LIST
+  GET_ORDER_LIST,
+  RESET_MODEL_INFOR
 } from './actionType';
 const defaultState = {
   userData:[],
@@ -65,6 +66,13 @@ export default(state = defaultState,action) => {
       return {
         ...state,
         orderData: action.data
+      }
+    case RESET_MODEL_INFOR:
+      return {
+        ...state,
+        visible: action.visible,
+        willChangeInfor: action.willChangeInfor,
+        url: action.url
       }
     default:
       return state;

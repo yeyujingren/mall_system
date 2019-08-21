@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-08 10:08:21 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 16:42:43
+ * @Last Modified time: 2019-08-21 10:30:16
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -10,14 +10,28 @@ import {
   GET_COMM_LIST,
   PUSH_URL,
   CHANGE_VISIBLE_FLAG,
-  WILL_CHANGE_INFOR
+  WILL_CHANGE_INFOR,
+  RESET_MODEL_INFOR
 } from '../actionType';
 
 // 控制模态框展示
-export const changeVisible = (flag) => ({
-  type: CHANGE_VISIBLE_FLAG,
-  visible: flag
-})
+export const changeVisible = (flag) => {
+  return (dispatch) => {
+    if(flag){
+      dispatch({
+        type: CHANGE_VISIBLE_FLAG,
+        visible: flag
+      })
+    } else {
+      dispatch({
+        type: RESET_MODEL_INFOR,
+        visible: flag,
+        willChangeInfor: {},
+        url: null
+      })
+    }
+  }
+}
 
 // 获取要修改的数据
 export const willChangeInfor = (infor, id, flag,handlePost) => ({
@@ -25,7 +39,7 @@ export const willChangeInfor = (infor, id, flag,handlePost) => ({
   infor: infor,
   user_id: id,
   visible: flag,
-  url:null,
+  url:infor?infor.com_photo:null,
   handlePost
 })
 
