@@ -11,13 +11,13 @@ module.exports = (opt,app) => {
         await next();
       } else {
         ctx.body = {
-          'code': 403,
+          'code': 404,
           'message': '您尚未登录，请登录后重试！'
         }
       }
     } else {
       ctx.body = {
-        'code': 403,
+        'code': 404,
         'message': '您尚未登录，请登录后重试！'
       }
     }
