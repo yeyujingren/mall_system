@@ -64,7 +64,7 @@ module.exports = appInfo => {
 
   config.security = {
     csrf: {
-      ignore: '/upload'
+      ignore: '/admin/upload'
     }
   }
 

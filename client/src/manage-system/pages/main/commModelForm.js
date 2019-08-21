@@ -187,17 +187,17 @@ class ModelForm extends Component{
               <Upload.Dragger
                   name="file"
                   multiple={false}
-                  action="/upload"
+                  action="/admin/upload"
                   listType="picture"
                   accept=".webp,.jpg,.png,.ico,.gif,.jpeg"
                   showUploadList={false}
                   onChange={info => this.pushPhotoUrl(info)}
               >
-                {this.props.commInfor ? <img src={url?url:this.props.commInfor.com_photo} alt="img" style={{ width: '40%' }} /> : <div><p className="ant-upload-drag-icon">
-                  <Icon type="inbox" />
-                </p>
-                <p className="ant-upload-text">支持点击或者拖拽来上传图片</p>
-                <p className="ant-upload-hint">若不需要修改图片信息，请不要上传！</p></div>}
+                {
+                  this.props.commInfor
+                  ?<img src={url?url:this.props.commInfor.com_photo} alt="img" style={{ width: '40%' }} />
+                  :<div><p className="ant-upload-drag-icon"><Icon type="inbox" /></p><p className="ant-upload-text">支持点击或者拖拽来上传图片</p><p className="ant-upload-hint">若不需要修改图片信息，请不要上传！</p></div>
+                }
               </Upload.Dragger>,
             )}
           </div>
