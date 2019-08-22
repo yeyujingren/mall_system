@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-21 19:56:05
+ * @Last Modified time: 2019-08-22 11:05:10
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -13,7 +13,9 @@ import {
   HANDLE_LOGIN,
   USER_NAME_IS_REPET,
   UPDATE_MY_CART_LEN,
-  GET_CART_LIST
+  GET_CART_LIST,
+  GET_USER_INFO,
+  PUSH_PERSION_PHOTO
 } from './actionType';
 
 // 登录注册模态框控制
@@ -243,6 +245,59 @@ export const delCourse = (com_id) =>{
     localStorage.setItem('mycart',JSON.stringify(mycart));
     dispatch(getMycartLen());
     dispatch(getCartList());
+  }
+}
+
+// 获取用户信息
+export const getUserInfor = () => {
+  return dispatch => {
+    axios.get('/shop/getUserInfor')
+      .then( res => {
+        if(res.data.code === 200 ){
+          dispatch({
+            type: GET_USER_INFO,
+            userInfor: res.data.data
+          })
+        } else if (res.data.code === 403 ){
+          message.info('您的账号已经冻结，请联系管理员解冻')
+        } else {
+          message.error('数据请求失败，请稍后重试！')
+        }
+      })
+      .catch(e => {
+        message.error('网络请求失败，请示后重试！')
+      })
+  }
+}
+
+// 上传用户头像
+export const pushImg = url => {
+  return dispatch => {
+    const data={
+      url
+    }
+    const headers = {
+      'contentType':'json',
+      'x-csrf-token': window._csrf
+    }
+    axios.put('/shop/pushImg',data,{headers})
+      .then(res => {
+        if(res.data.code === 200 ) {
+          message.success('头像修改成功！');
+          localStorage.setItem('user_photo',url);
+          dispatch({
+            type:PUSH_PERSION_PHOTO,
+            url:url
+          })
+        } else if(res.data.code === 403){
+          message.info('您的账号已经被冻结，请联系管理员解冻！')
+        } else {
+          message.error('修改失败！')
+        }
+      })
+      .catch( e => {
+        message.error('修改失败！')
+      })
   }
 }
 

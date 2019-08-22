@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 14:17:25 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-21 17:38:22
+ * @Last Modified time: 2019-08-22 10:43:05
  */
 
 module.exports = app => {
@@ -44,8 +44,10 @@ module.exports = app => {
   router.put('/shop/confirmCancel',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.orderManage.confirmPay);
 
   // 更改个人信息
+  router.get('/shop/getUserInfor',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.persionManage.getUserInfor);
   router.put('/shop/changeEmail',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.persionManage.changeEmail);
   router.put('/shop/changePsd',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.persionManage.changePsd);
+  router.put('/shop/pushImg',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.persionManage.pushImg);
 
   // 已购商品数据接口
   router.get('/shop/getHasPayCourse/:id',userauthMiddleware,controller.shop.orderManage.getHasPayCourse);

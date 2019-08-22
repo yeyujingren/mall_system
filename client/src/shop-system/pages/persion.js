@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
-import {  Icon, Modal, Form, Input, Tooltip } from 'antd';
+import {  Icon, Modal, Form, Input, Tooltip, Upload, message } from 'antd';
 import { changePersionInfor } from './store/actionCreator';
+import { getUserInfor, pushImg } from '../component/store/actionCreator';
 import '../style/persion.less';
 
 class Persion extends Component {
@@ -10,10 +11,16 @@ class Persion extends Component {
     super(props);
     this.state = {
       visible: false,
-      flag:0 // 0标识邮箱，1标识密码
+      flag:0, // 0标识邮箱，1标识密码
+      loading: false
     }
   }
   componentDidMount(){
+    this.verifyLogin();
+    this.props.getUserInfor();
+  }
+
+  verifyLogin(){
     let cookies = document.cookie.indexOf('EGG_COOK_U=');
     if (cookies === -1) {
       this.props.history.push('/')
@@ -35,8 +42,39 @@ class Persion extends Component {
       }
     });
   }
+  // 上传图片前所需验证
+  beforeUpload(file) {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('您只能上传JPG/PNG格式的图片!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error('您只能上传小于2m的图片！');
+    }
+    return isJpgOrPng && isLt2M;
+  }
+  handleChangePhoto = info => {
+    if(info.file.status === 'uploading'){
+      this.setState({loading: true});
+      return;
+    }
+    if(info.file.status === 'done') {
+      this.setState({
+        loading: false
+      })
+      this.props.pushImg(info.file.response.url);
+    }
+  }
   render() {
+    const { userInfor, userPhoto } = this.props;
     const { getFieldDecorator} = this.props.form;
+    const uploadButton = (
+      <div>
+        <Icon type={this.state.loading ? 'loading' : 'plus'} />
+        <div className="ant-upload-text">上传头像</div>
+      </div>
+    );
     const formItemLayout = {
       labelCol: {
         xs: { span: 24, offset: 4 },
@@ -165,19 +203,29 @@ class Persion extends Component {
         </Modal>
         <div className="persional">
           <div className="item">
-            <span>
-              <img className="per-photo" src="https://img.mukewang.com/5458640c0001b0a702200220-200-200.jpg" alt=""/>
-            </span>
-            <span>
-              更改头像
-            </span>
+            <Tooltip placement="rightTop" title="点击头像可进行修改">
+              <span style={{'display':'inline-block'}}>
+                <Upload
+                    name="avatar"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    action="/admin/upload"
+                    style={{'width':'100px','height':'100px','borderRadius':'50px','overflow':'hidden'}}
+                    beforeUpload={this.beforeUpload}
+                    onChange={this.handleChangePhoto}
+                >
+                  {userInfor.user_photo ? <img className="per-photo" src={userPhoto?userPhoto:userInfor.user_photo} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                </Upload>
+              </span>
+            </Tooltip>
           </div>
           <div className="item">
             <span className="span-icon">
               <Icon className="icon" type="barcode" />
             </span>
             <span className="span-type">
-              <p className="per-item">ID: 123456</p>
+              <p className="per-item">ID: {userInfor.user_id}</p>
               <p className="intro">用户唯一标识id</p>
             </span>
           </div>
@@ -186,7 +234,7 @@ class Persion extends Component {
               <Icon className="icon" type="money-collect" />
             </span>
             <span className="span-type">
-              <p className="per-item">积分： 1024</p>
+              <p className="per-item">积分： {userInfor.integral}</p>
               <p className="intro">用户购买课程所赠积分</p>
             </span>
           </div>
@@ -195,7 +243,7 @@ class Persion extends Component {
               <Icon className="icon" type="user" />
             </span>
             <span className="span-type">
-              <p className="per-item">昵称：夜雨惊人</p>
+              <p className="per-item">昵称：{userInfor.user_name}</p>
               <p className="intro">用户昵称不可再次更改</p>
             </span>
           </div>
@@ -204,7 +252,7 @@ class Persion extends Component {
               <Icon className="icon" type="mail" />
             </span>
             <span className="span-type">
-              <p className="per-item">电子邮箱：1234@gamil.com</p>
+              <p className="per-item">电子邮箱：{userInfor.email}</p>
               <p className="intro">用于验证用户信息的真实性</p>
             </span>
             <span onClick={() => this.handleVisible(true,0)} className="change-action">
@@ -232,12 +280,19 @@ class Persion extends Component {
 }
 
 const mapState = state => ({
-
+  userInfor: state.component.userInfor,
+  userPhoto:  state.component.userPhoto
 })
 
 const mapDispatch = dispatch => ({
   changeInfor(flag,values,id,_this) {
     dispatch(changePersionInfor(flag,values,id,_this))
+  },
+  getUserInfor(){
+    dispatch(getUserInfor())
+  },
+  pushImg(url){
+    dispatch(pushImg(url));
   }
 })
 

@@ -87,7 +87,7 @@ class Header extends Component {
   }
 
   render(){
-    const { isLogin, mycartLen, cartList } = this.props;
+    const { isLogin, mycartLen, cartList, userPhoto } = this.props;
     // 从localStorage中获取用户名和头像链接
     const user_name =  localStorage.getItem('user_name');
     const user_photo =  localStorage.getItem('user_photo');
@@ -197,7 +197,7 @@ class Header extends Component {
               : <Fragment>
                   <img
                       className="user-photo"
-                      src={user_photo}
+                      src={userPhoto?userPhoto:user_photo}
                       alt=""
                       onMouseEnter={() => this.handlePersionDisplay(0)}
                       onMouseLeave={() => this.handlePersionDisplay(1)}
@@ -215,7 +215,7 @@ class Header extends Component {
                   onMouseLeave={() => this.handlePersionDisplay(1)}
               >
                 <div className="top">
-                  <img src={user_photo} alt="会员头像"/>
+                  <img src={userPhoto?userPhoto:user_photo} alt="会员头像"/>
                   <div className="top-right">
                     <div className="user_name">
                       {user_name}
@@ -269,7 +269,8 @@ class Header extends Component {
 const mapState = state => ({
   isLogin: state.component.isLogin,
   mycartLen: state.component.mycartLen,
-  cartList: state.component.cartList
+  cartList: state.component.cartList,
+  userPhoto: state.component.userPhoto
 })
 
 const mapDispatch = dispatch => ({
