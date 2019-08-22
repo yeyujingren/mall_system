@@ -2,10 +2,10 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-22 14:36:08
+ * @Last Modified time: 2019-08-22 16:36:36
  */
 import axios from 'axios';
-import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST } from './actionType';
+import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, GET_FUZZY_SEARCH_LIST } from './actionType';
 import { handleLogin } from '../../component/store/actionCreator';
 import { message } from 'antd';
 
@@ -25,7 +25,7 @@ const seletApi = (user_id,flag) => {
   }
 }
 
-// 获取首页课程数据
+// 获取课程数据
 export const getCourseList = (type) => {
   return (dispatch) => {
     axios.get('/shop/getCommList/'+type)
@@ -38,6 +38,24 @@ export const getCourseList = (type) => {
         }
       })
       .catch(() => {message.error('获取课程列表失败')})
+  }
+}
+
+// 模糊查询返回值
+export const fuzzySearch = (value) => {
+  return (dispatch) => {
+    axios.get('/shop/fuzzySearch/'+value)
+      .then( res => {
+        if(res.data.code === 200 ) {
+          dispatch({
+            type: GET_FUZZY_SEARCH_LIST,
+            courseList: res.data.data
+          })
+        }
+      })
+      .catch(e => {
+        message.error('查询出错！');
+      })
   }
 }
 

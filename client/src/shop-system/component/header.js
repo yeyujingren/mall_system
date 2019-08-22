@@ -11,6 +11,7 @@ import {
   delCourse,
   getCartList
 } from './store/actionCreator';
+import { fuzzySearch } from '../pages/store/actionCreator';
 import '../style/header.less';
 
 class Header extends Component {
@@ -86,6 +87,15 @@ class Header extends Component {
     this.props.delCourse(com_id);
   }
 
+  // 按下回车键触发
+  onkeydown(e) {
+    if(e.keyCode === 13){
+      let value = e.target.value;
+      this.props.fuzzySearch(value);
+      this.props.history.push('/search/'+value);
+    }
+  }
+
   render(){
     const { isLogin, mycartLen, cartList, userPhoto } = this.props;
     // 从localStorage中获取用户名和头像链接
@@ -109,7 +119,7 @@ class Header extends Component {
             </ul>
           </div>
           <div className="search">
-            <input type="text"/>
+            <input onKeyDown={(e) =>this.onkeydown(e)} type="text"/>
             <Icon type="search" />
           </div>
         </div>
@@ -293,6 +303,9 @@ const mapDispatch = dispatch => ({
   },
   getCartList(){
     dispatch(getCartList())
+  },
+  fuzzySearch(value){
+    dispatch(fuzzySearch(value))
   }
 })
 

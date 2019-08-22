@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-08-02 16:52:13
  * @Last Modified by: 
- * @Last Modified time: 2019-08-22 14:46:48
+ * @Last Modified time: 2019-08-22 16:27:53
  */
 'use strict';
 
@@ -36,6 +36,11 @@ class CommManageServerService extends Service {
         results = await this.app.mysql.query('select * from commodity');
         return results;
     }
+  }
+
+  async fuzzySearch(key) {
+    const results = await this.app.mysql.query(`SELECT * FROM commodity WHERE CONCAT(com_name,merchant,type,com_dec) LIKE "%${key}%"`)
+    return results;
   }
 
   // 增加商品

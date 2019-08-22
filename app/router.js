@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 14:17:25 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-22 14:37:10
+ * @Last Modified time: 2019-08-22 16:02:30
  */
 
 module.exports = app => {
@@ -51,7 +51,8 @@ module.exports = app => {
 
   // 已购商品数据接口
   router.get('/shop/getHasPayCourse/:id',userauthMiddleware,controller.shop.orderManage.getHasPayCourse);
-  // 首页课程数据获取
+  // 课程数据获取
+  router.get('/shop/fuzzySearch/:key',controller.admin.commManage.fuzzySearch);
   router.get('/shop/getCommList/:type',controller.admin.commManage.getCommList);
   // 访问未知路径或者更目录时指向路径
   router.get('/admin(/?)**', controller.home.admin);

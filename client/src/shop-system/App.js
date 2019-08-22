@@ -12,6 +12,7 @@ import Persion from './pages/persion';
 import Success from './component/success';
 import Fail from './component/fail';
 import Classify from './pages/classify';
+import SearchPage from './pages/searchPage';
 class App extends Component {
   render() {
     return(
@@ -28,6 +29,7 @@ class App extends Component {
               <Route path="/fail" component={Fail} />
               <Route path="/persion" component={Persion} />
               <Route path="/type/:type" exact component={Classify} />
+              <Route path="/search/:key" exact component={SearchPage} />
               <Route path="/" component={Home} />
             </Switch>
           </Fragment>

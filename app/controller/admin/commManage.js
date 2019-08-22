@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-08-02 16:42:17
  * @Last Modified by: 
- * @Last Modified time: 2019-08-22 14:37:57
+ * @Last Modified time: 2019-08-22 16:28:06
  */
 'use strict';
 
@@ -104,6 +104,19 @@ class CommManageController extends Controller {
     ctx.body = {
       'code': 200,
       'url': '/images/'+result
+    }
+  }
+  // 模糊查询课程
+  async fuzzySearch() {
+    const {ctx} = this;
+    const key = ctx.params.key;
+    const result =  await ctx.service.admin.commManageServer.fuzzySearch(key);
+    ctx.set({
+      'contentType':'json'
+    });
+    ctx.body = {
+      'code': 200,
+      'data': result
     }
   }
 }
