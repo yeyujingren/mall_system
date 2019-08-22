@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-08-02 16:42:17
  * @Last Modified by: 
- * @Last Modified time: 2019-08-15 11:18:27
+ * @Last Modified time: 2019-08-22 14:37:57
  */
 'use strict';
 
@@ -12,7 +12,8 @@ class CommManageController extends Controller {
   // 获取商品列表
   async getCommList() {
     const {ctx} = this;
-    const result = await ctx.service.admin.commManageServer.getList();
+    const type = ctx.params.type;
+    const result = await ctx.service.admin.commManageServer.getList(type);
     ctx.set({
       'contentType':'json'
     });

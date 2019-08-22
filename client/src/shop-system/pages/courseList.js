@@ -11,7 +11,8 @@ import {
 const { confirm } = Modal;
 class CourseList extends Component {
   componentDidMount(){
-    this.props.getCourseList();
+    const type = this.props.type;
+    this.props.getCourseList(type);
   }
   // 验证是否已经购买
   isPay (com_id) {
@@ -158,8 +159,8 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  getCourseList() {
-    dispatch(getCourseList());
+  getCourseList(type) {
+    dispatch(getCourseList(type));
   },
   getMycartLen(){
     dispatch(getMycartLen());

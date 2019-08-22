@@ -1,8 +1,8 @@
 /*
  * @Author: Yifeng Tao
  * @Date: 2019-08-02 16:52:13
- * @Last Modified by
- * @Last Modified time: 2019-08-06 18:20:00
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-22 14:46:48
  */
 'use strict';
 
@@ -14,9 +14,28 @@ const sendToWormhole = require('stream-wormhole');
 
 class CommManageServerService extends Service {
   // 查询商品
-  async getList() {
-    const results = await this.app.mysql.query('select * from commodity where flag=0')
-    return results;
+  async getList(type) {
+    let results = ''
+    switch (type) {
+      case 'web':
+        results = await this.app.mysql.query('select * from commodity where type="web"');
+        return results;
+      case 'java':
+        results = await this.app.mysql.query('select * from commodity where type="java"');
+        return results;
+      case 'python':
+        results = await this.app.mysql.query('select * from commodity where type="python"');
+        return results;
+      case 'android':
+        results = await this.app.mysql.query('select * from commodity where type="android"');
+        return results;
+      case 'php':
+        results = await this.app.mysql.query('select * from commodity where type="php"');
+        return results;
+      default:
+        results = await this.app.mysql.query('select * from commodity');
+        return results;
+    }
   }
 
   // 增加商品

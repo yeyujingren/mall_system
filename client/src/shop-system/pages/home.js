@@ -6,7 +6,7 @@ class Home extends Component {
     return(
       <div>
         <CarouselModel />
-        <CourseList />
+        <CourseList type="all" />
       </div>
     )
   }

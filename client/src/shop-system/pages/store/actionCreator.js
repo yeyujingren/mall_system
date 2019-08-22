@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-21 20:02:02
+ * @Last Modified time: 2019-08-22 14:36:08
  */
 import axios from 'axios';
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST } from './actionType';
@@ -26,9 +26,9 @@ const seletApi = (user_id,flag) => {
 }
 
 // 获取首页课程数据
-export const getCourseList = () => {
+export const getCourseList = (type) => {
   return (dispatch) => {
-    axios.get('/shop/getCommList')
+    axios.get('/shop/getCommList/'+type)
       .then( res => {
         if(res.data.code === 200){
           dispatch({
