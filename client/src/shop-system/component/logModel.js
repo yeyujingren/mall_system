@@ -67,7 +67,7 @@ class LogModel extends Component {
 
   verifyUserName() {
     const user_name = this.props.form.getFieldsValue(['user_name']);
-    if(user_name.user_name) {
+    if(user_name.user_name && this.props.flag === 0) {
       this.props.verifyUserName(user_name.user_name);
     }
   }

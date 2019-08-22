@@ -2,12 +2,13 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-24 09:34:32
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 10:16:58
+ * @Last Modified time: 2019-08-22 13:19:55
  */
 'use strict';
 
 const Service = require('egg').Service;
 const svgCaptcha = require('svg-captcha');
+const  crypto = require('crypto');
 
 class RegisterServerService extends Service {
   // 查询用户名是否存在
@@ -15,7 +16,13 @@ class RegisterServerService extends Service {
     const result = await this.app.mysql.get('user',{ 'user_name':userName });
     return result;
   }
-
+  // 使用MD5（加盐）
+  saltPassword(psd,user_name){
+    const saltPassword = psd + ':' + user_name;
+    const md5 = crypto.createHash('md5');
+    let password = md5.update(saltPassword).digest('hex')
+    return password;
+  }
   // 生成验证码
   async verify(flag) {
     const captcha = svgCaptcha.create({
@@ -54,8 +61,9 @@ class RegisterServerService extends Service {
     const user_name = userInfor.user_name;
     const psd = userInfor.psd;
     const email = userInfor.email;
+    let saltPassword = this.saltPassword(psd,user_name);
     if(userInfor.code === regester_code){
-      const result = await this.app.mysql.insert('user',{ user_name, psd, email });
+      const result = await this.app.mysql.insert('user',{ user_name, psd:saltPassword, email });
       // 判断是否修改成功
       const isSuc = result.affectedRows === 1;
       return isSuc;
@@ -72,12 +80,14 @@ class RegisterServerService extends Service {
     if(userInfor.code){
       let code = userInfor.code;
       if(login_code===code){
-        const userResult = await this.app.mysql.get('user',{user_name,psd,'flag':[0,2]});
+        let saltPassword = this.saltPassword(psd,user_name);
+        const userResult = await this.app.mysql.get('user',{user_name,psd:saltPassword,'flag':[0,2]});
         return userResult
       }
       return false;
     } else {
-      const adminResult = await this.app.mysql.get('user',{user_name,psd,'flag':2});
+      let saltPassword = this.saltPassword(psd,user_name);
+      const adminResult = await this.app.mysql.get('user',{user_name,psd:saltPassword,'flag':2});
       return adminResult;
     }
   }
