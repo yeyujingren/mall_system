@@ -1,8 +1,8 @@
 /*
  * @Author: Yifeng Tao 
  * @Date: 2019-08-19 20:06:39 
- * @Last Modified by:    
- * @Last Modified time: 2019-08-21 20:06:39 
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-23 16:41:29
  */
 
 'use strict';
@@ -12,19 +12,42 @@ const Controller = require('egg').Controller;
 class OrderManageController extends Controller {
   // 订单生成
   async createOrder() {
+    let courses = []
+    let flag = true;
     const { ctx } = this;
     const data = ctx.request.body;
-    const result = await ctx.service.shop.orderManageServer.createOrder(data);
-    if(result.results.length === data.cartList.length){
-      ctx.body = {
-        'code': 200,
-        'message': '订单生成成功！',
-        'order_id':result.orderId
+    const cartList = data.cartList;
+    const hasPayCourse = await ctx.service.shop.orderManageServer.getOrderList(data.user_id, 4);
+    hasPayCourse.map(item => {
+      item.comms.map(course => {
+        courses.push(course.com_id);
+      })
+    })
+    for(let i=0;i<courses.length;i++){
+      for(let j=0;j<cartList.length;j++){
+        if(courses[i]===cartList[j].com_id){
+          flag = false;
+        }
+      }
+    }
+    if(flag){
+      const result = await ctx.service.shop.orderManageServer.createOrder(data);
+      if(result.results.length === data.cartList.length){
+        ctx.body = {
+          'code': 200,
+          'message': '订单生成成功！',
+          'order_id':result.orderId
+        }
+      } else {
+        ctx.body = {
+          'code': 400,
+          'message': '订单生成失败，请重试！'
+        }
       }
     } else {
       ctx.body = {
-        'code': 400,
-        'message': '订单生成失败，请重试！'
+        'code': 406,
+        'message': '您的订单中存在已购买课程！'
       }
     }
   }
@@ -112,7 +135,7 @@ class OrderManageController extends Controller {
   async getHasPayCourse() {
     const { ctx } = this;
     const user_id = ctx.params.id;
-    const result = await ctx.service.shop.orderManageServer.getOrderList(user_id,4);
+    const result = await ctx.service.shop.orderManageServer.getOrderList(user_id,5);
     ctx.body = {
       'code': 200,
       'message': '数据获取成功！',

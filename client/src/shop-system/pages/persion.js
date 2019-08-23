@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { withRouter } from 'react-router-dom'
 import {  Icon, Modal, Form, Input, Tooltip, Upload, message } from 'antd';
 import { changePersionInfor } from './store/actionCreator';
@@ -34,11 +35,28 @@ class Persion extends Component {
     const id = localStorage.getItem('user_id');
     e.preventDefault();
     const that = this;
+    let coms = [];
+    const data = JSON.parse(localStorage.getItem('mycart'));
+    const headers = {
+      'contentType': 'json',
+      'x-csrf-token': window._csrf
+    }
+    data.map(item => {
+      coms.push(item.com_id);
+    })
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        that.props.changeInfor(flag,values,id,this);
-        this.setState({'visible': false});
-        that.props.form.resetFields();
+        axios.put('/shop/saveMycart', { user_id:id, coms }, { headers })
+          .then(res => {
+            if (res.data.code === 200) {
+              that.props.changeInfor(flag,values,id,this);
+              this.setState({'visible': false});
+              that.props.form.resetFields();
+            } else {
+              message.error('购物车数据保存失败！')
+            }
+          })
+          .catch(e => { console.log(e)});
       }
     });
   }

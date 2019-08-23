@@ -2,11 +2,11 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-23 10:40:18
+ * @Last Modified time: 2019-08-23 16:47:35
  */
 import axios from 'axios';
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, GET_FUZZY_SEARCH_LIST, CHANGE_EMAIL } from './actionType';
-import { handleLogin } from '../../component/store/actionCreator';
+import { handleLogin, getMycartLen } from '../../component/store/actionCreator';
 import { message } from 'antd';
 
 // 根据flag来派发不同接口
@@ -23,16 +23,6 @@ const seletApi = (user_id,flag) => {
     default:
       break;
   }
-}
-
-// 删除localStorage中存储的数据
-const delLocalStorage = ()  => {
-  localStorage.removeItem('user_name');
-  localStorage.removeItem('user_photo');
-  localStorage.removeItem('user_id');
-  localStorage.removeItem('vip_level');
-  localStorage.removeItem('integral');
-  localStorage.removeItem('hasPay');
 }
 
 // 获取课程数据
@@ -116,6 +106,8 @@ export const reaclPay = (_this,order_id,user_id,totalPrice) => {
           });
           localStorage.setItem('hasPay',JSON.stringify(hasPay));
           _this.props.history.push('/success/'+order_id);
+        } else if (res.data.code === 406 ){
+          message.info(res.data.message);
         } else if (res.data.code === 403 ){
           message.info('您的账号已被冻结，请联系管理员解冻，再进行支付操作！');
         } else {
@@ -203,8 +195,9 @@ export const changePersionInfor = (flag,values,id,_this) => {
     axios.put('/shop/changePsd',data,{headers})
       .then( res => {
         if(res.data.code === 200 ){
-          delLocalStorage()
+          localStorage.clear();
           message.success('您已经成功修改密码，请重新登录！');
+          dispatch(getMycartLen())
           dispatch(handleLogin(false));
           _this.props.history.push('/');
         } else if (res.data.code === 403 ){
