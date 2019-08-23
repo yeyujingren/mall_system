@@ -25,8 +25,8 @@ class App extends Component {
               <Route path="/order" component={OrderCenter} />
               <Route path="/cart" component={ShopCart} />
               <Route path="/haspay" component={HasPay} />
-              <Route path="/success" component={Success} />
-              <Route path="/fail" component={Fail} />
+              <Route path="/success/:order" exact component={Success} />
+              <Route path="/fail/:order" component={Fail} />
               <Route path="/persion" component={Persion} />
               <Route path="/type/:type" exact component={Classify} />
               <Route path="/search/:key" exact component={SearchPage} />
