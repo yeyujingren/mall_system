@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Icon, Button, message, Row, Col } from 'antd';
+import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import {
@@ -67,8 +68,25 @@ class Header extends Component {
   // 退出登录
   logout() {
     let persion = document.getElementById('persion');
-    this.props.handleLogout();
     persion.style.display = 'none';
+    let coms = [];
+    const user_id = localStorage.getItem('user_id');
+    const data = JSON.parse(localStorage.getItem('mycart'));
+    const headers = {
+      'contentType': 'json',
+      'x-csrf-token': window._csrf
+    }
+    data.map(item => {
+      coms.push(item.com_id);
+    })
+    axios.put('/shop/saveMycart', { user_id, coms }, { headers })
+    .then(res => {
+      if (res.data.code) {
+        this.props.handleLogout();
+      }
+        return false;
+    })
+    .catch(e => { console.log(e)});
   }
 
   // 控制跳转

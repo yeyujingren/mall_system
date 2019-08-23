@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao
  * @Date: 2019-07-30 15:29:02
  * @Last Modified by: 
- * @Last Modified time: 2019-08-21 13:16:03
+ * @Last Modified time: 2019-08-23 15:48:53
  */
 'use strict';
 
@@ -91,7 +91,8 @@ class RegesterController extends Controller {
     });
     if(result) {
       const courses = []
-      const hasPayCourse = await ctx.service.shop.orderManageServer.getOrderList(result.user_id,2);
+      const hasPayCourse = await ctx.service.shop.orderManageServer.getOrderList(result.user_id,4);
+      let mycartList = await ctx.service.shop.cartManageServer.getMycart(result.user_id);
       hasPayCourse.map(item => {
         item.comms.map(course => {
           courses.push(course.com_id);
@@ -121,7 +122,7 @@ class RegesterController extends Controller {
       ctx.body = {
         'code': 200,
         'message': '登陆成功！',
-        data: {result,courses},
+        data: {result,courses,mycartList:mycartList?mycartList:[]},
         cookie,
         session
       }

@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 14:17:25 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-22 16:02:30
+ * @Last Modified time: 2019-08-23 13:46:21
  */
 
 module.exports = app => {
@@ -42,6 +42,9 @@ module.exports = app => {
   router.get('/shop/getHasFinishOrder/:id',userauthMiddleware,controller.shop.orderManage.getHasFinishOrder);
   router.put('/shop/confirmPay',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.orderManage.confirmPay);
   router.put('/shop/confirmCancel',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.orderManage.confirmPay);
+
+  // 退出登录时保存购物车数据
+  router.put('/shop/saveMycart',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.cartManage.upDateCartList);
 
   // 更改个人信息
   router.get('/shop/getUserInfor',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.persionManage.getUserInfor);

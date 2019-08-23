@@ -1,8 +1,8 @@
 /*
  * @Author: Yifeng Tao 
  * @Date: 2019-08-18 10:14:53 
- * @Last Modified by:    
- * @Last Modified time: 2019-08-21 10:14:53 
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-23 15:48:34
  */
 
 'use strict';
@@ -71,7 +71,7 @@ class OrderManageServerService extends Service {
   /**
    * 根据不同操作进行不同的条件查询
    * @param {number} user_id :用户id
-   * @param {number} flag : 标识订单状态操作：0标识查询该用户全部订单，1标识未支付订单，2标识待审核订单，3标识已完成订单，
+   * @param {number} flag : 标识订单状态操作：0标识查询该用户全部订单，1标识未支付订单，2标识待审核订单，3标识已完成订单，4标识已支付订单
    */
   select(user_id, flag){
     switch (flag) {
@@ -83,6 +83,8 @@ class OrderManageServerService extends Service {
         return `user.user_id=${user_id} and orderform.ispay=1`;
       case 3:
         return `user.user_id=${user_id} and orderform.ispay in (2,3)`;
+      case 4:
+        return `user.user_id=${user_id} and orderform.ispay in (1,2)`;
       default:
         return `user.user_id=${user_id} and orderform.ispay=2`;
     }
