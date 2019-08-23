@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-23 16:47:35
+ * @Last Modified time: 2019-08-23 17:22:20
  */
 import axios from 'axios';
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, GET_FUZZY_SEARCH_LIST, CHANGE_EMAIL } from './actionType';
@@ -107,7 +107,7 @@ export const reaclPay = (_this,order_id,user_id,totalPrice) => {
           localStorage.setItem('hasPay',JSON.stringify(hasPay));
           _this.props.history.push('/success/'+order_id);
         } else if (res.data.code === 406 ){
-          message.info(res.data.message);
+          message.info('您要购买的课程中存在已购买的课程，导致订单失效！');
         } else if (res.data.code === 403 ){
           message.info('您的账号已被冻结，请联系管理员解冻，再进行支付操作！');
         } else {

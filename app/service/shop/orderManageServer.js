@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-18 10:14:53 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-23 15:48:34
+ * @Last Modified time: 2019-08-23 17:09:43
  */
 
 'use strict';
@@ -203,6 +203,15 @@ class OrderManageServerService extends Service {
       hasPayCourse.push(item.com_id);
     })
     return hasPayCourse;
+  }
+
+  // 通过订单id获取订单中的商品
+  async getCom (order_id){
+    const results = await this.app.mysql.select('assocform',{
+      where: {order_id},
+      columns: 'com_id'
+    })
+    return results;
   }
 }
 
