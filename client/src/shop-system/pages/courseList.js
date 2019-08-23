@@ -3,11 +3,9 @@ import { connect } from 'react-redux';
 import { Icon, Row, Col, message, Modal } from 'antd';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { getCourseList } from './store/actionCreator';
+import { getCourseList, reaclPay } from './store/actionCreator';
 import { getMycartLen } from '../component/store/actionCreator';
-import {
-  reaclPay
-} from './store/actionCreator';
+
 const { confirm } = Modal;
 class CourseList extends Component {
   componentDidMount(){
