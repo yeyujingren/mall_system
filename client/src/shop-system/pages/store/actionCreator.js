@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-23 17:22:20
+ * @Last Modified time: 2019-08-23 18:02:38
  */
 import axios from 'axios';
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, GET_FUZZY_SEARCH_LIST, CHANGE_EMAIL } from './actionType';
@@ -167,7 +167,6 @@ export const changePersionInfor = (flag,values,id,_this) => {
     'user_id': id,
     'data': values
   };
-  console.log(data)
   const headers = {
     'contentType':'json',
     'x-csrf-token': window._csrf
@@ -197,7 +196,7 @@ export const changePersionInfor = (flag,values,id,_this) => {
         if(res.data.code === 200 ){
           localStorage.clear();
           message.success('您已经成功修改密码，请重新登录！');
-          dispatch(getMycartLen())
+          dispatch(getMycartLen());
           dispatch(handleLogin(false));
           _this.props.history.push('/');
         } else if (res.data.code === 403 ){

@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-19 20:06:39 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-23 17:20:36
+ * @Last Modified time: 2019-08-23 17:53:19
  */
 
 'use strict';
@@ -120,6 +120,7 @@ class OrderManageController extends Controller {
         for(let j=0;j<willPayCourse.length;j++){
           if(courses[i]===willPayCourse[j].com_id){
             flag = false;
+            break;
           }
         }
       }

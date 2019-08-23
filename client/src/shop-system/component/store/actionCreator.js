@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-23 16:28:19
+ * @Last Modified time: 2019-08-23 18:02:48
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -218,6 +218,7 @@ export const handleLogout = () => {
           type: HANDLE_LOGIN,
           isLogin: false
         })
+        dispatch(getMycartLen())
         message.success('您已经安全退出了');
       } else {
         message.error('opps,退出失败，请稍等再试');
@@ -232,7 +233,8 @@ export const handleLogout = () => {
 // 清除localStorage,并更新购物车列表和购物车数量
 export const removeMyCart = () => {
   return dispatch => {
-    localStorage.removeItem('mycart');
+    const mycart = JSON.stringify([]);
+    localStorage.setItem('mycart',mycart);
     dispatch(getCartList());
     dispatch(getMycartLen());
   }
