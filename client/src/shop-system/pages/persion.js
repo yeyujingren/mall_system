@@ -67,7 +67,7 @@ class Persion extends Component {
     }
   }
   render() {
-    const { userInfor, userPhoto } = this.props;
+    const { userInfor, userPhoto, userEmail } = this.props;
     const { getFieldDecorator} = this.props.form;
     const uploadButton = (
       <div>
@@ -252,7 +252,7 @@ class Persion extends Component {
               <Icon className="icon" type="mail" />
             </span>
             <span className="span-type">
-              <p className="per-item">电子邮箱：{userInfor.email}</p>
+              <p className="per-item">电子邮箱：{userEmail?userEmail:userInfor.email}</p>
               <p className="intro">用于验证用户信息的真实性</p>
             </span>
             <span onClick={() => this.handleVisible(true,0)} className="change-action">
@@ -281,7 +281,8 @@ class Persion extends Component {
 
 const mapState = state => ({
   userInfor: state.component.userInfor,
-  userPhoto:  state.component.userPhoto
+  userPhoto:  state.component.userPhoto,
+  userEmail: state.main.email
 })
 
 const mapDispatch = dispatch => ({
