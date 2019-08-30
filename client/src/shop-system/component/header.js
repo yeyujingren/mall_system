@@ -50,10 +50,8 @@ class Header extends Component {
   }
   handleCartDisplay =(flag)=>{
     if(!flag){
-      // const data = JSON.parse(localStorage.getItem('mycart'));
       this.props.getCartList();
       clearTimeout(this.state.shopTimer);
-      // this.setState({'mycart': data});
       this.setState({'handleCartShow':true});
     } else {
       const timer = setTimeout(() => this.setState({'handleCartShow':false}),300);
@@ -82,7 +80,7 @@ class Header extends Component {
     axios.put('/shop/saveMycart', { user_id, coms }, { headers })
     .then(res => {
       if (res.data.code) {
-        this.props.handleLogout();
+        this.props.handleLogout(this);
       }
         return false;
     })
@@ -310,8 +308,8 @@ const mapDispatch = dispatch => ({
   handleLogin(isLogin){
     dispatch(handleLogin(isLogin));
   },
-  handleLogout(){
-    dispatch(handleLogout());
+  handleLogout(that){
+    dispatch(handleLogout(that));
   },
   getMycartLen(){
     dispatch(getMycartLen());

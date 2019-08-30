@@ -15,7 +15,6 @@ class LogModel extends Component {
 
   handleConfirmBlur = e => {
     const { value } = e.target;
-    console.log(value,!!value);
     this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   };
   compareToFirstPassword = (rule, value, callback) => {
@@ -36,12 +35,12 @@ class LogModel extends Component {
   }
 
   regest(e,flag,isRepet){
-    console.log(isRepet)
     const that = this;
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err && !isRepet) {
         that.props.regest(flag,values);
+        that.props.form.resetFields();
       }
     });
   }
@@ -294,7 +293,6 @@ const mapDispatch = dispatch => ({
     }
   },
   verifyUserName(user_name) {
-    console.log(user_name);
     dispatch(verifyUserName(user_name));
   }
 })

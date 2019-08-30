@@ -5,11 +5,16 @@ import { getHasPayList } from './store/actionCreator';
 import '../style/hasPay.less';
 class HasPay extends Component {
   componentDidMount(){
-    this.hasPayList();
+    this.handleverify();
   }
-  // 获取已购课程列表
-  hasPayList() {
-    this.props.getHasPayList();
+  // 验证用户身份，若未登录则跳转到首页
+  handleverify() {
+    let cookies = document.cookie.indexOf('EGG_COOK_U=');
+    if (cookies === -1) {
+      this.props.history.push('/')
+    } else {
+      this.props.getHasPayList();
+    }
   }
   render() {
     const { courseList } = this.props;

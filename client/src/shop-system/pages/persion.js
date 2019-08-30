@@ -17,14 +17,15 @@ class Persion extends Component {
     }
   }
   componentDidMount(){
-    this.verifyLogin();
-    this.props.getUserInfor();
+    this.handleverify();
   }
-
-  verifyLogin(){
+  // 验证用户身份，若未登录则跳转到首页
+  handleverify() {
     let cookies = document.cookie.indexOf('EGG_COOK_U=');
     if (cookies === -1) {
       this.props.history.push('/')
+    } else {
+      this.props.getUserInfor();
     }
   }
   handleVisible(visible,flag) {

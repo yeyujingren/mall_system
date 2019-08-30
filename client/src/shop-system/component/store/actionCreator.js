@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-09 09:54:11 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-23 18:02:48
+ * @Last Modified time: 2019-08-29 19:17:04
  */
 import axios from 'axios';
 import { message } from 'antd';
@@ -207,7 +207,7 @@ export const handleLogin = (isLogin) => ({
 })
 
 // 退出登录
-export const handleLogout = () => {
+export const handleLogout = (that) => {
   return dispatch => {
     axios.get('/logout/0')
     .then(res => {
@@ -218,7 +218,8 @@ export const handleLogout = () => {
           type: HANDLE_LOGIN,
           isLogin: false
         })
-        dispatch(getMycartLen())
+        dispatch(getMycartLen());
+        that.props.history.push('/');
         message.success('您已经安全退出了');
       } else {
         message.error('opps,退出失败，请稍等再试');

@@ -7,7 +7,7 @@
     "dev": "npx egg-bin dev | npx webpack --mode development --watch",
     "dev:client": "npx webpack --mode development --watch",
     "dev:server": "npx egg-bin dev",
-    "build": "npx webpack --mode production",
+    "build": "npx webpack --profile --json > stats.json --mode production",
     "start": "npx eggctl start --port 8080 --daemon --title=egg-server-LUCKYIOTWAP",
     "stop": "npx eggctl stop --title=egg-server-LUCKYIOTWAP",
     "start:client": "webpack-dev-server --inline --progress --config webpack.config.js"

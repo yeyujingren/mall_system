@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-23 18:02:38
+ * @Last Modified time: 2019-08-30 14:34:04
  */
 import axios from 'axios';
 import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, GET_FUZZY_SEARCH_LIST, CHANGE_EMAIL } from './actionType';
@@ -82,7 +82,6 @@ export const getOrderList = (flag) => {
 
 // 确认支付
 export const reaclPay = (_this,order_id,user_id,totalPrice) => {
-  console.log(order_id,user_id,totalPrice);
   return (dispatch) => {
     // 封装body
     const orderInfor = {

@@ -74,6 +74,7 @@ class OrderCenter extends Component {
       cancelText: '我再想想',
       okText: '确认支付',
       onOk(){
+        let user_id = localStorage.getItem('user_id');
         e.props.reaclPay(e,order_id,user_id,total_price);
       },
       oncancel(){}

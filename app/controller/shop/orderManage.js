@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-19 20:06:39 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-23 17:53:19
+ * @Last Modified time: 2019-08-29 17:47:24
  */
 
 'use strict';
@@ -12,43 +12,21 @@ const Controller = require('egg').Controller;
 class OrderManageController extends Controller {
   // 订单生成
   async createOrder() {
-    // let courses = []
-    // let flag = true;
     const { ctx } = this;
     const data = ctx.request.body;
-    const cartList = data.cartList;
-    // const hasPayCourse = await ctx.service.shop.orderManageServer.getOrderList(data.user_id, 4);
-    // hasPayCourse.map(item => {
-    //   item.comms.map(course => {
-    //     courses.push(course.com_id);
-    //   })
-    // })
-    // for(let i=0;i<courses.length;i++){
-    //   for(let j=0;j<cartList.length;j++){
-    //     if(courses[i]===cartList[j].com_id){
-    //       flag = false;
-    //     }
-    //   }
-    // }
-    // if(flag){
-      const result = await ctx.service.shop.orderManageServer.createOrder(data);
-      if(result.results.length === data.cartList.length){
-        ctx.body = {
-          'code': 200,
-          'message': '订单生成成功！',
-          'order_id':result.orderId
-        }
-      } else {
-        ctx.body = {
-          'code': 400,
-          'message': '订单生成失败，请重试！'
-        }
+    const result = await ctx.service.shop.orderManageServer.createOrder(data);
+    if(result.results.length === data.cartList.length){
+      ctx.body = {
+        'code': 200,
+        'message': '订单生成成功！',
+        'order_id':result.orderId
       }
-    // } else {
-    //   ctx.body = {
-    //     'code': 406,
-    //     'message': '您的订单中存在已购买课程！'
-    //   }
+    } else {
+      ctx.body = {
+        'code': 400,
+        'message': '订单生成失败，请重试！'
+      }
+    }
   }
 
   // 获取所有订单
@@ -63,6 +41,7 @@ class OrderManageController extends Controller {
       result
     }
   }
+
   // 获取未支付订单
   async getWillPayOrder() {
     const { ctx } = this;
@@ -120,7 +99,6 @@ class OrderManageController extends Controller {
         for(let j=0;j<willPayCourse.length;j++){
           if(courses[i]===willPayCourse[j].com_id){
             flag = false;
-            break;
           }
         }
       }
