@@ -29,6 +29,18 @@ com_photo varchar(100) default 'https://github.com/fluidicon.png' comment'商品
 flag int(1) default 0 comment'是否被删除'
 )engine=InnoDB,default char set=utf8 comment='商品表';
 
+-- 建立评论表 --  
+DROP TABLE IF EXISTS `commentform`;
+create table commentform(
+comment_id int(10) not null auto_increment primary key comment '评论id',
+user_id int(10) not null comment '用户id',
+com_id int(10) not null comment '课程id',
+create_time varchar(50) not null comment '评论创建时间',
+comment_value varchar(300) not null comment '评论类容',
+foreign key(user_id) references user(user_id) on delete cascade on update cascade,
+foreign key(com_id) references commodity(com_id) on delete cascade on update cascade
+)engine=InnoDB,default char set=utf8 comment='评论表';
+
 -- 建立订单表 --  
 DROP TABLE IF EXISTS `orderForm`;
 create table orderForm(
