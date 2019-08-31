@@ -1,0 +1,195 @@
+@baseWidth: 70%;
+.detal{
+  width: 100%;
+  margin-top: 75px;
+  padding-bottom: 50px;
+  .detal-header{
+    width: 100%;
+    height: 300px;
+    text-align: center;
+    z-index: -1;
+    background-size: cover;
+    background: url("http://img1.sycdn.imooc.com/szimg/5c106a9b000168a420000560.jpg");
+    .detal-name{
+      display: inline-block;
+      margin-top: 100px;
+      color: white;
+      font-size: 40px;
+    }
+  }
+  .detal-title{
+    width: @baseWidth;
+    height: 120px;
+    margin: -60px auto 0;
+    border-radius: 15px;
+    background-size: 100% 100%;
+    padding: 10px;
+    z-index: 2;
+    box-sizing: border-box;
+    background-color: white;
+    background: url(https://coding.imooc.com/static/module/img/fixed_bg.png);
+    box-shadow: 0 8px 16px 0 rgba(28, 31,33,.1);
+    .detal-main-left{
+      width: 45%;
+      padding-left: 20px;
+      .detal-price{
+        margin-top: 15px;
+        font-size: 32px;
+        font-weight: 700;
+        color: #f01414;
+      }
+      .detal-span{
+        span{
+          margin-right: 20px;
+          color: #545c63;
+          font-size: 12px;
+          i{
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    .detal-main-right{
+      width: 55%;
+      float: right;
+      margin-top: -30px;
+      .btn{
+        font-size: 16px;
+        font-weight: 700;
+        padding: 12px 30px;
+        float: right;
+        box-sizing: border-box;
+        border-radius: 22px;
+      }
+      .detal-buy{
+        margin:0 20px 0 50px;
+        background-color: #f01414;
+        color: white;
+      }
+      .detal-add{
+        background: rgba(240,20,20,.1);
+        color: #f20d0d; 
+      }
+    }
+  }
+  .detal-main{
+    .detal-type{
+      padding: 28px 0 32px 0;
+      text-align: center;
+      box-sizing: border-box;
+      border-bottom: 1px solid #D9DDE1;
+      span{
+        padding: 0 20px;
+        font-size: 16px;
+        font-weight: 700;
+        sup{
+          font-size: 14px;
+          font-weight: normal;
+          color: #93999f;
+        }
+      }
+    }
+    .detal-chapter{
+      width: @baseWidth;
+      margin: 0 auto;
+      .detal-section{
+        border-bottom: 1px solid #d9dde1;
+        padding-bottom: 30px;
+        .section-title{
+          font-size: 16px;
+          line-height: 45px;
+          font-weight: 700;
+          padding-left: 20px;
+          color: #07111B;
+        }
+        .verse{
+          padding-left: 40px;
+          font-size: 14px;
+          color: #1c1f21;
+          li{
+            line-height: 40px;
+          }
+        }
+      }
+    }
+    .detal-content{
+      width: @baseWidth;
+      margin: 50px auto;
+      .detal-write{
+        text-align: center;
+        padding: 25px 0px;
+        border: 1px dashed #d9dde1;
+        border-radius: 13px;
+        textarea{
+          outline: none;
+          width: 60%;
+          min-height: 100px;
+          margin: 0 auto;
+          border-radius: 10px;
+          padding: 8px;
+          color: #555;
+          font-size: 14px;
+          resize: none;
+          line-height: 18px;
+        }
+        .publish{
+          display: inline-block;
+          border-radius: 23px;
+          padding: 15px 32px;
+          margin-left: 35px;
+          vertical-align: bottom;
+          box-sizing: border-box;
+          font-size: 16px;
+          background-color:#f20d0d;
+          color: white;
+          &:hover{
+            background-color: #c20a0a;
+          }
+        }
+      }
+      .content-list{
+        min-height: 300px;
+        margin-top: 50px;
+        padding: 0 60px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px 0 rgba(28, 31,33,.1);
+        background: white;
+        .comment-detal{
+          padding: 50px 0;
+          border-bottom: 1px solid #d9dde1;
+          img{
+            width: 48px;
+            height: 48px;
+            vertical-align: top;
+            border-radius: 24px;
+            overflow: hidden;
+          }
+          .comment-main{
+            width: 85%;
+            margin-left: 15px;
+            display: inline-block;
+            .comment-name{
+              line-height: 25px;
+              font-size: 14px;
+              font-weight: 700;
+              color: #1c1f21;
+              .comment-create{
+                display:block;
+                float: rigth;
+                margin-right: 20px;
+                font-size: 12px;
+                font-weight: normal;
+                color: #9199a1;
+              }
+            }
+            .comment-value{
+              line-height: 25px;
+              font-size: 16px;
+              color: #6c7174
+            }
+          }
+        }
+      }
+    }
+  }
+}

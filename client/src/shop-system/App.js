@@ -13,6 +13,7 @@ import Success from './component/success';
 import Fail from './component/fail';
 import Classify from './pages/classify';
 import SearchPage from './pages/searchPage';
+import CourseDetal from './pages/detal';
 class App extends Component {
   render() {
     return(
@@ -30,6 +31,7 @@ class App extends Component {
               <Route path="/persion" component={Persion} />
               <Route path="/type/:type" exact component={Classify} />
               <Route path="/search/:key" exact component={SearchPage} />
+              <Route path="/detal/:id" exact component={CourseDetal} />
               <Route path="/" component={Home} />
             </Switch>
           </Fragment>
