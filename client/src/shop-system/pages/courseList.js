@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Icon, Row, Col, message, Modal } from 'antd';
 import axios from 'axios';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { getCourseList, reaclPay } from './store/actionCreator';
 import { getMycartLen } from '../component/store/actionCreator';
 
@@ -113,7 +113,7 @@ class CourseList extends Component {
       this.props.getMycartLen();
     }
   }
-  
+
   render() {
     const { courseList } = this.props;
     return(
@@ -128,9 +128,11 @@ class CourseList extends Component {
                 return(
                   <Col key={item.com_id} className="course" span={6}>
                     <img className="course-photo" src={item.com_photo} alt=""/>
-                    <p className="course-top">
-                      {item.com_name}
-                    </p>
+                    <Link to={`/detal/${item.com_id}/chapter`}>
+                      <p className="course-top">
+                        {item.com_name}
+                      </p>
+                    </Link>
                     <p className="course-middle">
                       <span>{item.type}</span>
                       <span><Icon type="user" /> {item.amount}</span>

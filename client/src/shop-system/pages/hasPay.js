@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Timeline, message } from 'antd';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Timeline } from 'antd';
 import { getHasPayList } from './store/actionCreator';
 import '../style/hasPay.less';
 class HasPay extends Component {
@@ -48,9 +49,11 @@ class HasPay extends Component {
                               <span className="course-teac">授课老师：<i>{course.teacher}</i></span>
                             </p>
                             <p>
-                              <span onClick={() =>message.info(`恭喜您，距离成为${course.type}界大佬又近了一步^.^`)} className="begin-start">
-                                开始学习
-                              </span>
+                              <Link to={`/detal/${course.com_id}/chapter`}>
+                                <span className="begin-start">
+                                  开始学习
+                                </span>
+                              </Link>
                             </p>
                           </div>
                         </div>

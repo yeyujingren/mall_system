@@ -2,10 +2,20 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-08-15 14:17:55 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-30 14:34:04
+ * @Last Modified time: 2019-09-01 20:23:44
  */
 import axios from 'axios';
-import { GET_ORDER_LIST, GET_HAS_PAY_COURSE, GET_COURSE_LIST, GET_FUZZY_SEARCH_LIST, CHANGE_EMAIL } from './actionType';
+import {
+  GET_ORDER_LIST,
+  GET_HAS_PAY_COURSE,
+  GET_COURSE_LIST,
+  GET_FUZZY_SEARCH_LIST,
+  CHANGE_EMAIL,
+  GET_COMMON_LIST,
+  HANDLE_COMMON_WRITE,
+  GET_COURSE_DETAL,
+  UPDATE_COMMON_SUM
+} from './actionType';
 import { handleLogin, getMycartLen } from '../../component/store/actionCreator';
 import { message } from 'antd';
 
@@ -205,6 +215,78 @@ export const changePersionInfor = (flag,values,id,_this) => {
         }
       })
       .catch(()=>message.error('修改密码失败，请检查您的网络是否连接！'))
+  }
+}
+
+// 获取课程详情
+export const getCourseDetal = id => {
+  return (dispatch) => {
+    axios.get('/shop/getCourseDetal/'+id)
+      .then( res => {
+        if(res.data.code === 200){
+          dispatch({
+            type: GET_COURSE_DETAL,
+            courseDetal: res.data.result.result,
+            sum: res.data.result.sum
+          })
+        }
+      })
+      .catch(() => {message.error('数据获取失败，请检查您的网络！')})
+  }
+}
+
+// 获取评论
+export const getDetail = id => {
+  return (dispatch) => {
+    axios.get('/shop/getCommentList/'+id)
+      .then( res => {
+        if(res.data.code === 200) {
+          dispatch({
+            type: GET_COMMON_LIST,
+            commonList: res.data.result
+          })
+        }
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+}
+
+export const commonWrite = (common) => ({
+  type: HANDLE_COMMON_WRITE,
+  write: common
+})
+
+// 发表评论
+export const handlePublish = (user_id,com_id,common) => {
+  const data = {
+    user_id,
+    comment_value: common,
+    com_id
+  }
+  const headers = {
+    'contentType':'json',
+    'x-csrf-token': window._csrf
+  }
+  return (dispatch) => {
+    axios.post('/shop/write',data,{headers})
+      .then( res => {
+        if(res.data.code === 200){
+          dispatch(getDetail(data.com_id));
+          dispatch(commonWrite(''));
+          dispatch({
+            type: UPDATE_COMMON_SUM,
+            sum: res.data.sum
+          })
+          message.success('您已经成功评论，感谢您对这门课程的评论！');
+        } else if(res.data.code === 403){
+          message.info('您的账号已被冻结，请联系管理员解冻在评论！')
+        } else {
+          message.error('评论失败，请稍后重试！');
+        }
+      })
+      .catch( e => { console.log(e) });
   }
 }
 

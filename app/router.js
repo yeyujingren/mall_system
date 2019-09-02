@@ -2,7 +2,7 @@
  * @Author: Yifeng Tao 
  * @Date: 2019-07-31 14:17:25 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-23 13:46:21
+ * @Last Modified time: 2019-09-01 14:04:27
  */
 
 module.exports = app => {
@@ -52,6 +52,10 @@ module.exports = app => {
   router.put('/shop/changePsd',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.persionManage.changePsd);
   router.put('/shop/pushImg',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.persionManage.pushImg);
 
+  // 课程详情页相关
+  router.get('/shop/getCourseDetal/:id',controller.shop.commonManage.getCourseDetal);
+  router.get('/shop/getCommentList/:id',controller.shop.commonManage.getCommentList);
+  router.post('/shop/write',userauthMiddleware,verifyUserStatusMiddleware,controller.shop.commonManage.writeCommon);
   // 已购商品数据接口
   router.get('/shop/getHasPayCourse/:id',userauthMiddleware,controller.shop.orderManage.getHasPayCourse);
   // 课程数据获取

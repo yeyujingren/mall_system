@@ -31,7 +31,7 @@ class App extends Component {
               <Route path="/persion" component={Persion} />
               <Route path="/type/:type" exact component={Classify} />
               <Route path="/search/:key" exact component={SearchPage} />
-              <Route path="/detal/:id" exact component={CourseDetal} />
+              <Route path="/detal/:id/:type" component={CourseDetal} />
               <Route path="/" component={Home} />
             </Switch>
           </Fragment>

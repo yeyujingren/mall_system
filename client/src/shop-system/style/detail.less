@@ -60,6 +60,7 @@
         float: right;
         box-sizing: border-box;
         border-radius: 22px;
+        cursor: pointer;
       }
       .detal-buy{
         margin:0 20px 0 50px;
@@ -82,6 +83,15 @@
         padding: 0 20px;
         font-size: 16px;
         font-weight: 700;
+        .detal-link{
+          color: #545c63;
+        }
+        .focus{
+          color: #f20d0d;
+        }
+        &:hover >.detal-link{
+          color: #f20d0d;
+        }
         sup{
           font-size: 14px;
           font-weight: normal;
@@ -142,6 +152,7 @@
           font-size: 16px;
           background-color:#f20d0d;
           color: white;
+          cursor: pointer;
           &:hover{
             background-color: #c20a0a;
           }
@@ -154,6 +165,10 @@
         border-radius: 15px;
         box-shadow: 0 8px 16px 0 rgba(28, 31,33,.1);
         background: white;
+        .detal-no-data{
+          text-align: center;
+          line-height: 100px;
+        }
         .comment-detal{
           padding: 50px 0;
           border-bottom: 1px solid #d9dde1;
