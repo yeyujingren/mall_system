@@ -12,7 +12,7 @@ class HasPay extends Component {
   handleverify() {
     let cookies = document.cookie.indexOf('EGG_COOK_U=');
     if (cookies === -1) {
-      this.props.history.push('/')
+      this.props.history.push('/');
     } else {
       this.props.getHasPayList();
     }
