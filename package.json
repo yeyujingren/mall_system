@@ -20,7 +20,7 @@
     "antd": "^3.20.5",
     "antd-mobile": "^2.2.9",
     "await-stream-ready": "^1.0.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "bizcharts": "^3.4.5",
     "bluebird": "^3.5.3",
